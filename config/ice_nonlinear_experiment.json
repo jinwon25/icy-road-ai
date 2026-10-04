@@ -1,0 +1,22 @@
+{
+  "experiment_id": "20261002_fixed_hgb_fallback_weather",
+  "purpose": "Nonlinear weather-only classification and inner threshold objective ablation",
+  "features": "same 14 numeric weather/time features as fallback logistic",
+  "validation": "frozen 14 outer LOSO and 3 inner station groups",
+  "model": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "class_weight": "balanced",
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "threshold_policies": ["inner_pooled_slot_f1", "inner_station_daily_f1_grid_0_to_1_step_0.01_plus_no_alarm"],
+  "negative_downsampling": false,
+  "max_compute_threads": 2,
+  "data_release": "20260915_requires_rerun_after_official_correction",
+  "primary_safety_checks": ["same targets and truth as logistic", "no protected stations", "outer station absent from inner fit/selection", "no random early stopping split", "all outer predictions finite"],
+  "report": ["per-station TP FP FN", "daily station macro and denominator", "fixed observed-Ice days", "false alarm no-Ice days", "positive-station hit coverage", "ranking average precision", "winter strata (not winter-forward validation)"]
+}

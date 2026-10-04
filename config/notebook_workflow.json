@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "stages": [
+    {
+      "id": "data_audit",
+      "name": "관측 파일·변수 점검",
+      "command": [
+        "scripts/audit_data.py"
+      ],
+      "artifact": "outputs/private/full/audit_summary.json",
+      "summary_keys": [
+        "file_counts",
+        "row_counts",
+        "station_counts"
+      ]
+    },
+    {
+      "id": "time_audit",
+      "name": "시각·중복 점검",
+      "command": [
+        "scripts/audit_timestamps.py"
+      ],
+      "artifact": "outputs/private/full/timestamp_summary.json",
+      "summary_keys": []
+    },
+    {
+      "id": "aws_boundary_audit",
+      "name": "AWS 자정 중복 동등성",
+      "command": [
+        "scripts/audit_aws_boundaries.py"
+      ],
+      "artifact": "outputs/private/full/aws_boundary_audit.json",
+      "summary_keys": [
+        "counts",
+        "unmatched_midnight_dates"
+      ]
+    },
+    {
+      "id": "aws_cleaning",
+      "name": "AWS 날짜 필터·행 회계",
+      "command": [
+        "scripts/audit_aws_cleaning.py"
+      ],
+      "artifact": "outputs/private/full/aws_cleaning_summary.json",
+      "summary_keys": [
+        "counts"
+      ]
+    },
+    {
+      "id": "spatial_audit",
+      "name": "공간자료 점검",
+      "command": [
+        "scripts/audit_spatial.py"
+      ],
+      "artifact": "outputs/private/spatial/spatial_summary.json",
+      "summary_keys": []
+    },
+    {
+      "id": "station_road_alignment",
+      "name": "개발 RWIS·도로 중심선 정합",
+      "command": [
+        "scripts/audit_station_road_alignment.py"
+      ],
+      "artifact": "outputs/private/spatial/station_road_alignment_summary.json",
+      "summary_keys": [
+        "stations",
+        "distance_to_expected_m_median",
+        "distance_to_expected_m_max",
+        "nearest_route_mismatch"
+      ]
+    },
+    {
+      "id": "variable_dictionary",
+      "name": "변수 사전 갱신",
+      "command": [
+        "scripts/make_variable_dictionary.py"
+      ],
+      "artifact": "docs/VARIABLE_DICTIONARY.md",
+      "summary_keys": []
+    },
+    {
+      "id": "development_eda",
+      "name": "개발용 EDA",
+      "command": [
+        "scripts/eda_development.py"
+      ],
+      "artifact": "outputs/private/development/eda_summary.json",
+      "summary_keys": [
+        "valid_label",
+        "ice_slots",
+        "ice_events",
+        "single_slot_events"
+      ]
+    },
+    {
+      "id": "validation_splits",
+      "name": "관측소 단위 분할",
+      "command": [
+        "scripts/make_splits.py"
+      ],
+      "artifact": "outputs/private/validation/splits.json",
+      "summary_keys": [
+        "outer_strategy",
+        "score_status"
+      ]
+    },
+    {
+      "id": "baseline_asos",
+      "name": "과거 ASOS 기준 모델",
+      "command": [
+        "scripts/baseline_asos.py"
+      ],
+      "artifact": "outputs/private/baseline/summary.json",
+      "summary_keys": [
+        "status",
+        "stations",
+        "total_valid_pairs",
+        "direct_station_macro_mae",
+        "adjusted_station_macro_mae"
+      ]
+    },
+    {
+      "id": "weather_features",
+      "name": "과거 AWS·ASOS 기상 특징",
+      "command": [
+        "scripts/build_weather_features.py"
+      ],
+      "artifact": "outputs/private/weather_features/summary.json",
+      "summary_keys": [
+        "targets",
+        "aws_temp_pairs",
+        "asos_temp_pairs",
+        "both_temp_pairs"
+      ]
+    },
+    {
+      "id": "aws_fallback",
+      "name": "AWS fallback availability audit",
+      "command": [
+        "scripts/audit_aws_fallback.py"
+      ],
+      "artifact": "outputs/private/aws_fallback/summary.json",
+      "summary_keys": [
+        "station_count",
+        "totals",
+        "station_12209"
+      ]
+    },
+    {
+      "id": "aws_fallback_features",
+      "name": "AWS fallback feature build",
+      "command": [
+        "scripts/build_aws_fallback_features.py"
+      ],
+      "artifact": "outputs/private/aws_fallback_features/summary.json",
+      "summary_keys": [
+        "targets",
+        "aws_temp_pairs",
+        "aws_rank_counts"
+      ]
+    },
+    {
+      "id": "weather_fallback_ridge",
+      "name": "AWS fallback Ridge LOSO",
+      "command": [
+        "scripts/baseline_weather_ridge.py",
+        "--variant",
+        "fallback"
+      ],
+      "artifact": "outputs/private/aws_fallback_ridge/summary.json",
+      "summary_keys": [
+        "stations",
+        "paired_rows",
+        "weather_ridge_station_macro_mae"
+      ]
+    },
+    {
+      "id": "weather_fallback_comparison",
+      "name": "Paired weather variant comparison",
+      "command": [
+        "scripts/compare_weather_variants.py"
+      ],
+      "artifact": "outputs/private/weather_fallback_comparison/summary.json",
+      "summary_keys": [
+        "paired_rows",
+        "nearest_macro_mae",
+        "fallback_macro_mae",
+        "stations_fallback_mae_better",
+        "stations_fallback_near_mae_worse"
+      ]
+    },
+    {
+      "id": "weather_ridge",
+      "name": "기상 융합 Ridge LOSO",
+      "command": [
+        "scripts/baseline_weather_ridge.py"
+      ],
+      "artifact": "outputs/private/weather_ridge/summary.json",
+      "summary_keys": [
+        "stations",
+        "paired_rows",
+        "asos_adjusted_station_macro_mae",
+        "weather_ridge_station_macro_mae",
+        "stations_weather_worse"
+      ]
+    },
+    {
+      "id": "weather_diagnostic",
+      "name": "기상 모델 겨울·AWS 결측 진단",
+      "command": [
+        "scripts/diagnose_weather_ridge.py"
+      ],
+      "artifact": "outputs/private/weather_ridge/diagnostic_summary.json",
+      "summary_keys": [
+        "weather_worse_stations",
+        "near_freezing_worse_stations"
+      ]
+    },
+    {
+      "id": "weather_temporal",
+      "name": "겨울 간 시간 일반화 보조 검증",
+      "command": [
+        "scripts/evaluate_weather_temporal.py"
+      ],
+      "artifact": "outputs/private/weather_temporal/summary.json",
+      "summary_keys": [
+        "train_rows",
+        "validation_rows",
+        "asos_adjusted_station_macro_mae",
+        "weather_ridge_station_macro_mae",
+        "stations_weather_worse"
+      ]
+    },
+    {
+      "id": "ice_features",
+      "name": "Development Ice features",
+      "command": [
+        "scripts/build_ice_features.py"
+      ],
+      "artifact": "outputs/private/ice_features/summary.json",
+      "summary_keys": [
+        "target_slots",
+        "valid_labels",
+        "ice_slots",
+        "undefined_labels"
+      ]
+    },
+    {
+      "id": "ice_logistic",
+      "name": "Direct Ice baseline nearest AWS",
+      "command": [
+        "scripts/baseline_ice_logistic.py"
+      ],
+      "artifact": "outputs/private/ice_logistic/summary.json",
+      "summary_keys": [
+        "target_slots",
+        "valid_label_slots",
+        "slot_micro",
+        "daily_10minute_station_macro"
+      ]
+    },
+    {
+      "id": "ice_fallback_features",
+      "name": "Ice fallback AWS features",
+      "command": [
+        "scripts/build_aws_fallback_features.py",
+        "--target",
+        "ice"
+      ],
+      "artifact": "outputs/private/ice_fallback_features/summary.json",
+      "summary_keys": [
+        "targets",
+        "aws_temp_pairs",
+        "aws_rank_counts"
+      ]
+    },
+    {
+      "id": "ice_fallback_logistic",
+      "name": "Direct Ice baseline fallback AWS",
+      "command": [
+        "scripts/baseline_ice_logistic.py",
+        "--variant",
+        "fallback"
+      ],
+      "artifact": "outputs/private/ice_fallback_logistic/summary.json",
+      "summary_keys": [
+        "slot_micro",
+        "daily_10minute_station_macro"
+      ]
+    },
+    {
+      "id": "ice_variant_comparison",
+      "name": "Paired Ice model comparison",
+      "command": [
+        "scripts/compare_ice_variants.py"
+      ],
+      "artifact": "outputs/private/ice_variant_comparison/summary.json",
+      "summary_keys": [
+        "nearest_slot_micro",
+        "fallback_slot_micro",
+        "fixed_observed_ice_days"
+      ]
+    },
+    {
+      "id": "ice_diagnostic",
+      "name": "Ice input and failure diagnostic",
+      "command": [
+        "scripts/diagnose_ice_baseline.py"
+      ],
+      "artifact": "outputs/private/ice_diagnostic/summary.json",
+      "summary_keys": [
+        "ice_slots",
+        "nonice_road_temp_at_or_below_0c",
+        "ice_nearest_aws_temp_available",
+        "ice_fallback_aws_temp_available"
+      ]
+    },
+    {
+      "id": "ice_event_audit",
+      "name": "Ice event neighbor-state audit",
+      "command": [
+        "scripts/audit_ice_events.py"
+      ],
+      "artifact": "outputs/private/ice_event_audit/summary.json",
+      "summary_keys": [
+        "events",
+        "single_slot_events",
+        "single_adjacent_to_code_12_or_15"
+      ]
+    },
+    {
+      "id": "station_facility",
+      "name": "Development station bridge/tunnel proximity",
+      "command": [
+        "scripts/build_static_station_features.py"
+      ],
+      "artifact": "outputs/private/spatial/station_facility/summary.json",
+      "summary_keys": [
+        "station_count",
+        "distance_summary_m"
+      ]
+    },
+    {
+      "id": "facility_weather",
+      "name": "Paired LOSO weather plus facility ablation",
+      "command": [
+        "scripts/compare_facility_weather.py"
+      ],
+      "artifact": "outputs/private/facility_weather_comparison/summary.json",
+      "summary_keys": [
+        "paired_rows",
+        "weather_macro_mae",
+        "facility_macro_mae",
+        "stations_facility_mae_better"
+      ]
+    },
+    {
+      "id": "ice_weather_history",
+      "name": "Strictly prior AWS three-hour Ice context",
+      "command": [
+        "scripts/audit_ice_weather_history.py"
+      ],
+      "artifact": "outputs/private/ice_weather_history/summary.json",
+      "summary_keys": [
+        "ice_slots",
+        "positive_history_available",
+        "exposure"
+      ]
+    },
+    {
+      "id": "ice_history_logistic",
+      "name": "LOSO Ice model with prior AWS history",
+      "command": [
+        "scripts/baseline_ice_logistic.py",
+        "--variant",
+        "history"
+      ],
+      "artifact": "outputs/private/ice_history_logistic/summary.json",
+      "summary_keys": [
+        "slot_micro",
+        "daily_10minute_station_macro"
+      ]
+    },
+    {
+      "id": "station_facility_route",
+      "name": "Route-aligned development facility proximity",
+      "command": [
+        "scripts/build_route_facility_features.py"
+      ],
+      "artifact": "outputs/private/spatial/station_facility_route/summary.json",
+      "summary_keys": [
+        "station_count",
+        "distance_summary_m"
+      ]
+    },
+    {
+      "id": "route_facility_weather",
+      "name": "Paired LOSO route-aligned facility ablation",
+      "command": [
+        "scripts/compare_facility_weather.py",
+        "--facility-type",
+        "route"
+      ],
+      "artifact": "outputs/private/route_facility_weather_comparison/summary.json",
+      "summary_keys": [
+        "paired_rows",
+        "weather_macro_mae",
+        "facility_macro_mae",
+        "stations_facility_mae_better"
+      ]
+    },
+    {
+      "id": "ice_history_comparison",
+      "name": "Paired Ice history comparison on fixed observed-Ice days",
+      "command": [
+        "scripts/compare_ice_history.py"
+      ],
+      "artifact": "outputs/private/ice_history_comparison/summary.json",
+      "summary_keys": [
+        "fallback_slot_micro",
+        "history_slot_micro",
+        "fixed_observed_ice_days"
+      ]
+    },
+    {
+      "id": "neighbor_rwis",
+      "name": "Prior same-route RWIS benchmark and fixed 1:1 fusion",
+      "command": [
+        "scripts/baseline_neighbor_rwis.py"
+      ],
+      "artifact": "outputs/private/neighbor_rwis/summary.json",
+      "summary_keys": [
+        "target_stations",
+        "paired_rows",
+        "neighbor_macro_mae",
+        "equal_blend_macro_mae",
+        "weather_macro_mae_on_paired",
+        "stations_blend_better_than_weather"
+      ]
+    },
+    {
+      "id": "neighbor_rwis_diagnostic",
+      "name": "Neighbor RWIS benchmark by winter and route",
+      "command": [
+        "scripts/diagnose_neighbor_rwis.py"
+      ],
+      "artifact": "outputs/private/neighbor_rwis/diagnostic_summary.json",
+      "summary_keys": [
+        "age_minutes_counts",
+        "winters",
+        "routes"
+      ]
+    },
+    {
+      "id": "neighbor_transfer",
+      "name": "Next winter and held station with fixed blend and RWIS latency",
+      "command": [
+        "scripts/evaluate_neighbor_transfer.py"
+      ],
+      "artifact": "outputs/private/neighbor_transfer/summary.json",
+      "summary_keys": [
+        "status",
+        "train_period",
+        "validation_period",
+        "scenarios"
+      ]
+    },
+    {
+      "id": "ice_nonlinear",
+      "name": "Fixed nonlinear Ice benchmark with nested thresholds",
+      "command": [
+        "scripts/baseline_ice_nonlinear.py"
+      ],
+      "artifact": "outputs/private/ice_nonlinear/summary.json",
+      "summary_keys": [
+        "status",
+        "stations",
+        "target_rows",
+        "ice_slots"
+      ]
+    },
+    {
+      "id": "ice_nonlinear_comparison",
+      "name": "Paired Ice classification and alarm tradeoffs",
+      "command": [
+        "scripts/compare_ice_nonlinear.py"
+      ],
+      "artifact": "outputs/private/ice_nonlinear_comparison/summary.json",
+      "summary_keys": [
+        "status",
+        "valid_label_rows",
+        "ice_slots",
+        "variants"
+      ]
+    },
+    {
+      "id": "rwis_context",
+      "name": "Prior RWIS information and nested reference audit",
+      "command": [
+        "scripts/audit_rwis_context.py"
+      ],
+      "artifact": "outputs/private/rwis_context/summary.json",
+      "summary_keys": [
+        "target_rows",
+        "ice_slots",
+        "fixed_latest_ice_benchmark",
+        "fixed_past60_ice_benchmark",
+        "inner_missing_reference_cases"
+      ]
+    },
+    {
+      "id": "ice_context_diagnostic",
+      "name": "Existing HGB errors by prior RWIS moisture context",
+      "command": [
+        "scripts/diagnose_ice_context.py"
+      ],
+      "artifact": "outputs/private/rwis_context/error_context_summary.json",
+      "summary_keys": [
+        "valid_rows",
+        "condition_groups",
+        "top_false_alarm_stations"
+      ]
+    },
+    {
+      "id": "road_segment_scaffold",
+      "name": "Unscored maximum 1km geometry scaffold",
+      "command": [
+        "scripts/build_road_segment_scaffold.py"
+      ],
+      "artifact": "outputs/private/spatial/segment_scaffold/summary.json",
+      "summary_keys": [
+        "status",
+        "segments",
+        "source_length_m",
+        "segment_length_m",
+        "routes"
+      ]
+    }
+  ]
+}

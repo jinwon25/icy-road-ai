@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "archive_filename": "DATA AI 경진대회 데이터(20260915).zip",
+  "sha256": "c0f7e0b1fe5fc08b6fa2b8ab10f60b1be238437e8098dd7cbb394a98aeca2dad",
+  "bytes": 520933103,
+  "release": "20260915",
+  "status": "superseding_correction_announced_by_20261006",
+  "migration": "Do not mix old cached outputs with corrected data; audit schema and regenerate all dependent stages in an isolated copy."
+}

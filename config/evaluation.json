@@ -1,0 +1,44 @@
+{
+  "timezone": "Asia/Seoul",
+  "held_out_rwis_stations": [
+    "12410",
+    "33411",
+    "23402"
+  ],
+  "evaluation_periods": [
+    [
+      "2024-11-01",
+      "2025-02-28"
+    ],
+    [
+      "2025-11-01",
+      "2026-02-28"
+    ]
+  ],
+  "ice_code": "04",
+  "known_non_ice_codes": [
+    "01",
+    "02",
+    "03",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+  ],
+  "daily_metric_unit_provisional": "10_minute_observations",
+  "zero_positive_policy_provisional": "undefined_null",
+  "minimum_daily_coverage_provisional": 1.0,
+  "official_status": "partially_clarified_20260929_20260930_pending_remaining_details",
+  "official_clarifications": {
+    "checked_date": "2026-10-02",
+    "qna_ids": [555, 556],
+    "aggregation": "daily_mean_per_station_then_unweighted_station_mean; pooled_counts_not_official",
+    "no_observed_or_predicted_ice_day": "exclude_from_average",
+    "state_0_and_minus999": "exclude_recommended_by_organizer",
+    "announced_corrected_data_by": "2026-10-06",
+    "unresolved": ["incomplete_day_coverage", "precision_or_recall_only_zero_denominator", "required_regression_targets_and_submission_schema", "source_publication_latency"]
+  },
+  "random_seed": 20260923
+}
