@@ -1,4 +1,8 @@
-# 평가 대비 최신 상태 — 2026-10-02
+# 평가·제출 준비 현황 — 2026-10-02
+
+대회 평가·제출 항목별로 현재 구현한 것과 남은 작업을 확인합니다. 온도 예측 결과는 있지만 최종 결빙 모델·보호 지점 평가·위험 지도는 미완료입니다.
+
+[문서 목록·용어 풀이](README.md) · [프로젝트 소개](../README.md)
 
 ## 수정본 전 후속 작업 완료
 
@@ -16,9 +20,11 @@
 
 ---
 
-## 이전 기록 (당시 가정 포함)
+<details>
+<summary>이전 기록 펼치기 — 당시 가정·진행 상태 포함</summary>
 
-# 공식 평가 항목별 진행 현황과 다음 실행 — 2026-09-23
+
+### 공식 평가 항목별 진행 현황과 다음 실행 — 2026-09-23
 
 근거: 사용자가 전달한 평가 본문, [요구사항 대조](COMPETITION_REQUIREMENTS.md), 실제 [데이터 감사](DATA_AUDIT.md), [검증 규약](VALIDATION_PROTOCOL.md), [개발용 EDA](EDA_REPORT.md), [기상 입력 실험](WEATHER_FUSION_REPORT.md). 아래 성능은 **개발용 관측소 단위 검증**이며 공식 제외 지점 점수가 아니다.
 
@@ -31,25 +37,26 @@
 | 제공 데이터 외 추가 자료 | 공식·원 논문은 연구 설계의 근거로 조사·기록. **외부 데이터를 모델 입력으로 추가한 적 없음** | 평가 이득이 예상되는 자료 한 가지씩 출처·이용 조건·수집일·관측 겨울과의 시간 적합성 확인 후 개발 LOSO에서 추가 효과 입증. 제공 ASOS에 이미 있는 일사·운량 등의 중복 수집은 우선하지 않음 |
 | 3개 노선 위험도 지도 | EPSG:5179 도로 중심선 275.889km, 노선명과 DEM·시설 레이어를 감사. 개발 RWIS 14곳의 해당 노선 중심선 거리 최대 22.3m | 도로 연결·상하행·분기 검증, 1km 구간 생성, 정적 특징 품질 점검, 공통 겨울 분모의 결빙 추정 빈도·지속시간·신뢰도, 기준표·CSV·shapefile·JPG. 아직 지도/등급/사고 위험 점수 없음 |
 
-## 평가 문구의 현재 해석
+### 평가 문구의 현재 해석
 
 “하루 단위 AI 예측결과”와 “10분 단위 예측 결과”를 함께 읽으면, **하루 안의 10분 시점들을 비교해 TP·FP·FN을 만들고 일별 지표를 평균**하는 방식이 가장 자연스럽다. 이것을 `config/evaluation.json`의 잠정 주방식으로 둔다. 하루를 단일 이진값으로 바꾸는 방법은 감도 분석 후보로만 유지한다. 실제·예측 모두 Ice가 없는 날의 Precision·Recall·F1은 수학적으로 정의되지 않으므로 임의로 0 또는 1로 넣지 않는다. 공식 처리법과 최종 평균 가중치는 [운영진 질문](QUESTIONS_FOR_ORGANIZER.md)에 기록돼 있다. 운영진에게 메시지는 발송하지 않았다.
 
-## 후속 실행 순서와 통과 조건
+### 후속 실행 순서와 통과 조건
 
-1. **기준선 실패를 해결할 정보·평가 기준 점검.** 보호 3곳을 제외한 직접 Ice 분류·10분 OOF·잠정 일별 지표는 첫 실행을 마쳤다. 두 모델의 오경보/미탐 교환이 심하고 대체 AWS 모델의 TP 21건은 12210에만 있다. 다음은 단일 시각 Ice의 전후 상태 QC, 입력 시점 이전 1~3시간 수분·기온 요약, 실제 Ice 날짜와 오경보를 함께 고려하는 내부 지점 균형 임계값 설계다. 현재 외부 OOF 성능에 맞춰 임계값을 재조정하지 않는다.
-2. **핵심 질문의 도로·지형 추가 효과를 검증.** 시설 CSV 중복·시작/끝 의미와 DEM 좌표/수직 단위·제작시점을 먼저 확인한다. 같은 LOSO·같은 평가 행에서 기상만 대비 기상+검증된 정적 특징을 노면온도와 직접 Ice 판정 각각 비교한다. 12209의 노면온도 온난 편향과 23202의 −2~2°C 악화를 우선 추적한다. 지점별 결과가 개선되지 않으면 복잡한 모델 확대나 임의 위험 가중치를 보류한다.
+1. **기준선 실패를 해결할 정보·평가 기준 점검.** 보호 3곳을 제외한 직접 Ice 분류·10분 OOF·잠정 일별 지표는 첫 실행을 마쳤다. 두 모델의 오경보/미탐 교환이 심하고 대체 AWS 모델의 TP 21건은 12210에만 있다. 다음은 단일 시각 Ice의 전후 상태 QC, 입력 시점 이전 1–3시간 수분·기온 요약, 실제 Ice 날짜와 오경보를 함께 고려하는 내부 지점 균형 임계값 설계다. 현재 외부 OOF 성능에 맞춰 임계값을 재조정하지 않는다.
+2. **핵심 질문의 도로·지형 추가 효과를 검증.** 시설 CSV 중복·시작/끝 의미와 DEM 좌표/수직 단위·제작시점을 먼저 확인한다. 같은 LOSO·같은 평가 행에서 기상만 대비 기상+검증된 정적 특징을 노면온도와 직접 Ice 판정 각각 비교한다. 12209의 노면온도 온난 편향과 23202의 −2–2°C 악화를 우선 추적한다. 지점별 결과가 개선되지 않으면 복잡한 모델 확대나 임의 위험 가중치를 보류한다.
 3. **직접 분류와 추정값을 거친 분류를 비교.** 두 단계 모델의 학습 입력에는 해당 대상 지점을 제외해 만든 OOF 노면온도만 사용한다. 외부 LOSO 보류 지점의 정답이 중간 추정기 학습에도 들어가지 않도록 한다. 임계값·확률 보정은 내부 분할에서만 정하며, 10분 예측과 잠정 일별 평균을 같이 비교한다.
 4. **구간화·외부 자료·최종 검증.** 도로망 1km 구간의 연결성을 먼저 확인하고 지도 신뢰도 표시를 설계한다. 필요성이 입증되고 약관·시점이 맞는 외부 자료만 한 번에 하나씩 추가한다. 필수 회귀 타깃과 일별 집계 규정이 확인되면 모델·코드·평가 설정을 동결해 보호 3개소를 일회 평가하고 제출 CSV·위험도 기준표·공간자료·실행매뉴얼을 검증한다.
 
 현재 가장 큰 점수 공백은 **실사용 가능한 10분 결빙 분류와 공식 일별 지표**, 그다음은 **도로·지형 추가 효과**, **필수 관측값 전체 및 보호 3개소 최종 성능**, **구간 지도**다. 최근접 AWS 기준선은 과도한 오경보, 대체 AWS 기준선은 과도한 미탐을 보였으므로 이 균형을 먼저 개선한다. 상세 수치와 한계는 [첫 결빙 분류 보고서](ICE_BASELINE_REPORT.md)에 있다. 모든 후속 실행 코드는 [단일 분석 노트북](../notebooks/analysis_review.ipynb)의 단계 목록과 결과 셀에 함께 연결한다.
 
 
-## 2026-09-23 follow-up status
+### 시설·기상 이력 후속 실험 상태 — 2026-09-23
 
-Development-only facility-distance and prior-AWS-history ablations are complete; neither improved the relevant LOSO outcome. The best tested direct Ice baseline still detects only 21/239 Ice slots with 955 false-positive slots, and all 21 detections occur at one development station. Consequently no validated 10-minute Ice classifier, official protected-station score, segment hazard score, or final map is claimed. [Detailed paired evidence](FACILITY_HISTORY_REPORT.md) and the [analysis notebook](../notebooks/analysis_review.ipynb) contain the executable comparisons. Required estimation targets and official daily-score treatment remain organizer questions.
+개발 자료에서 시설 거리와 과거 AWS 이력을 추가했지만, 해당 지점 제외 검증 결과는 개선되지 않았다. 당시 기준이었던 직접 결빙 모델도 실제 결빙 239개 중 21개만 맞히고 955개 시점에서 오경보를 냈으며, 적중 21개는 한 지점에 집중됐다. 따라서 실사용 가능한 10분 결빙 분류기, 공식 보호 지점 점수, 구간 위험 점수와 최종 지도가 완성됐다고 주장하지 않는다. [같은 조건의 상세 비교](FACILITY_HISTORY_REPORT.md)와 [분석 노트북](../notebooks/analysis_review.ipynb)에서 실행 근거를 확인할 수 있다. 필수 추정 변수와 공식 일별 평가 처리는 당시 운영진 확인 질문으로 남아 있었다.
 
+### 주변 관측을 추가한 노면온도 결과 — 2026-09-23
 
-## Latest road-temperature estimation evidence ? 2026-09-23
+같은 노선의 과거 주변 RWIS를 사용한 비교에서, 동일한 평가 행의 지점 평균 MAE는 기상 Ridge 1.738°C에서 고정 혼합 1.286°C로 줄었다. 개발 지점 14곳 모두 개선됐지만 공식 3개 지점 점수나 결빙 분류 점수는 아니다. 과거의 다른 지점 관측만 사용했고, 실제 발표 지연과 도로 구간별 참조 거리는 미확인이다. 10분 결빙 분류기는 최종 위험 지도에 사용할 수준이 아니었다. [주변 RWIS 상세 결과](NEIGHBOR_RWIS_REPORT.md)를 참고한다.
 
-A prior same-route neighboring RWIS benchmark now improves development-only road-temperature estimation on identical paired timestamps: weather-only Ridge 1.738 C versus fixed weather/neighbor average 1.286 C station-macro MAE, 14/14 locations improved. This is a nonparametric benchmark, not the official 3-station score or an Ice classification score. It uses only earlier other-station observations, but RWIS reporting delay and segment-level reference distance remain unverified. The 10-minute Ice classifier remains too weak for final risk mapping. See [NEIGHBOR_RWIS_REPORT.md](NEIGHBOR_RWIS_REPORT.md).
+</details>
