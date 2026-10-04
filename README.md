@@ -52,7 +52,7 @@ python scripts/baseline_asos.py --limit-days 2
 python scripts/check_notebook.py
 ```
 
-전체 학습은 고비용 작업이므로 [실행 단계 설정](config/notebook_workflow.json)과 [실행 이력](docs/EXECUTION_HISTORY.md)을 확인하고 선택합니다. 노트북 기본 실행에도 원본과 기존 비공개 산출물이 필요합니다. 저장된 노트북에는 실행 출력이 없습니다. 새 자료는 별도 감사 후 캐시를 다시 만들어야 합니다.
+전체 학습은 고비용 작업이므로 [실행 단계 설정](config/notebook_workflow.json)과 [단계별 실행 안내](docs/RUNBOOK.md)를 확인하고 선택합니다. 노트북 기본 실행에도 원본과 기존 비공개 산출물이 필요합니다. 저장된 노트북에는 실행 출력이 없습니다. 새 자료는 별도 감사 후 캐시를 다시 만들어야 합니다.
 
 ## 파일 구성
 
