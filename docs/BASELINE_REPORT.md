@@ -19,4 +19,4 @@
 
 이 실험은 도로·지형 특징을 추가한 효과를 측정하지 않았다. 결빙 분류, 필수 관측 변수 전체 추정, 공식 평가 지점 성능도 아니다. ASOS 값의 실제 발표 지연과 노면온도 단위는 아직 확인되지 않았다. 같은 분할과 시각 규칙에서 AWS 및 도로·지형 특징을 추가한 후 비교해야 한다.
 
-지점별 `n`, 거리, BIAS·MAE·RMSE는 Git 제외 파일 `outputs/private/baseline/station_metrics.csv`에, 각 10분 목표시각·참조 ASOS 시각·예측값은 `outputs/private/baseline/predictions.csv`에 있다. 요약 JSON과 ASOS 매핑도 같은 폴더에 있다.
+지점별 `n`, 거리, BIAS·MAE·RMSE는 Git 제외 파일 `outputs/private/baseline/station_metrics.csv`에, 각 10분 목표 시각·참조 ASOS 시각·예측값은 `outputs/private/baseline/predictions.csv`에 있다. 요약 JSON과 ASOS 매핑도 같은 폴더에 있다.

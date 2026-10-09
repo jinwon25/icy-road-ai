@@ -1,6 +1,6 @@
 # 전북 두 겨울 구간 기상 노출·환경 근거 — 2026-10-09
 
-전북 경계 안의 500m 843개·1km 423개 방향별 구간에 두 겨울 기상 노출과 도로환경 속성을 연결했다. CSV·GeoPackage·Shapefile·JPG·오프라인 HTML을 생성하고 독립 감사했다. 이 결과는 검증된 결빙 확률이나 최종 위험등급이 아니다.
+전북 경계 안의 500m 843개·1km 423개 방향별 구간에 두 겨울 기상 노출과 도로환경 속성을 연결했다. CSV·GeoPackage·Shapefile·JPG·오프라인 HTML을 생성하고 독립 감사했다. 이 결과는 검증된 결빙 확률이나 최종 위험 등급이 아니다.
 
 [문서 목록](README.md) · [연구 인계 결과](RESEARCH_DELIVERY_REVIEW_20261009.md) · [공식 요구사항](OFFICIAL_REVIEW_20261009.md)
 
@@ -14,20 +14,20 @@
 
 ## 기상·판정·환경 기준
 
-모델은 첫 겨울 23지점의 기상 14변수로 학습한 고정 HGB 회귀다. 2024년 11월–2025년 2월과 2025년 11월–2026년 2월을 각각 10분 간격 17,280시각에서 계산했다. 각 500m 유지 구간 중앙점의 가까운 AWS 3개 중 과거 자료가 있는 첫 관측소와 가장 가까운 ASOS를 사용했다. 현재 시각보다 **엄격히 이른** 관측만 연결하고 최대 나이는 60분이다.
+모델은 첫 겨울 23개 지점의 기상 14개 변수로 학습한 고정 HGB 회귀다. 2024년 11월–2025년 2월과 2025년 11월–2026년 2월을 각각 10분 간격 17,280개의 10분 시점에서 계산했다. 각 500m 유지 구간 중앙점의 가까운 AWS 3개 중 과거 자료가 있는 첫 관측소와 가장 가까운 ASOS를 사용했다. 현재 시각보다 **엄격히 이른** 관측만 연결하고 목표 시각과 입력 관측 시각의 차이는 최대 60분이다.
 
 두 번째 겨울 추론은 AWS·ASOS·기상 좌표만 받는 `WeatherOnlySources`로 분리했다. RWIS·노면상태·노면온도 정답을 읽지 않았고 다음 겨울 성능도 계산하지 않았다. 기상망의 선택 가능 목록은 첫 겨울 가용성으로 고정했다. 과거 관측으로 같은 시각을 추정한 연구이며 기상예보를 넣은 미래 예측이 아니다.
 
 | 요소 | 이번 산출물의 계산·근거 | 해석 한계 |
 | --- | --- | --- |
 | 저온 조건 | AI 추정 노면온도 ≤0°C | 센서 Ice 코드와 같지 않음. 제빙액 동결점 미반영 |
-| 수분 근거 | AWS 이슬점 ≥추정 온도, 과거 3시간 15분 강수 관측의 최댓값 >0, ASOS 적설 >0 중 하나 | 노면의 물·얼음 저장량이나 실제 서리 관측 아님. 세 원인 시간은 서로 겹침 |
-| 조건 비율 | 저온·수분 동시 시각 수 / 온도와 수분 근거 중 하나 이상을 계산 가능한 시각 수 | 결측을 안전으로 처리하지 않음. 실제 결빙 확률·사고 빈도 아님 |
-| 모델 민감도 | 기존 외부 그룹 4개를 각각 제외한 회귀와 23지점 회귀의 조건 비율 범위·판정 차이 | 같은 개발 겨울의 제한된 모델 차이. 신뢰구간이나 새 겨울 오차 보장 아님 |
+| 수분 근거 | AWS 이슬점 ≥추정 온도, 과거 3시간 15분 강수 관측의 최댓값 >0, ASOS 적설 >0 중 하나 | 노면의 물·얼음 저장량이나 실제 서리 관측 아님. 각 수분 근거에 해당하는 시간은 서로 겹칠 수 있음 |
+| 조건 비율 | 저온·수분 동시 시각 수 / 온도를 추정할 수 있고 수분 입력 3개 중 하나 이상을 확인할 수 있는 시각 수 | 결측을 안전으로 처리하지 않음. 실제 결빙 확률·사고 빈도 아님 |
+| 모델 민감도 | 기존 외부 그룹 4개를 각각 제외한 회귀와 23개 지점 회귀의 조건 비율 범위·판정 차이 | 같은 개발 겨울의 제한된 모델 차이. 신뢰구간이나 새 겨울 오차 보장 아님 |
 | 교량·터널 | 과거 링크 ROADTYPE 003·004의 유지 선형 길이 비중 | 구조물의 실물 경계와 일치 여부 미검증. 코드 0%를 구조물 부재로 해석하지 않음 |
 | 차로·제한속도 | 링크 LANES·MAXSPD의 최소·최대, 원본 날짜 보존 | 2024년 3월 취득본의 속성 기준일 20230519. 현행 운영값으로 단정하지 않음 |
 | 지형·음영 | 제공 DEM 단위 미확인 문제를 유지 | 이번 구간 모델·배점에 미사용. 기존 Copernicus DSM도 상판 종단경사와 다르므로 검증 없이 점수화하지 않음 |
-| 최종 위험등급 | `risk_grade`는 비어 있고 `verified_ice_probability=False` | 교통량·사고·제빙·검증된 환경별 효과·정확한 이정이 부족해 임의 가중치나 등급 경계를 만들지 않음 |
+| 최종 위험 등급 | `risk_grade`는 비어 있고 `verified_ice_probability=False` | 교통량·사고·제빙·검증된 환경별 효과·정확한 이정이 부족해 임의 가중치나 등급 경계를 만들지 않음 |
 
 물리 과정은 [RoadSurf 원 논문](https://gmd.copernicus.org/articles/17/4837/2024/), 관측 대표성은 [FHWA ESS 입지 지침](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm)을 참고했다. 한국 구간의 효과 크기·위험 배점을 문헌에서 전용하지 않았다. 링크 필드 해석은 [국토교통부 표준노드링크 기준 2023](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000), 경계는 [SGIS 설명](https://sgis.mods.go.kr/view/pss/openDataIntrcn)과 [행정구역 경계 API 명세](https://sgis.mods.go.kr/developer/html/newOpenApi/api/dataApi/addressBoundary.html)를 대조했다.
 
@@ -57,17 +57,17 @@
 | `planned_slots`, `valid_slots`, `valid_fraction` | 500m 중앙점의 계획·가용 시각 수와 비율 |
 | `cold_hours`, `cold_moist_hours`, `cold_moist_fraction` | 유효 시각 중 저온 시간, 저온·수분 시간, 저온·수분 비율 |
 | `dew_cold_hours`, `rain_cold_hours`, `snow_cold_hours` | 각 수분 근거와 저온이 겹친 시간. 서로 중복되므로 합산 금지 |
-| `temp_p05`, `temp_mean`, `point_lon/lat`, `sampling` | 추정 온도의 5백분위·평균과 중앙점 좌표·표본 방식 |
-| `sensitivity_fraction_min/max`, `model_disagreement_fraction` | 그룹 제외 4모델의 조건 비율 범위, 기준 모델과 하나 이상 다른 시각 비율 |
+| `temp_p05`, `temp_mean`, `point_lon/lat`, `sampling` | 추정 온도의 5백분위수·평균과 중앙점 좌표·표본 방식 |
+| `sensitivity_fraction_min/max`, `model_disagreement_fraction` | 그룹 제외 4개 모델의 조건 비율 범위, 기준 모델과 하나 이상 다른 시각 비율 |
 | `bridge_code_fraction`, `tunnel_code_fraction`, `lanes_min/max`, `max_spd_min/max`, `source_date` | 과거 링크 기반 환경 속성과 날짜 |
-| `official_chainage_verified`, `physical_structure_extent_verified`, `verified_ice_probability`, `risk_grade` | 확인 상태와 미검증 위험등급 공백 |
+| `official_chainage_verified`, `physical_structure_extent_verified`, `verified_ice_probability`, `risk_grade` | 확인 상태와 미검증 위험 등급 공백 |
 
-1km는 하위 500m 통계를 실제 유지 길이로 가중 평균했다. **1km의 slots는 가중된 중앙점 시각 수이고, p05는 중앙점별 p05의 가중 평균**이다. 고유 시각 개수·구간 전체 온도 분포의 5백분위로 읽지 않는다. 단순히 500m 비율을 합하거나 총 노출 시간으로 보고하지 않는다.
+1km는 하위 500m 통계를 실제 유지 길이로 가중 평균했다. **1km의 slots는 가중된 중앙점 시각 수이고, p05는 중앙점별 p05의 가중 평균**이다. 고유 시각 개수·구간 전체 온도 분포의 5백분위수로 읽지 않는다. 단순히 500m 비율을 합하거나 총 노출 시간으로 보고하지 않는다.
 
 Shapefile은 필드 이름 길이 제한 때문에 `seg_id,route,direction,len_m,cm_frac,cm_hours,coverage,bridge_fr,tunnel_fr,model_diff`만 싣는다. 전체 필드·결측 확인 상태는 CSV·GeoPackage로 확인한다. GeoPackage가 단일 LineString을 MultiLineString으로 저장한 경우에도 원본 순서·좌표·방향이 동일한지 감사했다.
 
 ## 검증·결과물
 
-각 겨울의 독립 감사는 500m·1km 합계 1,266개 형상·환경 연결, 14,567,040개 시각 노출, 대표 21구간의 5모델 1,814,400개 온도 예측, 423개 1km 가중 집계를 재계산했다. 기존 47개·549개 고정 파일도 유지했다. HTML은 두 겨울 개수, 노선·방향·검색, 상세조회, UTF-8 CSV 다운로드와 외부 요청 0건을 로컬 브라우저로 확인했다.
+각 겨울의 독립 감사는 500m·1km 합계 1,266개 형상·환경 연결, 14,567,040개 시각 노출, 대표 21개 구간의 5개 모델 1,814,400개 온도 예측, 423개 1km 가중 집계를 재계산했다. 기존 47개·549개 고정 파일도 유지했다. HTML은 두 겨울 개수, 노선·방향·검색, 상세 조회, UTF-8 CSV 다운로드와 외부 요청 0건을 로컬 브라우저로 확인했다.
 
-비공개 폴더는 `outputs/private/segment_exposure_20261009_v1/`, `outputs/private/segment_exposure_second_winter_20261009_v1/`, `outputs/private/segment_review_20261009_v2/`다. 첫 렌더 v1은 제목 글꼴 문제로 보존하고 수정 v2를 사용한다. CSV·SHP·JPG 형식 생성은 완료했으나 공식 이정·시설의 실제 범위·결빙 조건부 위험등급 요구 충족은 남아 있다.
+비공개 폴더는 `outputs/private/segment_exposure_20261009_v1/`, `outputs/private/segment_exposure_second_winter_20261009_v1/`, `outputs/private/segment_review_20261009_v2/`다. 첫 렌더 v1은 제목 글꼴 문제로 보존하고 수정 v2를 사용한다. CSV·SHP·JPG 형식 생성은 완료했으나 공식 이정·시설의 실제 범위·결빙 조건부 위험 등급 요구 충족은 남아 있다.

@@ -15,6 +15,9 @@ README·About·결과 설명·커밋 메시지는 한국어로 작성한다. 모
 ```powershell
 python -m unittest discover -s tests -v
 python scripts/check_repository.py
+python scripts/check_markdown.py
 ```
+
+Markdown은 띄어쓰기·수치·검증 범위를 먼저 확인하고 로컬 GFM으로 표·강조·코드·링크·앵커를 검증한다. 최신 상태와 과거 기록을 구분하고 원본 변수·명령·URL은 보존한다.
 
 단위 테스트는 원본 데이터 없이 수행한다. 전체 노트북과 학습은 참가 권한이 있는 원본·캐시를 필요로 한다.

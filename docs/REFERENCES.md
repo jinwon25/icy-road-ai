@@ -1,5 +1,9 @@
 # 공식 자료·선행연구 목록
 
+공식 규격·관측 정의·모델·공간 처리의 근거를 정리합니다. 각 출처의 실제 적용과 한계를 함께 표시하며 문헌의 성능·계수를 이 프로젝트의 결과로 옮기지 않습니다.
+
+[문서 목록](README.md) · [최신 연구 인계](RESEARCH_DELIVERY_REVIEW_20261009.md)
+
 ## 최신 보정·관측 대표성·전북 구간 — 2026-10-09
 
 [점수 보정 보고서](SCORE_CALIBRATION_REVIEW_20261009.md)와 [구간·환경 보고서](SEGMENT_EXPOSURE_REVIEW_20261009.md)에 실제 적용과 한계를 연결했습니다. 앞선 문서의 ‘보정 미실행’은 당시 상태이며 이번에는 중첩 sigmoid·사전 비율 점수 보정을 구현·검산하고 미채택했습니다. 원 논문의 성능·계수·배점을 가져오지 않았습니다.
@@ -9,18 +13,20 @@
 | [RoadSurf, Karsisto 2024](https://gmd.copernicus.org/articles/17/4837/2024/) | 열수지·수분/눈/얼음 저장량 구분, 단순 저온·수분 가안 해석 | 완전한 물리 모델·제빙 과정 구현 아님 |
 | [Vaisala 센서 공식 설명](https://docs.vaisala.com/r/M211607EN-AA/en-US/GUID-8FB4E70E-7340-403E-BD77-6ED1D7F3AA0A) | 광학/매립·관측 영역·상태/온도 불일치 가설 검토 | 실제 설치 장비 모델·오라벨 확인 불가 |
 | [Lipton·Wang·Smola 2018](https://proceedings.mlr.press/v80/lipton18a.html), [scikit-learn 보정](https://scikit-learn.org/1.6/modules/generated/sklearn.calibration.CalibratedClassifierCV.html) | 클래스 조건부 분포 가정·모델 학습/보정 분리 | 순수 label shift를 가정하지 않음. BBSE는 구현하지 않음 |
-| [SGIS 통계경계 설명](https://sgis.mods.go.kr/view/pss/openDataIntrcn), [경계 API](https://sgis.mods.go.kr/developer/html/newOpenApi/api/dataApi/addressBoundary.html) | EPSG:5179,2024년전북35경계의 자기영역조회·해시 | API 표현 경계·원문출처보존. 법정측량경계·재배포권한 확정 아님 |
-| [국토교통부2023표준노드링크기준](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000), [FHWA ESS입지](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm) | ROADTYPE003/004·LANES/MAXSPD/UPDATEDATE해석·지역/국지대표성 구분 | 과거링크코드≠구조물정확경계. 현행제한속도·한국효과크기 아님 |
+| [SGIS 통계경계 설명](https://sgis.mods.go.kr/view/pss/openDataIntrcn), [경계 API](https://sgis.mods.go.kr/developer/html/newOpenApi/api/dataApi/addressBoundary.html) | EPSG:5179, 2024년 전북 경계(코드 35)의 자기 영역 조회·해시 확인 | API 표현 경계와 원문 출처 보존. 법정 측량 경계·재배포 권한을 확정한 것은 아님 |
+| [국토교통부 2023 표준노드링크 기준](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000), [FHWA ESS 입지](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm) | ROADTYPE 003·004, LANES·MAXSPD·UPDATEDATE 해석과 지역·국지 대표성 구분 | 과거 링크 코드가 구조물의 정확한 경계와 같다는 뜻은 아님. 현행 제한속도나 한국 구간의 효과 크기를 확인한 자료도 아님 |
 
-공식 문제·자료 본문·Q&A6건·공지·참가서약 재조회 원문은 `outputs/private/final_review_20261009_v1/`에 SHA256와 함께 보존했습니다. SGIS 원천응답·조회조건은 `outputs/private/sgis_boundary_2024_v1/`에 보존했습니다. 키·인증 응답·요청 토큰은 출처 문서에 넣지 않습니다. 시간 블록 재표집은 자체 정의한 고정지점 민감도 계산이며 원 논문의 엄밀한 신뢰구간 구현이라고 주장하지 않습니다.
+공식 문제·자료 본문·Q&A 6건·공지·참가 서약 재조회 원문은 `outputs/private/final_review_20261009_v1/`에 SHA256와 함께 보존했습니다. SGIS 원천 응답·조회 조건은 `outputs/private/sgis_boundary_2024_v1/`에 보존했습니다. 키·인증 응답·요청 토큰은 출처 문서에 넣지 않습니다. 시간 블록 재표집은 자체 정의한 고정 지점 민감도 계산이며 원 논문의 엄밀한 신뢰구간 구현이라고 주장하지 않습니다.
 
 ## 온도 교차 추정·상태 분류·점수 이전 — 2026-10-09
+
+이 절은 보정 실험 전 검토 기록입니다. 이후 수행한 보정의 결과는 위 최신 절과 [보정 보고서](SCORE_CALIBRATION_REVIEW_20261009.md)에서 확인합니다. BBSE는 구현하지 않았습니다.
 
 [최신 실험 보고서](JOINT_SURFACE_REVIEW_20261009.md)에 출처별 실제 적용과 한계를 연결했습니다. 원문 URL·수집 시각·SHA256는 비공개 검토 폴더에 보존합니다.
 
 - Karsisto, V. E. (2024), [RoadSurf 1.1: open-source road weather model library](https://gmd.copernicus.org/articles/17/4837/2024/), GMD 17, 4837–4853, DOI 10.5194/gmd-17-4837-2024. 온도 에너지수지와 물·눈·얼음·착빙 저장량을 구분하는 근거입니다. 이번 데이터 모델을 RoadSurf 구현이나 검증된 물리 모델로 부르지 않습니다.
 - [Vaisala RWS200 Surface state and temperature sensors](https://docs.vaisala.com/r/M211607EN-AA/en-US/GUID-8FB4E70E-7340-403E-BD77-6ED1D7F3AA0A), 문서 M211607EN-AA. 광학·매립 방식과 수분·약품·동결점·측정 면적·설치 영향을 해석하는 공식 기술 자료입니다. 대회 지점의 실제 장비 모델이나 센서 오류를 확인한 근거는 아닙니다.
-- [scikit-learn 1.6 StackingClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingClassifier.html)와 [HGBClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html). 같은 학습행의 보조 예측 재사용이 초래하는 과적합 위험, 교차 검증 예측과 이진/다중 손실을 확인했습니다. 여기서는 공간 그룹을 직접 제외해 온도를 입력으로 만들었습니다.
+- [scikit-learn 1.6 StackingClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingClassifier.html)와 [HGBClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html). 같은 학습 행의 보조 예측 재사용이 초래하는 과적합 위험, 교차 검증 예측과 이진/다중 손실을 확인했습니다. 여기서는 공간 그룹을 직접 제외해 온도를 입력으로 만들었습니다.
 - Lipton, Z. C., Wang, Y.-X., Smola, A. J. (2018), [Detecting and Correcting for Label Shift with Black Box Predictors](https://proceedings.mlr.press/v80/lipton18a.html), ICML, PMLR 80, 3122–3130. 양성 비율 이동의 추정·보정에는 클래스 조건부 입력 분포 유지와 혼동행렬의 가역성 등 조건이 필요합니다. 지점별 정답 비율이 다르다는 사실만으로 이 조건이 성립한다고 판단하지 않습니다.
 - [scikit-learn 1.6 CalibratedClassifierCV](https://sklearn.org/1.6/modules/generated/sklearn.calibration.CalibratedClassifierCV.html). 모델 학습과 보정 자료의 분리, 작은 자료의 isotonic 과적합 한계를 확인했습니다. 보정과 BBSE는 후속 실행 가설이며 이번에 수행한 모델 성과가 아닙니다.
 
@@ -28,17 +34,17 @@
 
 ## 제공 설명서 기반 도로교·보도교·철교 구분 — 2026-10-09
 
-제공 `other_spatial.zip` 내부의 **국토지리정보원 전국 연속수치지형도 데이터베이스설계서 v5.1.1(2014-12-30)를** 직접 확인했다. 3쪽은N3A 교량/터널 면 레이어와1:5,000 목록,21쪽은교량 KIND/QUAL 코드 및EYMD설치연도,22·27쪽은FMTA제작정보 참조(SL_PRODUCT_INFO),27쪽은터널 필드/통합코드다. 해당 공급 버전의 속성 의미를 해석하는 근거이며 최신 고시·현재 구조물 현황·치수 단위·실제 차로 소속의 증명이 아니다.
+제공 `other_spatial.zip` 내부의 **국토지리정보원 전국 연속수치지형도 데이터베이스설계서 v5.1.1(2014-12-30)를** 직접 확인했다. 3쪽은 N3A 교량·터널 면 레이어와 1:5,000 목록, 21쪽은 교량 KIND·QUAL 코드와 EYMD 설치 연도, 22·27쪽은 FMTA 제작 정보 참조(SL_PRODUCT_INFO), 27쪽은 터널 필드·통합 코드다. 제공 버전의 속성 의미를 해석하는 근거이며 최신 고시·현재 구조물 현황·치수 단위·실제 차로 소속을 증명하지 않는다.
 
-제공XML의EPSG5179·선형미터·생성20230215·수정/동기화20240419를 기록했으나 처리일을 시설 관측일로 바꾸지 않았다. 설명서·XML 원본과 검토 페이지는 수정본 시설 검토 하위 `road_bridge_kind_review_v1/`에멤버명·SHA256와함께 보존한다. 수평중첩·재질 코드에서 결빙 위험 배점이나 열계수를 만들지 않았다. 원래 도로교·보도교·철교는종류 코드로구분하되층위 교차·인접 차로 불확실성은남는다.
+제공 XML의 EPSG:5179·선형 미터·생성일 20230215·수정/동기화일 20240419를 기록했으나 처리일을 시설 관측일로 바꾸지 않았다. 설명서·XML 원본과 검토 페이지는 수정본 시설 검토 폴더 `road_bridge_kind_review_v1/`에 멤버명·SHA256와 함께 보존한다. 수평 중첩·재질 코드에서 결빙 위험 배점이나 열계수를 만들지 않았다. 도로교·보도교·철교는 종류 코드로 구분하되 층위 교차·인접 차로의 불확실성은 남는다.
 
 ## 방향별 구간의 공식 도로환경 해석 — 2026-10-09
 
-[국토교통부 공식 구축기준 전문](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000)의11쪽에서 LANES=차로수, MAX_SPD=최고 제한속도, UPDATEDATE=구축날짜를 확인했다. 보존한2024-03-25 ZIP의 원본 DBF150링크를 직접 대조해500m/1km 후보별 유형 코드 길이 비중과 차로수·속도 범위를 연결했다. 이2023년 기준은 과거 자료 해석의 근거다. 링크 코드가 정확한 물리적 구조물 경계와 같다는 검증은 별도로 남는다.
+[국토교통부 공식 구축기준 전문](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000)의 11쪽에서 LANES=차로수, MAX_SPD=최고 제한속도, UPDATEDATE=구축 날짜를 확인했다. 보존한 2024-03-25 ZIP의 원본 DBF 150개 링크를 직접 대조해 500m·1km 후보별 유형 코드의 길이 비중과 차로수·속도 범위를 연결했다. 이 2023년 기준은 과거 자료 해석의 근거다. 링크 코드가 정확한 물리적 구조물 경계와 같다는 검증은 별도로 남는다.
 
-[FHWA ESS 센서 배치 지침,2005년](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm)은 지역 대표 관측과 교량·그늘 등 국지 취약 지점 관측의 목적을 구분한다. 센서 위치가 관측의 대표성에 영향을 주며, 서로 다른 기상 조건에서 열 지도 조사를 설명한다. 이는 추가9지점의 표본 편중·공간 전이 한계를 해석하고 도로환경별 검증을 요구할 근거다. 최신 한국 운영 규정이나 이 프로젝트의 검증된 효과 크기로 취급하지 않는다.
+[FHWA ESS 센서 배치 지침, 2005년](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm)은 지역 대표 관측과 교량·그늘 등 국지 취약 지점 관측의 목적을 구분한다. 센서 위치가 관측의 대표성에 영향을 주며, 서로 다른 기상 조건에서 열 지도 조사를 설명한다. 이는 추가 9개 지점의 표본 편중·공간 전이 한계를 해석하고 도로환경별 검증을 요구할 근거다. 최신 한국 운영 규정이나 이 프로젝트의 검증된 효과 크기로 취급하지 않는다.
 
-[FHWA 관측 요구사항](https://ops.fhwa.dot.gov/publications/ess05/ess0510.htm)은 노면온도·노면상태·동결점·약품농도 등 관측을 구분한다. [Met Office의 노면온도 안내](https://www.metoffice.gov.uk/services/transport/road/independent-gritting)는 노면온도와 기온이 다를 수 있음을 설명한다. 기온이나 교량 코드 하나로 Ice 정답·운영 위험등급을 대체하지 않는다. 세 원문HTML·수집일·URL·SHA256는 수정본 비공개 `external/road_environment_references_20261009/source_manifest.json`에 보존했다. Met Office 예보 상품은 구독하거나 모델 입력으로 수집하지 않았다.
+[FHWA 관측 요구사항](https://ops.fhwa.dot.gov/publications/ess05/ess0510.htm)은 노면온도·노면상태·동결점·약품농도 등 관측을 구분한다. [Met Office의 노면온도 안내](https://www.metoffice.gov.uk/services/transport/road/independent-gritting)는 노면온도와 기온이 다를 수 있음을 설명한다. 기온이나 교량 코드 하나로 Ice 정답·운영 위험 등급을 대체하지 않는다. 세 원문HTML·수집일·URL·SHA256는 수정본 비공개 `external/road_environment_references_20261009/source_manifest.json`에 보존했다. Met Office 예보 상품은 구독하거나 모델 입력으로 수집하지 않았다.
 
 실험 설계·결과 해석에 참고한 공식 자료와 원 논문을 정리합니다. 참고 자료를 읽은 것과 외부 데이터를 모델 입력으로 수집한 것을 구분합니다.
 
@@ -65,7 +71,7 @@ NASA 출처: NASA Langley Research Center POWER Project, NASA Earth Science Dire
 
 | 자료 | 확인한 내용 | 적용 범위 |
 | --- | --- | --- |
-| [기상청 AWS 관측자료 항목 설명](https://www.weather.go.kr/wnuri_help/html/observation/aws-table.jsp) | 강수15·강수60은 선택 시각 이전의 누적량, 일강수는 00:01에 초기화. 풍향·풍속의 과거 1·10분 평균 설명 | AWS 15분 강수를 사용하고 일 누적량의 단순 차분을 초기 특징에서 제외. 제공 ZIP의 변수명·단위는 별도 대조 |
+| [기상청 AWS 관측자료 항목 설명](https://www.weather.go.kr/wnuri_help/html/observation/aws-table.jsp) | 강수 15·강수 60은 선택 시각 이전의 누적량, 일강수는 00:01에 초기화. 풍향·풍속의 과거 1·10분 평균 설명 | AWS 15분 강수를 사용하고 일 누적량의 단순 차분을 초기 특징에서 제외. 제공 ZIP의 변수명·단위는 별도 대조 |
 | [기상청 ASOS 자료 설명](https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmN=) | ASOS 시간 자료는 매 정시, 품질 플래그 정보가 있을 수 있음 | 1시간 원천과 10분 RWIS의 시각 차이·가용성을 명시. 제공 ZIP에 QC 플래그가 있는지는 독립 점검 |
 | [미국 FHWA RWIS 안내](https://ops.fhwa.dot.gov/weather/resources/publications/tech_briefs/rwis.htm) | 기온·노면온도·강수·제빙제 정보를 구분해 도로 상태 판단에 활용 | 노면온도 회귀와 결빙 판정을 분리하고 제빙 관련 상태를 무비판적으로 Ice에 합치지 않음 |
 | [Roberts et al. (2017), *Ecography*](https://www.wsl.ch/lud/biodiversity_events/papers/Roberts_et_al-2017-Ecography.pdf) | 공간·시간 구조가 있는 자료의 무작위 행 분할은 새 위치 일반화 평가에 부적합할 수 있음 | RWIS 관측소 단위 LOSO와 겨울 간 시간 검증을 별도 유지 |
@@ -80,7 +86,7 @@ KMA 웹 도움말은 일반 관측망 설명이다. 이번 대회 제공 CSV의 
 | [FHWA RWIS 관측소 입지 지침 §2](https://ops.fhwa.dot.gov/publications/ess05/ess0502.htm), 2005 | 지역 대표 관측소와 특정 교량·짧은 구간을 대표하는 국지 관측소를 구분하고 다른 관측망의 보완 활용을 설명 | AWS 2·3순위 대체와 RWIS 대표성 검증의 설계 근거. 대체 AWS가 자동으로 정확하다는 증거는 아님 |
 | [FHWA 입지 지침 §3](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm), [§4](https://ops.fhwa.dot.gov/publications/ess05/ess0504.htm), 2005 | 저지대·교량·음영 및 센서 설치 위치·물고임에 따른 관측 영향 | 단일 시각 Ice 사건의 품질 검토와 정적 특징의 근거. 원시 정답을 자동 제외하는 기준은 아님 |
 | [FHWA, Michigan Finds a Solution for Icy Bridges](https://ops.fhwa.dot.gov/weather/resources/publications/tech_briefs/cs037.htm), FHWA-SA-96-045 | 교량 상판이 인접 도로보다 먼저 얼 수 있고 RWIS로 노면온도·습윤 상태·기상을 함께 관측한 사례 | 교량 특징 실험 가설. 전북도 교량의 효과 크기나 위험 배점으로 전용하지 않음 |
-| [FHWA, Nebraska Bridge Prioritization](https://ops.fhwa.dot.gov/publications/fhwahop16093/ch7.htm), 제7.5절 | 사고·교통·기상·교량·유지관리 자료를 결합한 제빙 설비 우선순위 사례 | 사고·교통 정보가 없는 본 프로젝트의 결빙 취약도와 사고 위험을 구분할 근거 |
+| [FHWA, Nebraska Bridge Prioritization](https://ops.fhwa.dot.gov/publications/fhwahop16093/ch7.htm), 제 7.5절 | 사고·교통·기상·교량·유지관리 자료를 결합한 제빙 설비 우선순위 사례 | 사고·교통 정보가 없는 본 프로젝트의 결빙 취약도와 사고 위험을 구분할 근거 |
 | [Bogren, Gustavsson & Postgård, International Journal of Climatology 20 (2000)](https://rmets.onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-0088%28200002%2920%3A2%3C151%3A%3AAID-JOC460%3E3.0.CO%3B2-U) | 국지 노면온도 차이와 지형·구름·바람·일사 조건의 관계를 분석한 원 논문 | DEM 기반 상대고도와 기상 조건 상호작용 가설. 스웨덴 계수·임계값을 직접 사용하지 않음 |
 | [Bogren 등, Meteorological Applications 7 (2000)](https://rmets.onlinelibrary.wiley.com/doi/10.1017/S135048270000150X) | 차광 노면과 일사 노출 노면의 온도 차이와 해 진 뒤 지속을 분석한 원 논문 | 실제 계산 가능한 음영 특징이 확보될 때만 시험 |
 | [기상청 2023.11.15 도로살얼음 발생 가능 정보 보도자료](https://www.weather.go.kr/kma/servlet/NeoboardProcess?bid=press&callback=https%3A%2F%2Fwww.kma.go.kr%2Fkma%2Fnews%2Fpress.jsp&fno=3&k=ATC202311150847023_69dc0f63-f58c-4954-aeca-7ff79d4b4293.pdf&mode=download&num=1194292&ses=USERSESSION) | AWS 강수·도로기상 기온·노면상태 등을 융합해 관심/주의/위험 정보를 제공한 공식 서비스 사례 | 정보 활용 예시일 뿐, 본 대회 Ice 코드·일별 F1·구간 위험도 기준과 동일하지 않음 |
@@ -90,57 +96,57 @@ KMA 웹 도움말은 일반 관측망 설명이다. 이번 대회 제공 CSV의 
 
 ## 이정·좌표의 독립 교차 검토 자료 — 2026-10-09
 
-- [한국도로공사 본선 도로관리용 CCTV 현황 20260423](https://www.data.go.kr/data/15102134/fileData.do): 노선명·CCTV명·이정·방향 등2,999행. 포털 이용허락범위 제한 없음. 좌표 및 공통 CCTV ID가 없어 별도 지도와 유일한 이름 후보만 교차 점검한다.
-- [한국도로공사 ROADPLUS](https://www.roadplus.co.kr/main)와 [공개 CCTV GeoJSON](https://www.roadplus.co.kr/geojson/EX_CCTV.geojson): 홈페이지가 쓰는3,838개 좌표. 이름 중복과 잘못된 위치 가능성을 점검하고 재배포 조건 미확인으로 비공개 검증에만 사용한다.
-- [서울시립대 교통안전 DB 연구 지도](https://traffic-viewer.urbanscience.uos.ac.kr/): 공개 UI 소스의100m급 RoutePath를 기하 참조로만 사용. 단위·노선명 오류와 공식 기준점 이정 차이를 발견하여 공식 선형으로 채택하지 않았다.
+- [한국도로공사 본선 도로관리용 CCTV 현황 20260423](https://www.data.go.kr/data/15102134/fileData.do): 노선명·CCTV명·이정·방향 등 2,999행. 포털 이용허락범위 제한 없음. 좌표 및 공통 CCTV ID가 없어 별도 지도와 유일한 이름 후보만 교차 점검한다.
+- [한국도로공사 ROADPLUS](https://www.roadplus.co.kr/main)와 [공개 CCTV GeoJSON](https://www.roadplus.co.kr/geojson/EX_CCTV.geojson): 홈페이지가 쓰는 3,838개 좌표. 이름 중복과 잘못된 위치 가능성을 점검하고 재배포 조건 미확인으로 비공개 검증에만 사용한다.
+- [서울시립대 교통안전 DB 연구 지도](https://traffic-viewer.urbanscience.uos.ac.kr/): 공개 UI 소스의 100m급 RoutePath를 기하 참조로만 사용. 단위·노선명 오류와 공식 기준점 이정 차이를 발견하여 공식 선형으로 채택하지 않았다.
 
-자료 수집 날짜2026-10-09와 해시는 수정본 비공개 출처 manifest 및 기준점 summary에 기록했다. 공식 현재 CCTV 현황은 과거 두 겨울의 선형이나 제공 도형의 차로·상하행을 검증하지 않는다.
+자료 수집 날짜 2026-10-09와 해시는 수정본 비공개 출처 manifest 및 기준점 summary에 기록했다. 공식 현재 CCTV 현황은 과거 두 겨울의 선형이나 제공 도형의 차로·상하행을 검증하지 않는다.
 
 
 ## 최근 냉각 누적의 추가 개발 비교 — 2026-10-09
 
 [Yi·Seo(2026), Early warning of road icing from antecedent meteorological conditions without consistent critical slowing down](https://arxiv.org/abs/2609.33528), 2026-09-27 공개 프리프린트. [저자 공개 코드](https://github.com/yunam-seo/road-icing-forced-threshold)는 MIT 라이선스이며 검토 커밋은 `5552934b22dc25be07839fc53fe757a7d136b072`다. 원자료는 저장소에서 재배포되지 않는다. 저자 관측자료를 새 독립 검증 자료로 확보했다고 주장하지 않는다.
 
-최근 냉각·서리점 대비 온도차·영도 교차를 지수 감쇠 누적으로 나타내는 개념에서 착안했다. 우리 구현은20·60분 감쇠, 10분 간격의 구간 상수 입력 정확 적분, 유효 관측 가중 커버리지80% 조건과 공백 시 교차 연결 차단을 사용한다. 이는 논문의1분 발생 예보와 다르고, 자기 관측 대신 다른 개발 지점의 과거 관측을 쓴다. 대회04 양성 정의를 유지하며 논문의04/15 양성·사건 병합·온도 품질 필터를 대회 정답에 적용하지 않았다. 논문 성능 수치는 우리 성능으로 옮기지 않는다.
+최근 냉각·서리점 대비 온도차·영도 교차를 지수 감쇠 누적으로 나타내는 개념에서 착안했다. 우리 구현은 20·60분 감쇠, 10분 간격의 구간 상수 입력 정확 적분, 유효 관측 가중 커버리지 80% 조건과 공백 시 교차 연결 차단을 사용한다. 이는 논문의 1분 발생 예보와 다르고, 자기 관측 대신 다른 개발 지점의 과거 관측을 쓴다. 대회 04 양성 정의를 유지하며 논문의 04/15 양성·사건 병합·온도 품질 필터를 대회 정답에 적용하지 않았다. 논문 성능 수치는 우리 성능으로 옮기지 않는다.
 
 원본 공개 코드·LICENSE·고정 URL/해시는 수정본 비공개 `external/antecedent_reference/manifest.json`에 보존했다. 수치 결과는 `antecedent_forward/summary.json`과 [진행 보고](PROJECT_STATUS.md)를 확인한다.
 
 
 ## 규제 선형·가법 스플라인 비교의 구현 근거 — 2026-10-09
 
-설치된scikit-learn1.6.1의 [LogisticRegression 공식 문서](https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LogisticRegression.html)와 [SplineTransformer 공식 문서](https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.SplineTransformer.html)를 확인했다. L2 규제C=0.1·양성 가중치20을 사전에 고정하고, 같은40개 열·수분 입력에서 선형과4변수의 가법 스플라인을 비교한다. 스플라인은2차·5개 물리 단위 매듭·선형 외삽이며, 매듭은 검증 정답이나 분포에서 선택하지 않았다. 중앙값 대체·결측 표시·스케일링은 각 학습 분할 안에서 처리하고 수렴 경고는 실패로 취급한다.
+설치된scikit-learn1.6.1의 [LogisticRegression 공식 문서](https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LogisticRegression.html)와 [SplineTransformer 공식 문서](https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.SplineTransformer.html)를 확인했다. L2 규제C=0.1·양성 가중치 20을 사전에 고정하고, 같은 40개 열·수분 입력에서 선형과 4변수의 가법 스플라인을 비교한다. 스플라인은 2차·5개 물리 단위 매듭·선형 외삽이며, 매듭은 검증 정답이나 분포에서 선택하지 않았다. 중앙값 대체·결측 표시·스케일링은 각 학습 분할 안에서 처리하고 수렴 경고는 실패로 취급한다.
 
-고도를 제외했으므로41입력의 기존HGB와의 차이를 모두 분류기 구조 효과로 주장하지 않는다. 선형/스플라인 사이는 같은 입력이다. 가중 학습 점수와 상관된 입력의 계수는 실제 결빙 확률이나 독립 물리 효과가 아니다. 결과는 수정본 `regularized_forward/summary.json`과 [진행 보고](PROJECT_STATUS.md)에 기록한다.
+고도를 제외했으므로 41입력의 기존 HGB와의 차이를 모두 분류기 구조 효과로 주장하지 않는다. 선형/스플라인 사이는 같은 입력이다. 가중 학습 점수와 상관된 입력의 계수는 실제 결빙 확률이나 독립 물리 효과가 아니다. 결과는 수정본 `regularized_forward/summary.json`과 [진행 보고](PROJECT_STATUS.md)에 기록한다.
 
 
 ## 다른 지점의 과거 노면상태 추가 입력 — 2026-10-09
 
-[공식 답변588](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=588)과 [공식 답변555](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=555)를 다시 확인했다. 정답은Ice만 양성이고0/-999는 제외한다. 보호 지점의 추정 대상 실측값을 학습·예측 입력으로 사용하지 않는다. 최신 목록은620·603·588·556·555와 같았으며 재확인 원문·해시는 원본 작업 루트의 비공개 `official_review_20261007/*surface_state*`에 보존했다.
+[공식 답변 588](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=588)과 [공식 답변 555](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=555)를 다시 확인했다. 정답은 Ice만 양성이고 0/-999는 제외한다. 보호 지점의 추정 대상 실측값을 학습·예측 입력으로 사용하지 않는다. 최신 목록은 620·603·588·556·555와 같았으며 재확인 원문·해시는 원본 작업 루트의 비공개 `official_review_20261007/*surface_state*`에 보존했다.
 
-[Yi·Seo(2026)](https://arxiv.org/abs/2609.33528)의 초기 상태·수분 공급 논의에서 착안하되, 다른 지점의 과거 상태가 현재 대상의 상태를 설명하는지는 별도 가설로 검증한다. 현재 상태별10개 표시,60/180분 관측 상태 비율 및 커버리지, 최근 관측Ice의 경과시간을 합친23개 입력이다. 대상·내부/외부 제외·보호 지점은 상태 참조에서 차단한다.13·15는 별도 입력으로 구분하고 양성 정답으로 바꾸지 않는다. 관측 비율은 실제 결빙 지속시간이나 위험 확률이 아니다.
+[Yi·Seo(2026)](https://arxiv.org/abs/2609.33528)의 초기 상태·수분 공급 논의에서 착안하되, 다른 지점의 과거 상태가 현재 대상의 상태를 설명하는지는 별도 가설로 검증한다. 현재 상태별 10개 표시, 60/180분 관측 상태 비율 및 커버리지, 최근 관측 Ice의 경과시간을 합친 23개 입력이다. 대상·내부/외부 제외·보호 지점은 상태 참조에서 차단한다.13·15는 별도 입력으로 구분하고 양성 정답으로 바꾸지 않는다. 관측 비율은 실제 결빙 지속시간이나 위험 확률이 아니다.
 
 
 ## 온도 추정의 분류 입력 연결 — 2026-10-09
 
-[캐나다 BC 교통부 RWIS 정의](https://www.th.gov.bc.ca/RWIS/dataDef.htm)는 노면온도보다 이슬점이 높을 때 수분 침착이 가능함을 설명한다. 이 물리 관계를 추정 노면온도−AWS 이슬점 입력의 근거로 사용한다. 다른 국가의 센서·염수 동결점·마찰 경보 기준을 대회04 정답 정의나 한국 도로 위험등급으로 옮기지 않는다. 온도 추정 오류와 AWS의 공간 대표성이 남으므로 이 차이 자체를 Ice 정답으로 간주하지 않는다.
+[캐나다 BC 교통부 RWIS 정의](https://www.th.gov.bc.ca/RWIS/dataDef.htm)는 노면온도보다 이슬점이 높을 때 수분 침착이 가능함을 설명한다. 이 물리 관계를 추정 노면온도−AWS 이슬점 입력의 근거로 사용한다. 다른 국가의 센서·염수 동결점·마찰 경보 기준을 대회 04 정답 정의나 한국 도로 위험 등급으로 옮기지 않는다. 온도 추정 오류와 AWS의 공간 대표성이 남으므로 이 차이 자체를 Ice 정답으로 간주하지 않는다.
 
-[scikit-learn1.6 StackingRegressor](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingRegressor.html)는 최종 모델 학습에 기본 모델의 교차검증 예측을 사용하며 같은 학습 행의 적합값을 그대로 쓰는 과적합 문제를 설명한다. 본 구현은 기본 StackingRegressor 호출이 아니라 지점 단위3그룹 및 내부/외부 제외 지점 제한을 직접 구현한 온도→분류 입력 연결이다. 분류 학습 행도 자기 지점 그룹의 온도 정답·전처리에서 제외한다. 두 겨울 중 첫 겨울 공간OOF 단계이므로 각10분 행의 미래 예보를 재현한 연구라고 주장하지 않는다.
+[scikit-learn1.6 StackingRegressor](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingRegressor.html)는 최종 모델 학습에 기본 모델의 교차검증 예측을 사용하며 같은 학습 행의 적합값을 그대로 쓰는 과적합 문제를 설명한다. 본 구현은 기본 StackingRegressor 호출이 아니라 지점 단위 3그룹 및 내부/외부 제외 지점 제한을 직접 구현한 온도→분류 입력 연결이다. 분류 학습 행도 자기 지점 그룹의 온도 정답·전처리에서 제외한다. 두 겨울 중 첫 겨울 공간OOF 단계이므로 각 10분 행의 미래 예보를 재현한 연구라고 주장하지 않는다.
 
 
 ## 기상청 공식 도로관측 API·SFS·지점 목록 — 2026-10-09
 
-[도로기상관측정보 API](https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293)는2024-01-01 이후 조회가 가능하되 지점별 제공 시작이 다르다고 설명한다. 지점 지정mode=1,var=지점번호는 최대24시간 구간 조회이고, 전체 지점/노선/종류 조회는 시작시각 한 시점만 반환한다. 도로관측의 조회 노선번호12/23/33과 다른 도로위험정보의015/025/035는 다른 번호 체계다. 관측 시각은KST이고 도로위험정보ZIP의기준시각UTC와 다르다. 후자의 예측/위험 산출물을 독립 관측 정답으로 사용하지 않는다.
+[도로기상관측정보 API](https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293)는 2024-01-01 이후 조회가 가능하되 지점별 제공 시작이 다르다고 설명한다. 지점 지정mode=1,var=지점번호는 최대 24시간 구간 조회이고, 전체 지점/노선/종류 조회는 시작시각 한 시점만 반환한다. 도로관측의 조회 노선번호 12/23/33과 다른 도로위험정보의 015/025/035는 다른 번호 체계다. 관측 시각은KST이고 도로위험정보ZIP의기준시각UTC와 다르다. 후자의 예측/위험 산출물을 독립 관측 정답으로 사용하지 않는다.
 
-공식 첨부 `도로기상관측지점 목록.pdf`6쪽 전체와 `노면상태 코드.pdf`1쪽의 표를 추출·렌더링해 확인했다. 정적366지점 목록은 관측 기간·과거 센서 상태를 입증하지 않는다.12 chemical wet과13 critical wet의 설명은 서로 달라, 이전V1의12/13 통합deicing 요약을 수정한V2를 별도 검증했다.04 양성,13/15 음성이라는 대회 정답은 바꾸지 않았다. V1은 이전 비교·결합의 재현용으로 보존하며 통합 변수의 이름을 실제 제빙 상태로 해석하지 않는다.
+공식 첨부 `도로기상관측지점 목록.pdf`6쪽 전체와 `노면상태 코드.pdf`1쪽의 표를 추출·렌더링해 확인했다. 정적 366개 지점 목록은 관측 기간·과거 센서 상태를 입증하지 않는다.12 chemical wet과 13 critical wet의 설명은 서로 달라, 이전V1의 12/13 통합deicing 요약을 수정한V2를 별도 검증했다.04 양성, 13/15 음성이라는 대회 정답은 바꾸지 않았다. V1은 이전 비교·결합의 재현용으로 보존하며 통합 변수의 이름을 실제 제빙 상태로 해석하지 않는다.
 
 [기상청 출처표시 안내](https://apihub.kma.go.kr/notice.do?seqNotice=57)와 자료 제공 조건을 확인할 위치를 기록했다. 실제 추가 관측자료는 인증키가 없어 받지 않았고, 대회·보호 지점의 추가 동적 관측은 조회하지 않았다. 정적 지점·상태코드 PDF의 공식 URL·SHA256은 수정본 비공개 `external/kma_rwis_reference/manifest.json`에 보존한다.
 
-이 절의 미수집 상태는 API 승인 전 기록이다. 이후 참가자가 `secret.env`에 승인 키를 설정하여 비대회9지점의 첫 겨울을 실제 수집 중이다. 키를 로그·출처 기록·제출 묶음에 넣지 않는다. 원본 관측 응답·정확한10분 변환·계획 영수증·해시는 수정본 비공개 `external/kma_rwis_development_v1/`에 기록한다. 다음 겨울과 기존 대회19지점은 요청하지 않는다.
+이 절의 미수집 상태는 API 승인 전 기록이다. 이후 참가자가 `secret.env`에 승인 키를 설정하여 비대회 9개 지점의 첫 겨울을 실제 수집 중이다. 키를 로그·출처 기록·제출 묶음에 넣지 않는다. 원본 관측 응답·정확한 10분 변환·계획 영수증·해시는 수정본 비공개 `external/kma_rwis_development_v1/`에 기록한다. 다음 겨울과 기존 대회 19개 지점은 요청하지 않는다.
 
 ## 외부 공간 그룹의 중첩 후보 선택 — 2026-10-09
 
 [Cawley·Talbot(2010), On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation](https://jmlr.org/papers/v11/cawley10a.html), JMLR11(70):2079–2107. 유한 표본의 검증 점수로 반복 선택하면 성능 추정에도 선택 편향이 생길 수 있다는 방법론적 근거다. [scikit-learn1.6 공식 중첩 검증 예제](https://scikit-learn.org/1.6/auto_examples/model_selection/plot_nested_cross_validation_iris.html)도 후보 선택과 외부 평가의 분리를 설명한다.
 
-이를 참고해 첫 겨울 추가9지점의4개 공간 그룹 중 평가 그룹을 학습·임계값 보정·후보 선택에서 제외하는 절차를 직접 구현했다. 내부 후보 비교에도 해당 내부 검증 그룹을 제외한다. 임계값은 기존14개 개발 지점의 첫 겨울 공간OOF로 선택하고, 동적 참조는 기존14개 지점으로 제한한다. 다른3개 그룹의 동일 정답 행에서FP·FN을 모두 감소시키지 못하면 기준 모델로 돌아간다. 논문과 공식 예제는 이 프로젝트의 도로 결빙 성능 개선을 검증한 자료가 아니다. 실제 증강 모델 학습과 별도 다음 겨울 평가는 아직 수행하지 않았다.
+이를 참고해 첫 겨울 추가 9개 지점의 4개 공간 그룹 중 평가 그룹을 학습·임계값 보정·후보 선택에서 제외하는 절차를 직접 구현했다. 내부 후보 비교에도 해당 내부 검증 그룹을 제외한다. 임계값은 기존 14개 개발 지점의 첫 겨울 공간OOF로 선택하고, 동적 참조는 기존 14개 지점으로 제한한다. 다른 3개 그룹의 동일 정답 행에서FP·FN을 모두 감소시키지 못하면 기준 모델로 돌아간다. 논문과 공식 예제는 이 프로젝트의 도로 결빙 성능 개선을 검증한 자료가 아니다. 실제 증강 모델 학습과 별도 다음 겨울 평가는 아직 수행하지 않았다.
 
-추가 확인: [한국도로공사 공간정보노선현황](https://www.data.go.kr/data/15062048/openapi.do)은 시·종점과 주요 경유지의 기본 좌표를 설명하며 별도 인증이 필요하다. 공개 설명만으로 전체100m 이정·상하행·과거 선형을 제공한다고 확정할 수 없어 공식 균등구간 근거로 채택하지 않았다. [기상청 도로위험기상정보 안내](https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293)는 위험정보ZIP의 서비스 시작을2025-12-15, 기준시각을UTC로 표시한다. 첫 겨울 전체를 대체하는 관측자료나 실측Ice 정답으로 사용하지 않는다. 현재 수집하는 매분 도로관측 API와 구분한다.
+추가 확인: [한국도로공사 공간정보노선현황](https://www.data.go.kr/data/15062048/openapi.do)은 시·종점과 주요 경유지의 기본 좌표를 설명하며 별도 인증이 필요하다. 공개 설명만으로 전체 100m 이정·상하행·과거 선형을 제공한다고 확정할 수 없어 공식 균등구간 근거로 채택하지 않았다. [기상청 도로위험기상정보 안내](https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293)는 위험정보ZIP의 서비스 시작을 2025-12-15, 기준시각을UTC로 표시한다. 첫 겨울 전체를 대체하는 관측자료나 실측 Ice 정답으로 사용하지 않는다. 현재 수집하는 매분 도로관측 API와 구분한다.
