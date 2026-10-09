@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20261009_nested_external_first_winter_augmentation_v1",
+  "plan": "config/kma_external_validation_plan.json",
+  "candidate_names": ["augmented_thermal", "augmented_surface_state_v2"],
+  "model": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "calibration_folds": 3,
+  "calibration_population": "First-winter competition development stations only, shared across baseline and candidates. External training rows never calibrate themselves.",
+  "candidate_training": "Competition first-winter rows plus external first-winter rows outside both the outer reserved group and inner validation group.",
+  "selection": "For each reserved group, compare two candidates with the baseline on only the other three external first-winter groups. Fit, calibration and selection exclude every observation in the outer reserved group. Select only a candidate with strictly fewer FP and FN on the same gold rows; otherwise keep baseline.",
+  "threshold_policy": "Daily station-macro F1 threshold from competition-station inner OOF only, using the existing complete-day provisional rules.",
+  "dynamic_reference_pool": "Fourteen competition development RWIS stations only; held calibration stations are excluded fold-wide. External state/temperature is never an input.",
+  "requires_full_first_winter_download_and_audit": true,
+  "reserved_winter_outcomes_may_be_read": false,
+  "official_protected_outcomes_may_be_read": false,
+  "limits": [
+    "This experiment does not update the original frozen model or threshold.",
+    "HGB weighted scores are not calibrated icing probabilities or operating risk grades.",
+    "Positive and negative target codes retain official competition semantics.",
+    "First-winter nested validation is development evidence; a later frozen reserved-winter test is still required."
+  ]
+}

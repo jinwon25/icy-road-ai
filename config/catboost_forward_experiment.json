@@ -1,0 +1,8 @@
+{
+  "experiment_id": "20261008_catboost_thermal_forward",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {"iterations": 400, "depth": 4, "learning_rate": 0.03, "l2_leaf_reg": 20.0, "loss_function": "Logloss", "class_weights": [1.0, 20.0], "random_seed": 20260923, "bootstrap_type": "Bayesian", "bagging_temperature": 1.0, "random_strength": 1.0, "grow_policy": "SymmetricTree", "boosting_type": "Plain", "nan_mode": "Min", "thread_count": 2, "use_best_model": false, "allow_writing_files": false, "verbose": false},
+  "selection": "고정 열·수분 입력의 단일 사전 고정 모델. 임계값만 첫 겨울 내부 지점 OOF에서 선택한다.",
+  "limitations": ["다음 겨울 외부 지점 정답을 조기종료·임계값에 사용하지 않음", "공식 보호 지점 제외", "당일 과거 관측 기반 위치 추정이며 미래 시점 예보가 아님", "반복 검토한 개발 자료에서의 추가 비교"]
+}

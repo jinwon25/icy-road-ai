@@ -1,0 +1,9 @@
+{
+  "experiment_id": "20261009_equal_weight_surface_state_ensemble",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "candidates": ["arithmetic", "geometric"],
+  "weights": [0.5, 0.5],
+  "selection": "두 점수의 산술·기하 평균을 고정 비교하고 첫 겨울 내부 OOF에서만 각 임계값을 선택한다.",
+  "limitations": ["반복 사용한 개발 자료이며 독립 최종 검증이 아니다.", "검증 겨울 정답으로 가중치나 결합식을 선택하지 않는다.", "보호 지점 입력·정답을 읽지 않고 기존 고정 모델·평가·제출초안을 보존한다."]
+}

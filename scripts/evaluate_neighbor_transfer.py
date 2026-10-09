@@ -103,7 +103,9 @@ def main():
                           **{col + "_macro": float(part[col].mean()) for col in
                              ("weather_mae", "blend_mae", "weather_rmse", "blend_rmse",
                               "weather_bias", "blend_bias", "weather_near_mae", "blend_near_mae")}})
-    summary = {"status": "development_only_old_20260915_data_spatiotemporal_transfer",
+    source_config = json.loads((ROOT / "config/data_source.json").read_text(encoding="utf-8"))
+    summary = {"status": "development_only_spatiotemporal_transfer",
+               "data_release": source_config["release"], "archive_sha256": source_config["sha256"],
                "smoke": args.smoke, "train_period": periods[0], "validation_period": periods[1],
                "validation": "first-winter other stations train; second-winter held station test",
                "reference_policy": "nearest other development station same route, prior observations available by scenario delay",
@@ -113,7 +115,7 @@ def main():
                "scenarios": scenarios,
                "limitations": ["Publication delays are assumed, not verified.",
                                "Existing weather-input delays unchanged; only RWIS latency varied.",
-                               "Q&A 555 announces corrected data by 2026-10-06; rerun after version audit.",
+                               "Compare only within a single audited release and matching target rows.",
                                "Does not establish Ice classification or risk-map quality."]}
     out = PRIVATE / ("smoke_neighbor_transfer" if args.smoke else "neighbor_transfer")
     out.mkdir(parents=True, exist_ok=True)

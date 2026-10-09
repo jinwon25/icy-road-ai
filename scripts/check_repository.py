@@ -21,7 +21,7 @@ def main():
         if not path.exists():
             errors.append(f'누락된 추적 파일: {name}')
             continue
-        if path.suffix.lower() in FORBIDDEN or name.startswith('outputs/') or (path.name.startswith('.env') and path.name != '.env.example'):
+        if path.suffix.lower() in FORBIDDEN or name.startswith('outputs/') or (path.name.startswith('.env') and path.name != '.env.example') or (path.name.endswith('.env') and path.name != '.env.example'):
             errors.append(f'공유 제외 파일: {name}')
         if path.suffix == '.py':
             ast.parse(path.read_text(encoding='utf-8-sig'), filename=name)

@@ -17,6 +17,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_source import competition_archive
+from src.observation_io import daily_members
 from src.validation import canonical_station_id
 
 
@@ -42,11 +43,11 @@ def main() -> None:
     previous: dict[str, tuple[str, ...]] = {}
     columns: list[str] = []
     with zipfile.ZipFile(archive_path) as archive:
-        names = sorted(n for n in archive.namelist() if "AWS_daily_" in n)
+        names = daily_members(archive, "AWS")
         if args.limit_files:
             names = names[:args.limit_files]
         for name in names:
-            match = re.search(r"AWS_daily_(\d{8})", name)
+            match = re.search(r"AWS_daily_(\d{8})", name, re.IGNORECASE)
             if not match:
                 raise ValueError(f"Missing date token: {name}")
             day = datetime.strptime(match.group(1), "%Y%m%d")

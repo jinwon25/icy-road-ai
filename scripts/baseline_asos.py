@@ -12,6 +12,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_source import competition_archive
+from src.observation_io import daily_members, read_columns
 from src.validation import (PROTECTED_STATIONS, assert_training_stations,
                             canonical_station_id, regression_metrics)
 
@@ -25,14 +26,11 @@ def haversine_km(lat1, lon1, lat2, lon2):
 def read_data(zip_path, kind, columns, names, limit_days):
     frames = []
     with zipfile.ZipFile(zip_path) as archive:
-        files = sorted(n for n in archive.namelist() if kind + "_daily_" in n)
+        files = daily_members(archive, kind)
         if limit_days:
             files = files[:limit_days]
         for name in files:
-            with archive.open(name) as stream:
-                frame = pd.read_csv(stream, usecols=columns, dtype=str,
-                                    encoding="utf-8-sig", keep_default_na=False)
-            frame.columns = names
+            frame = read_columns(archive, name, columns, names)
             if kind == "RWIS":
                 frame["station"] = frame.station.map(canonical_station_id)
                 frame = frame.loc[~frame.station.isin(PROTECTED_STATIONS)
@@ -46,9 +44,9 @@ def main():
     parser.add_argument("--limit-days", type=int)
     args = parser.parse_args()
     archive = competition_archive(ROOT)
-    asos = read_data(archive, "ASOS", [1, 2, 3, 4, 5, 6],
+    asos = read_data(archive, "ASOS", ["시간", "지점", "지점명", "위도", "경도", "기온(°C)"],
                      ["time", "station", "name", "lat", "lon", "air_temp"], args.limit_days)
-    rwis = read_data(archive, "RWIS", [0, 1, 2, 3, 4, 5, 7],
+    rwis = read_data(archive, "RWIS", ["관측시각 (KST)", "관측 지점번호", "관측 지점명", "고속도로", "관측소 위도", "관측소 경도", "노면온도 (광학)"],
                      ["time", "station", "name", "route", "lat", "lon", "road_temp"], args.limit_days)
     rwis["station"] = rwis.station.map(canonical_station_id)
     rwis = rwis.loc[~rwis.station.isin(PROTECTED_STATIONS) & rwis.station.ne("<missing>")].copy()

@@ -12,6 +12,7 @@ import pandas as pd
 
 from src.validation import PROTECTED_STATIONS, assert_training_stations, canonical_station_id
 from src.weather_inputs import filter_aws_nominal_day
+from src.observation_io import daily_members, read_columns, numeric_observations
 
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -43,28 +44,25 @@ def prior_join(target: pd.DataFrame, source: pd.DataFrame, prefix: str,
     return joined
 
 
-def _load_daily(archive: zipfile.ZipFile, kind: str, columns: list[int],
+def _load_daily(archive: zipfile.ZipFile, kind: str, columns: list[str],
                 new_names: list[str], limit_days: int | None) -> pd.DataFrame:
-    names = sorted(n for n in archive.namelist() if f"{kind}_daily_" in n)
+    names = daily_members(archive, kind)
     if limit_days:
         names = names[:limit_days]
     frames = []
     for name in names:
-        with archive.open(name) as stream:
-            frame = pd.read_csv(stream, dtype=str, encoding="utf-8-sig", keep_default_na=False,
-                                usecols=columns)
-        frame.columns = new_names
+        frame = read_columns(archive, name, columns, new_names)
         frames.append(frame)
     return pd.concat(frames, ignore_index=True)
 
 
 def _load_aws(archive: zipfile.ZipFile, limit_days: int | None) -> pd.DataFrame:
-    names = sorted(n for n in archive.namelist() if "AWS_daily_" in n)
+    names = daily_members(archive, "AWS")
     if limit_days:
         names = names[:limit_days]
     frames = []
     for name in names:
-        match = re.search(r"AWS_daily_(\d{8})", name)
+        match = re.search(r"AWS_daily_(\d{8})", name, re.IGNORECASE)
         if not match:
             raise ValueError(f"Missing AWS date token: {name}")
         day = datetime.strptime(match.group(1), "%Y%m%d").date()
@@ -82,7 +80,7 @@ def _load_aws(archive: zipfile.ZipFile, limit_days: int | None) -> pd.DataFrame:
 
 
 def _numeric_range(frame: pd.DataFrame, column: str, lower: float, upper: float) -> None:
-    number = pd.to_numeric(frame[column], errors="coerce")
+    number = numeric_observations(frame[column])
     frame[column] = number.where(number.between(lower, upper))
 
 
@@ -95,9 +93,9 @@ def _nearest(target_lat: float, target_lon: float, coordinates: pd.DataFrame) ->
 
 def build_features(archive_path: Path, limit_days: int | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     with zipfile.ZipFile(archive_path) as archive:
-        rwis = _load_daily(archive, "RWIS", [0, 1, 3, 4, 5, 7],
+        rwis = _load_daily(archive, "RWIS", ["관측시각 (KST)", "관측 지점번호", "고속도로", "관측소 위도", "관측소 경도", "노면온도 (광학)"],
                            ["time", "station", "route", "lat", "lon", "road_temp"], limit_days)
-        asos = _load_daily(archive, "ASOS", [1, 2, 4, 5, 6],
+        asos = _load_daily(archive, "ASOS", ["시간", "지점", "위도", "경도", "기온(°C)"],
                            ["source_time", "station", "lat", "lon", "air_temp"], limit_days)
         aws = _load_aws(archive, limit_days)
     rwis["station"] = rwis.station.map(canonical_station_id)

@@ -9,10 +9,11 @@ from collections import Counter
 from pathlib import Path
 
 import geopandas as gpd
+import pandas as pd
 from pyproj import CRS
 
-from audit_data import decoded_name
-from src.data_source import competition_archive
+from audit_data import decoded_name, read_csv
+from src.data_source import competition_archive, sha256_file
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "outputs" / "private" / "spatial"
@@ -107,6 +108,23 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     archive_path = competition_archive(ROOT)
     with zipfile.ZipFile(archive_path) as archive:
+        facility_csv = []
+        for info in archive.infolist():
+            if not info.filename.lower().endswith(".csv") or "daily_" in info.filename.lower():
+                continue
+            frame, encoding, _ = read_csv(archive, info)
+            fields = list(frame.columns)
+            item = {"member": decoded_name(info), "rows": len(frame), "columns": fields,
+                    "encoding": encoding, "exact_duplicate_rows": int(frame.duplicated().sum())}
+            selected = [next((c for c in fields if position in c and axis in c), None)
+                        for position, axis in [("시작", "위도"), ("종료", "위도"), ("시작", "경도"), ("종료", "경도")]]
+            if all(selected):
+                coordinates = frame[selected].apply(pd.to_numeric, errors="coerce")
+                lat0, lat1, lon0, lon1 = selected
+                item["same_start_end_rows"] = int((coordinates[lat0].eq(coordinates[lat1])
+                                                    & coordinates[lon0].eq(coordinates[lon1])).sum())
+                item["missing_coordinate_rows"] = int(coordinates.isna().any(axis=1).sum())
+            facility_csv.append(item)
         for info in archive.infolist():
             if "jb_road_center_line." in info.filename and info.filename.endswith((".shp", ".shx", ".dbf", ".prj", ".cpg")):
                 copy_entry(archive, info, OUT / Path(info.filename).name)
@@ -130,8 +148,10 @@ def main():
                   "total_uncompressed_bytes": sum(x["bytes"] for x in manifest),
                   "extensions": dict(Counter(Path(x["name"]).suffix.lower() for x in manifest)),
                   "layers": nested_layer_metadata(inner)}
-    report = {"road_centerline": road_info, "dem": tiff_metadata(OUT / "dem.tif"),
-              "nested_archive": nested}
+    report = {"archive_sha256": sha256_file(archive_path), "road_centerline": road_info,
+              "dem": tiff_metadata(OUT / "dem.tif"), "nested_archive": nested,
+              "facility_csv": facility_csv,
+              "facility_csv_limitations": "Repeated points and start=end do not establish facility extent or travel direction; select coordinates by name, not position."}
     (OUT / "spatial_summary.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     (OUT / "nested_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"road_features": len(road), "dem_size": [report["dem"]["width"], report["dem"]["height"]],

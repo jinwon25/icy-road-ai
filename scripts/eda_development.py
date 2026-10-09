@@ -12,6 +12,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_source import competition_archive
+from src.observation_io import daily_members, read_columns
 from src.validation import PROTECTED_STATIONS, assert_training_stations, canonical_station_id, normalize_state
 
 OUT = ROOT / "outputs" / "private" / "development"
@@ -27,12 +28,10 @@ def run():
     differences = defaultdict(list)
     archive = competition_archive(ROOT)
     with zipfile.ZipFile(archive) as z:
-        names = [n for n in z.namelist() if "RWIS_daily_" in n]
+        names = daily_members(z, "RWIS")
         for n in names:
-            with z.open(n) as stream:
-                data = pd.read_csv(stream, usecols=[0, 1, 2, 3, 6, 7, 9, 10, 12],
-                                   dtype=str, encoding="utf-8-sig", keep_default_na=False)
-            data.columns = FIELDS
+            data = read_columns(z, n, ["관측시각 (KST)", "관측 지점번호", "관측 지점명", "고속도로", "노면상태",
+                                       "노면온도 (광학)", "습도 (%)", "일 누적 강수량 (mm)", "기온 (C)"], FIELDS)
             data["station_id"] = data["station_id"].map(canonical_station_id)
             data = data.loc[~data.station_id.isin(PROTECTED_STATIONS) & data.station_id.ne("<missing>")].copy()
             assert_training_stations(data.station_id.unique())

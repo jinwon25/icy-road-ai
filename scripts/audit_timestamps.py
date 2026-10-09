@@ -12,6 +12,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_source import competition_archive
+from src.observation_io import daily_members
 from src.validation import canonical_station_id
 OUT = ROOT / "outputs" / "private" / "full"
 
@@ -22,7 +23,7 @@ def main():
     overlaps = defaultdict(lambda: defaultdict(int))
     with zipfile.ZipFile(archive) as z:
         for kind in ("RWIS", "ASOS", "AWS"):
-            names = sorted(n for n in z.namelist() if kind + "_daily_" in n)
+            names = daily_members(z, kind)
             previous_boundary = {}
             for name in names:
                 date_token = re.search(r"daily_(\d{4}-?\d{2}-?\d{2})", name).group(1)

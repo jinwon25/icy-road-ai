@@ -98,12 +98,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--smoke", action="store_true",
                         help="Two outer folds and sampled negative training rows")
-    parser.add_argument("--variant", choices=("nearest", "fallback", "history"), default="nearest")
+    parser.add_argument("--variant", choices=("nearest", "fallback", "history", "fog"), default="nearest")
     args = parser.parse_args()
     private = ROOT / "outputs" / "private"
     input_name = "ice_features" if args.variant == "nearest" else "ice_fallback_features"
     data = add_time_features(pd.read_parquet(private / input_name / "features.parquet"))
     features = FEATURES.copy()
+    if args.variant == "fog":
+        from src.fog_features import FOG_FEATURES
+        fog = pd.read_parquet(private / "ice_fog_features_delay0/features.parquet")
+        if len(fog) != len(data) or fog.duplicated(["station", "time"]).any():
+            raise ValueError("Fog cache denominator mismatch")
+        check = data[["station", "time", "ice"]].merge(
+            fog[["station", "time", "ice"]], on=["station", "time"],
+            how="outer", validate="one_to_one", indicator=True, suffixes=("_base", "_fog"))
+        if not check._merge.eq("both").all() or not check.ice_base.equals(check.ice_fog):
+            raise ValueError("Fog cache targets or labels differ")
+        data = data.merge(fog[["station", "time", *FOG_FEATURES]],
+                          on=["station", "time"], how="left", validate="one_to_one")
+        features += FOG_FEATURES
     if args.variant == "history":
         from scripts.audit_ice_weather_history import HISTORY
         history = pd.read_parquet(private / "ice_weather_history" / "features.parquet")
@@ -190,7 +203,9 @@ def main() -> None:
     station_table = pd.DataFrame(station_rows)
     slot_micro = binary_metrics(valid_prediction.ice.astype(int),
                                 valid_prediction.predicted_ice.astype(int))
+    source_config = json.loads((ROOT / "config/data_source.json").read_text(encoding="utf-8"))
     summary = {
+        "data_release": source_config["release"], "archive_sha256": source_config["sha256"],
         "status": "provisional_development_only_ice_baseline",
         "aws_variant": args.variant,
         "validation": "outer LOSO; threshold from inner station-OOF pooled slot F1",
@@ -211,6 +226,7 @@ def main() -> None:
     output_name = {
         "nearest": "ice_logistic", "fallback": "ice_fallback_logistic",
         "history": "ice_history_logistic",
+        "fog": "ice_fog_logistic",
     }[args.variant]
     if args.smoke:
         output_name = "smoke_" + output_name

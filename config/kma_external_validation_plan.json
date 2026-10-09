@@ -1,0 +1,34 @@
+{
+  "plan_id": "20261009_external_rwis_forward_group_validation_v1",
+  "source": "https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293",
+  "endpoint": "https://apihub.kma.go.kr/api/typ01/url/road_stn_obs.php",
+  "development_start_kst": "2024-11-01",
+  "development_end_kst": "2025-02-28",
+  "reserved_validation_start_kst": "2025-11-01",
+  "reserved_validation_end_kst": "2026-02-28",
+  "station_groups": {
+    "seohaean_seocheon": ["12207", "12408"],
+    "honam_baekyang": ["23205", "23404"],
+    "tongyeong_geumsan": ["33205", "33408"],
+    "tongyeong_seosang": ["33207", "33413", "33414"]
+  },
+  "competition_stations_excluded_from_external_requests": ["12103", "12209", "12210", "12211", "12306", "12409", "12410", "23202", "23203", "23204", "23402", "23403", "33103", "33206", "33312", "33409", "33410", "33411", "33412"],
+  "collector_permitted_partition": "development_only",
+  "reserved_validation_download_permitted": false,
+  "minimum_request_interval_seconds": 1.2,
+  "request_maximum_minutes": 1440,
+  "raw_state_positive": "04",
+  "undefined_state_codes": ["0", "-999"],
+  "numeric_missing_values": [-99.9, -99.2, -99.7, -999.0],
+  "ten_minute_conversion": "Select exact KST minute multiples of ten; never round, interpolate or carry target labels.",
+  "spatial_protocol": "For each reserved validation group, exclude every station in that group from model fit, preprocessing, internal threshold choice and dynamic reference inputs. Use first-winter external observations only for development; never use next-winter external observations as model inputs or training labels.",
+  "validation_gate": "Before obtaining next-winter labels, save selected model(s), thresholds, input source hashes, nine-station predictions and their hashes. Evaluate the reserved winter once; do not tune afterward. Other development-only comparisons are not final evaluation.",
+  "final_comparison": "Compare the original-input baseline and a development-selected augmented candidate on the same valid station/time pairs. Report TP, FP, FN, AP, station daily macro, fixed actual-ice-day F1, false-alarm days, full versus partial coverage and road-temperature MAE/RMSE/BIAS. Primary improvement requires both FP and FN reductions; neither a changed denominator nor threshold movement alone proves improvement.",
+  "limitations": [
+    "Public static metadata does not establish historical sensor availability or spatial independence.",
+    "The nine stations lie along the three routes and are not all inside Jeonbuk.",
+    "Spatial groups were chosen using metadata only, before new winter observations were opened.",
+    "Historical coordinates, valid SFS, sensor installation and gaps must be audited.",
+    "Official protected stations 12410, 33411 and 23402 remain excluded permanently."
+  ]
+}

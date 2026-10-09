@@ -1,0 +1,11 @@
+{
+  "experiment_id": "20261008_memory_deployable_forward",
+  "rationale": "관측소 전용 고도를 제외한 동일 입력에서 6–72시간 기억의 추가 효과를 비교한다.",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": ["thermal_noheight", "memory"],
+  "limitations": ["두 후보 모두 elevation_m 제외", "노면 잔류 수분 실측이 아닌 기상 대용값", "공식 보호 지점 입력·정답 제외", "다음 겨울 외부 정답을 임계값 선택에 사용하지 않음"]
+}

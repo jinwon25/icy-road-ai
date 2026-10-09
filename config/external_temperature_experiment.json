@@ -1,0 +1,16 @@
+{
+  "experiment_id": "20261009_nested_external_temperature_v1",
+  "plan": "config/kma_external_validation_plan.json",
+  "ridge_alpha": 100.0,
+  "blend_weather_weight": 0.5,
+  "neighbor_max_age_minutes": 60,
+  "missing_neighbor_policy": "Weather estimate only.",
+  "missing_asos_policy": "Output unknown; preserve the previously validated domain.",
+  "feature_policy": "Existing fourteen weather/time features; external target temperature is a training label only, never an inference feature.",
+  "selection": "For each reserved spatial group, choose augmented Ridge only if both paired MAE and RMSE decrease on the other three first-winter external groups. Each inner comparison excludes both outer and inner groups from fit and preprocessing. Otherwise use first-winter fourteen-station baseline.",
+  "dynamic_reference_pool": "Only fourteen competition development RWIS stations. External target measurements are excluded.",
+  "max_compute_threads": 2,
+  "requires_full_first_winter_download_and_audit": true,
+  "reserved_winter_outcomes_may_be_read": false,
+  "official_protected_outcomes_may_be_read": false
+}

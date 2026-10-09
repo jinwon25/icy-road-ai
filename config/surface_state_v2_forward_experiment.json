@@ -1,0 +1,35 @@
+{
+  "experiment_id": "20261009_official_surface_state_semantics_v2",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": [
+    "surface_state_v2"
+  ],
+  "source_age_limit_minutes": 30,
+  "history_minutes": [
+    60,
+    180
+  ],
+  "history_minimum_coverage": 0.8,
+  "selection": "공식 SFS 표에 따라12 chemical wet과13 critical wet 누적 비율을 구분한25개 입력. 원래04 양성 정답과 같은 겨울·공간 분리 및 첫 겨울 내부OOF 임계값 선택을 유지한다.",
+  "limitations": [
+    "공식04만 양성인 정답을 유지한다.13·15를 양성으로 바꾸지 않는다.",
+    "상태 코드는 입력으로 각각 구분하며 다른 지점 상태의 공간 전이 가능성은 검증 대상이다.",
+    "대상·내부/외부 제외·보호 지점의 국소 상태를 참조하지 않는다.",
+    "같은 시각·미래 관측과30분보다 오래된 현재 상태를 사용하지 않는다.",
+    "반복 연구한 개발 자료의 비교이며 새로운 독립 최종 검증이 아니다.",
+    "기존고정모델·보호평가·제출초안은 변경하지 않는다.",
+    "V1의deicing12/13 묶음은 공식 의미에 맞지 않아 설명·재현용으로만 보존한다. V2는 두 상태를 별도 이력으로 사용한다."
+  ]
+}

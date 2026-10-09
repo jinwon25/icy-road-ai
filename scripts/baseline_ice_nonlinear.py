@@ -90,7 +90,9 @@ def main():
     pd.DataFrame(thresholds).to_csv(out / 'thresholds.csv', index=False, encoding='utf-8-sig')
     pd.concat(traces, ignore_index=True).to_csv(out / 'inner_daily_threshold_trace.csv', index=False, encoding='utf-8-sig')
     (out / 'fold_manifest.json').write_text(json.dumps(manifests, indent=2), encoding='utf-8')
-    summary = {'status': 'development_only_prespecified_nonlinear_20260915', 'smoke': args.smoke,
+    source_config = json.loads((ROOT / 'config/data_source.json').read_text(encoding='utf-8'))
+    summary = {'status': 'development_only_prespecified_nonlinear', 'smoke': args.smoke,
+               'data_release': source_config['release'], 'archive_sha256': source_config['sha256'],
                'stations': prediction.station.nunique(), 'target_rows': len(prediction),
                'valid_labels': int(prediction.ice.notna().sum()), 'ice_slots': int(prediction.ice.sum()),
                'features': FEATURES, 'config': config,

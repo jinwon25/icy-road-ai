@@ -1,0 +1,14 @@
+{
+  "experiment_id": "20261009_regularized_thermal_forward",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "C": 0.1,
+  "positive_weight": 20.0,
+  "max_iter": 1000,
+  "tol": 0.00001,
+  "max_compute_threads": 2,
+  "candidates": ["linear", "spline"],
+  "exclude_features": ["elevation_m"],
+  "selection": "동일 입력에서 규제 선형과 온도·습도4변수의 가법 스플라인 비교. 임계값은 첫 겨울 내부 지점 OOF에서만 선택한다.",
+  "limitations": ["반복 연구한 개발 자료의 다음 겨울 제외 지점 비교이며 새 독립 최종 성능이 아니다.", "학습과 검증 지점은 국소 관측 참조에서 함께 제외한다.", "위치별 센서 정답과 실제 결빙 발생확률을 동일하게 해석하지 않는다.", "공식 보호 지점을 학습·참조·선택·재평가에 사용하지 않는다.", "고도는 제외하며 분류기 비교와 함께 입력 축소의 효과도 있으므로 기존41입력 HGB와 순수 분류기 효과로 해석하지 않는다."]
+}

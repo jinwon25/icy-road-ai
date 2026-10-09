@@ -11,3 +11,12 @@ jupyter_client==8.6.3
 scikit-learn==1.6.1
 pyarrow==20.0.0
 threadpoolctl==3.6.0
+tifffile==2026.3.3
+rasterio==1.4.4
+catboost==1.2.8
+scipy==1.15.3
+joblib==1.5.1
+pillow==11.2.1
+opencv-python-headless==4.11.0.86
+pypdf==6.11.0
+requests==2.34.2

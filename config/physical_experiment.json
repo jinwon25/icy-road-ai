@@ -1,0 +1,24 @@
+{
+  "experiment_id": "20261007_physical_inputs_moderate_weight_nested",
+  "rationale": "냉각·수분·복사 입력과 과도한 양성 가중치의 영향을 분리해 비교한다.",
+  "selection": "외부 지점을 제외한 내부 OOF의 지점별 일평균 F1로 후보와 임계값을 선택한다. 동률은 경보 수가 작은 후보를 우선한다.",
+  "model": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "candidates": [
+    {"id": "weather_w20", "features": "base", "positive_weight": 20.0},
+    {"id": "physical_w20", "features": "physical", "positive_weight": 20.0},
+    {"id": "thermal_w20", "features": "thermal", "positive_weight": 20.0},
+    {"id": "thermal_w1", "features": "thermal", "positive_weight": 1.0}
+  ],
+  "max_compute_threads": 2,
+  "inner_threshold_grid": "내부 점수 분위수와 1e-6~1 로그격자; 경보 없음 포함",
+  "prohibited": ["보호 관측소 입력", "타깃 자기 이력", "외부/내부 제외 관측소의 주변 참조", "외부 정답으로 임계값 선택", "무작위 행 단위 조기종료", "임의 Ice 라벨 변경"],
+  "limitations": ["양성 가중치 20은 고정 후보이며 문헌에서 보장된 최적값이 아니다.", "주변 온도는 관측 기반 대용값이며 대상 도로의 실측 온도가 아니다.", "공식 일별 일부 규칙은 아직 잠정이며 오경보·고정 Ice 날짜 점수도 함께 보고한다."]
+}

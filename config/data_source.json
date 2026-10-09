@@ -4,6 +4,13 @@
   "sha256": "c0f7e0b1fe5fc08b6fa2b8ab10f60b1be238437e8098dd7cbb394a98aeca2dad",
   "bytes": 520933103,
   "release": "20260915",
-  "status": "superseding_correction_announced_by_20261006",
-  "migration": "Do not mix old cached outputs with corrected data; audit schema and regenerate all dependent stages in an isolated copy."
+  "status": "legacy_20260915_preserved_corrected_release_in_isolated_workspace",
+  "migration": "Do not mix old cached outputs with corrected data; audit schema and regenerate all dependent stages in an isolated copy.",
+  "corrected_release": {
+    "release": "20261007",
+    "archive_filename": "DATA AI 경진대회 데이터(20261007).zip",
+    "sha256": "0aa87d9e0268b9271241c027b11350eafef339ce35c460930c5ddfe3364e65e9",
+    "workspace": "outputs/private/releases/20261007",
+    "status": "audit_and_temperature_logistic_rebaseline_complete"
+  }
 }

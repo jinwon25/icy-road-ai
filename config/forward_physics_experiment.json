@@ -1,0 +1,16 @@
+{
+  "experiment_id": "20261008_forward_terrain_radiation",
+  "rationale": "이전 겨울의 다른 지점으로 학습하고 다음 겨울의 제외 지점에서 지형·복사 입력의 추가 효과를 검증한다.",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": [
+    {"id": "thermal", "features": "thermal", "retrospective_only": false},
+    {"id": "terrain", "features": "terrain", "retrospective_only": false},
+    {"id": "radiation", "features": "radiation", "retrospective_only": true}
+  ],
+  "selection": "내부 OOF 일별 F1 기준. 실시간 가용성 미확인 자료와 NASA 사후자료를 구별해 보고한다.",
+  "limitations": ["개발 자료를 반복 연구한 진단이며 새 독립 시험자료가 아니다.", "다른 지점의 당일 과거 관측값을 참조하는 미관측 위치 추정이며 미래 기상 예보 실험이 아니다.", "NASA 복사자료 후보는 발표 지연 때문에 사후 분석 전용이다.", "공식 평가용 3개 지점은 입력·정답 모두 제외한다."]
+}

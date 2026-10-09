@@ -14,17 +14,19 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.data_source import competition_archive
+from src.observation_io import daily_kind, MISSING_NUMBERS
 from src.validation import PROTECTED_STATIONS, canonical_station_id
 
 
 ROOT = Path(__file__).resolve().parents[1]
 FIELDS = {
     "RWIS": ("관측시각 (KST)", "관측 지점번호", "관측 지점명", "관측소 위도", "관측소 경도", "고속도로", 10),
+    "FOG": ("관측시각 (KST)", "관측 지점번호", "관측 지점명", "관측소 위도", "관측소 경도", "고속도로", 10),
     "ASOS": ("시간", "지점", "지점명", "위도", "경도", None, 60),
     "AWS": ("시간(KST)", "지점 번호", "지점명", "위도", "경도", None, 10),
 }
 MISSING_TOKENS = {"", "nan", "na", "null", "none", "#num!", "#n/a", "-"}
-NONNUMERIC = {"노면상태", "운형(운형약어)", "현상번호(국내식)"}
+NONNUMERIC = {"노면상태", "관측소 종류", "운형(운형약어)", "현상번호(국내식)"}
 STATE_CODES = {"01", "02", "03", "04", "10", "11", "12", "13", "14", "15"}
 
 
@@ -54,8 +56,7 @@ def read_csv(archive, info):
 
 
 def label_file(name):
-    match = re.search(r"Jeonbuk_(RWIS|ASOS|AWS)_daily_", name)
-    return match.group(1) if match else None
+    return daily_kind(name)
 
 
 def summarize_station_rows(frame, kind, station_summary, prev_slot, interval_counts):
@@ -108,7 +109,8 @@ def main():
     with zipfile.ZipFile(archive_path) as archive:
         daily_infos = [i for i in archive.infolist() if label_file(i.filename)]
         if args.limit_files:
-            daily_infos = [i for kind in FIELDS for i in [next(x for x in daily_infos if label_file(x.filename) == kind)]]
+            daily_infos = [next(x for x in daily_infos if label_file(x.filename) == kind)
+                           for kind in FIELDS if any(label_file(x.filename) == kind for x in daily_infos)]
         for number, info in enumerate(daily_infos, 1):
             kind = label_file(info.filename)
             try:
@@ -117,7 +119,8 @@ def main():
                 if any(col not in frame for col in (time_col, id_col, name_col, lat_col, lon_col)):
                     raise ValueError(f"Missing required columns: {frame.columns.tolist()}")
                 summarize_station_rows(frame, kind, station_summary, prev_slot, interval_counts)
-                development = frame if kind != "RWIS" else frame.loc[~frame[id_col].map(canonical_station_id).isin(PROTECTED_STATIONS)]
+                development = frame if kind not in {"RWIS", "FOG"} else frame.loc[
+                    ~frame[id_col].map(canonical_station_id).isin(PROTECTED_STATIONS | {"<missing>"})]
                 if kind == "RWIS":
                     raw_state = development["노면상태"].astype(str).str.strip()
                     normalized = raw_state.where(raw_state.ne(""), "<blank>")
@@ -133,6 +136,9 @@ def main():
                     stats["missing_tokens"] += int(missing.sum())
                     if col not in NONNUMERIC:
                         numeric = pd.to_numeric(values.where(~missing), errors="coerce")
+                        stats["official_missing_numeric"] += int(numeric.isin(MISSING_NUMBERS).sum())
+                        for sentinel in sorted(MISSING_NUMBERS):
+                            stats[f"missing:{sentinel:g}"] += int(numeric.eq(sentinel).sum())
                         invalid = ~missing & numeric.isna()
                         stats["malformed_numeric"] += int(invalid.sum())
                         for token, count in values[invalid].value_counts().head(5).items():
@@ -170,7 +176,7 @@ def main():
         intervals = interval_counts[(kind, station)]
         expected = FIELDS[kind][-1]
         station_rows.append({"kind": kind, "station_id": station,
-            "protected": kind == "RWIS" and station in PROTECTED_STATIONS,
+            "protected": kind in {"RWIS", "FOG"} and station in PROTECTED_STATIONS,
             "rows": summary["rows"], "first_kst": str(summary["first"]),
             "last_kst": str(summary["last"]), "invalid_time": summary["invalid_time"],
             "duplicate_time_within_file": summary["duplicate_time_within_file"],

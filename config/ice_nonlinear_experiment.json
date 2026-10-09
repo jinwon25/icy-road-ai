@@ -13,10 +13,27 @@
     "early_stopping": false,
     "random_state": 20260923
   },
-  "threshold_policies": ["inner_pooled_slot_f1", "inner_station_daily_f1_grid_0_to_1_step_0.01_plus_no_alarm"],
+  "threshold_policies": [
+    "inner_pooled_slot_f1",
+    "inner_station_daily_f1_grid_0_to_1_step_0.01_plus_no_alarm"
+  ],
   "negative_downsampling": false,
   "max_compute_threads": 2,
-  "data_release": "20260915_requires_rerun_after_official_correction",
-  "primary_safety_checks": ["same targets and truth as logistic", "no protected stations", "outer station absent from inner fit/selection", "no random early stopping split", "all outer predictions finite"],
-  "report": ["per-station TP FP FN", "daily station macro and denominator", "fixed observed-Ice days", "false alarm no-Ice days", "positive-station hit coverage", "ranking average precision", "winter strata (not winter-forward validation)"]
+  "data_release": "pinned_by_config/data_source.json",
+  "primary_safety_checks": [
+    "same targets and truth as logistic",
+    "no protected stations",
+    "outer station absent from inner fit/selection",
+    "no random early stopping split",
+    "all outer predictions finite"
+  ],
+  "report": [
+    "per-station TP FP FN",
+    "daily station macro and denominator",
+    "fixed observed-Ice days",
+    "false alarm no-Ice days",
+    "positive-station hit coverage",
+    "ranking average precision",
+    "winter strata (not winter-forward validation)"
+  ]
 }

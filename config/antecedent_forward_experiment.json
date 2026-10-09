@@ -1,0 +1,15 @@
+{
+  "experiment_id": "20261009_antecedent_dose_forward",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": ["antecedent"],
+  "dose_tau_minutes": [20, 60],
+  "minimum_weighted_coverage": 0.8,
+  "source_paper": "https://arxiv.org/abs/2609.33528",
+  "source_commit": "5552934b22dc25be07839fc53fe757a7d136b072",
+  "selection": "단일 추가 특징 후보. 임계값은 첫 겨울 내부 지점 OOF에서만 선택한다.",
+  "limitations": ["반복 연구한 개발 자료이며 새 독립 최종 검증이 아니다.", "논문의 04/15 양성 정의·1분 발생 예보를 재현하지 않는다. 공식 04 양성·10분 상태 추정이다.", "대상 지점 관측 대신 다른 개발 지점의 과거 온도·AWS를 사용한다.", "서리점 및 관측 간격 상수 입력은 근사이며 실제 얼음 성장량이 아니다.", "이미 열린 공식 보호 지점은 재평가·모델 선택에 사용하지 않는다."]
+}

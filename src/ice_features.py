@@ -15,10 +15,10 @@ from src.weather_features import (_load_aws, _load_daily, _nearest,
 
 def build_ice_features(archive_path: Path, limit_days: int | None = None) -> pd.DataFrame:
     with zipfile.ZipFile(archive_path) as archive:
-        rwis = _load_daily(archive, "RWIS", [0, 1, 3, 4, 5, 6],
+        rwis = _load_daily(archive, "RWIS", ["관측시각 (KST)", "관측 지점번호", "고속도로", "관측소 위도", "관측소 경도", "노면상태"],
                            ["time", "station", "route", "lat", "lon", "state_raw"],
                            limit_days)
-        asos = _load_daily(archive, "ASOS", [1, 2, 4, 5, 6],
+        asos = _load_daily(archive, "ASOS", ["시간", "지점", "위도", "경도", "기온(°C)"],
                            ["source_time", "station", "lat", "lon", "air_temp"],
                            limit_days)
         aws = _load_aws(archive, limit_days)

@@ -1,0 +1,31 @@
+{
+  "experiment_id": "20261009_crossfit_estimated_temperature",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": [
+    "estimated_temperature"
+  ],
+  "selection": "기존41개 입력에 지점3그룹 교차 적합 온도·추정온도 수분차4개 추가. 모든 온도 전처리·학습·임계값은 해당 내부/외부 학습 범위로 제한한다.",
+  "limitations": [
+    "대상 온도는 회귀 정답이며 분류 입력이 아니다. 학습 행도 자기 지점 그룹을 제외한 온도 예측만 사용한다.",
+    "첫 겨울 공간 OOF를 만드는 절차이며 각 과거 행의 미래 예보를 재현한 실험은 아니다.",
+    "보호 지점은 입력·학습·선택·재평가에서 제외한다.",
+    "기존60분 온도 혼합과 달리 같은 분류 참조30분을 사용한다.",
+    "반복 개발 비교이며 새 독립 최종 검증이 아니다.",
+    "기존 고정 모델·평가·제출초안은 변경하지 않는다."
+  ],
+  "temperature_ridge_alpha": 100.0,
+  "temperature_crossfit_groups": 3,
+  "temperature_blend_weight": 0.5
+}

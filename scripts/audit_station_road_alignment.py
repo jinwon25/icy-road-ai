@@ -36,7 +36,7 @@ def main() -> None:
                               crs="EPSG:4326").to_crs(road.crs)
     rows = []
     for item in points.itertuples():
-        expected = ROUTE_NAMES.get(item.routes)
+        expected = ROUTE_NAMES.get(item.routes.strip())
         if expected is None:
             raise ValueError(f"Unmapped RWIS route: {item.routes}")
         distances = {name: float(item.geometry.distance(geometry))

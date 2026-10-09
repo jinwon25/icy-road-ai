@@ -12,6 +12,7 @@ outputs/private/
 __pycache__/
 .pytest_cache/
 .venv/
+.venv_research/
 *.pyc
 .ipynb_checkpoints/
 *.gpkg
@@ -37,3 +38,4 @@ __pycache__/
 .env
 .env.*
 !.env.example
+secret.env

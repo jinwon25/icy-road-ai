@@ -105,10 +105,12 @@ def main():
         bootstrap[variant] = {'positive_stations': len(wide), 'mean_delta': float(delta.mean()),
                               'percentile_95_interval': [float(x) for x in np.quantile(samples, [.025, .975])],
                               'limitations': 'Exploratory 2000 station resamples; shared LOSO training sets and few stations; not independent confirmation.'}
-    summary = {'status': 'development_only_20260915_paired_nonlinear_comparison', 'smoke': args.smoke,
+    source_config = json.loads((ROOT / 'config/data_source.json').read_text(encoding='utf-8'))
+    summary = {'status': 'development_only_paired_nonlinear_comparison', 'smoke': args.smoke,
+               'data_release': source_config['release'], 'archive_sha256': source_config['sha256'],
                'target_rows': len(paired), 'valid_label_rows': len(valid), 'ice_slots': int(valid.ice_logistic.sum()),
                'variants': summaries, 'fixed_positive_day_station_bootstrap': bootstrap,
-               'limitations': ['Old data pending official correction.',
+               'limitations': ['Compare only within the pinned archive release.',
                                'Daily coverage and singly undefined precision/recall remain provisional.',
                                'Daily-macro threshold objective and candidate grid differ from pooled slot policy.',
                                'Threshold policies compared on the same fitted HGB scores; outer labels never tune thresholds.',
@@ -134,7 +136,7 @@ def main():
         ax.tick_params(axis='x', labelrotation=25)
         ax.margins(y=.2)
         ax.spines[['top', 'right']].set_visible(False)
-    fig.suptitle('Development-only Ice benchmark | 20260915 data | thresholds from inner folds', fontsize=11)
+    fig.suptitle(f"Development-only Ice benchmark | {source_config['release']} data | thresholds from inner folds", fontsize=11)
     fig.savefig(out / 'tradeoffs.png', dpi=180)
     plt.close(fig)
     print(json.dumps(summary, ensure_ascii=False), flush=True)

@@ -22,7 +22,8 @@ lines = ["# 변수 사전과 품질 요약", "",
          "## 변수별 현황", "",
          "원본 CSV 첫 파일의 실제 열 이름을 기준으로 작성했다. 결측토큰과 숫자 오류는 개발용 RWIS 14개소, ASOS·AWS 전체 행에서 집계했다. 정적 메타데이터 열에는 동적 품질 통계를 적용하지 않았다.",
          ""]
-for kind in ("RWIS", "ASOS", "AWS"):
+present_kinds = [kind for kind in FIELDS if inventory.kind.eq(kind).any()]
+for kind in present_kinds:
     lines += ["| 자료 | 원본 열 | 원본형 | 처리형 | 역할 | 표기 단위 | 분모 | 결측토큰 | 숫자 오류 |",
               "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: |"]
     header = inventory.loc[inventory.kind == kind, "header"].iloc[0].split(" | ")
@@ -65,11 +66,11 @@ for kind in ("RWIS", "ASOS", "AWS"):
         lines.append(f"| {kind} | {col or '(빈 열명)'} | string | {parsed} | {role} | {unit} | {n} | {missing} | {invalid} |")
     lines.append("")
 lines += [
-    "노면상태 코드의 원본 정의: 01 건조(Dry), 02 젖음(Wet), 03 눈(Snow), 04 결빙(Ice), 10 저시정, 11 노면 위 물 고임, 12 제빙제 사용으로 결빙 안 됨, 13 제빙제 사용으로 결빙 시작, 14 습윤(Damp), 15 물·얼음 판별 불가. 공식 설명에 따라 04만 Ice 양성으로 둔다. 13·15는 현재 잠정 음성이고, 빈 값·미정의 코드는 평가에서 제외한다.",
+    "노면상태 코드의 원본 정의: 01 건조(Dry), 02 젖음(Wet), 03 눈(Snow), 04 결빙(Ice), 10 저시정, 11 노면 위 물 고임, 12 제빙제 사용으로 결빙 안 됨, 13 제빙제 사용으로 결빙 시작, 14 습윤(Damp), 15 물·얼음 판별 불가. 10월 6·7일 Q&A 588에 따라 04만 Ice 양성이며 13·15 등 나머지 유효 상태는 음성이다. 빈 값·0·-999·미정의 코드는 평가에서 제외한다.",
     "",
     "RWIS 시정은 m, ASOS 시정은 10m 표기다. ASOS 풍향은 16방위 표기와 수치 값의 관계가 미확인이다. RWIS 노면온도의 광학 표기는 센서 방식이며 온도 단위는 원본 헤더에 명시되지 않았다. 누적 강수량은 자정 초기화를 고려해야 한다.",
     "",
     "세부 오류 문자열과 건수는 Git에서 제외된 `outputs/private/full/variable_quality.csv`에 보존했다. 이 사전은 원본 값을 변경하지 않는다.",
 ]
 (ROOT / "docs" / "VARIABLE_DICTIONARY.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
-print("columns",sum(len(inventory.loc[inventory.kind == kind, "header"].iloc[0].split(" | ")) for kind in FIELDS))
+print("columns",sum(len(inventory.loc[inventory.kind == kind, "header"].iloc[0].split(" | ")) for kind in present_kinds))

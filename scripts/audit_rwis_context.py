@@ -12,6 +12,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_source import competition_archive, sha256_file
+from src.observation_io import daily_members, read_columns
 from src.rwis_context import add_source_history, select_reference, pair_context
 from src.validation import PROTECTED_STATIONS, canonical_station_id, assert_training_stations, normalize_state, binary_metrics
 from src.weather_features import _numeric_range
@@ -22,11 +23,10 @@ def main():
     archive = competition_archive(ROOT)
     chunks = []
     with zipfile.ZipFile(archive) as zipped:
-        for name in sorted(n for n in zipped.namelist() if 'RWIS_daily_' in n):
-            with zipped.open(name) as stream:
-                part = pd.read_csv(stream, usecols=[0, 1, 3, 6, 7, 9, 10], dtype=str,
-                                   encoding='utf-8-sig', keep_default_na=False)
-            part.columns = ['time', 'station', 'route', 'state_raw', 'road_temp', 'humidity', 'rain_cum']
+        for name in daily_members(zipped, 'RWIS'):
+            part = read_columns(zipped, name,
+                                ['관측시각 (KST)', '관측 지점번호', '고속도로', '노면상태', '노면온도 (광학)', '습도 (%)', '일 누적 강수량 (mm)'],
+                                ['time', 'station', 'route', 'state_raw', 'road_temp', 'humidity', 'rain_cum'])
             part['station'] = part.station.map(canonical_station_id)
             part = part.loc[~part.station.isin(PROTECTED_STATIONS) & part.station.ne('<missing>')].copy()
             chunks.append(part)
@@ -129,7 +129,9 @@ def main():
             for label, mask in [('true', observed & flag), ('false', observed & ~flag), ('missing', ~observed)]:
                 strata.append({'station': station, 'condition': field, 'stratum': label,
                                'rows': int(mask.sum()), 'ice_slots': int(group.loc[mask, 'ice'].sum())})
-    summary = {'status': 'development_only_prior_neighbor_context_audit_20260915',
+    source_config = json.loads((ROOT / 'config/data_source.json').read_text(encoding='utf-8'))
+    summary = {'status': 'development_only_prior_neighbor_context_audit',
+               'data_release': source_config['release'], 'archive_sha256': source_config['sha256'],
                'target_rows': len(context), 'valid_labels': len(valid), 'ice_slots': int(valid.ice.sum()),
                'source_metadata_policy': 'same route, nearest allowed station; moisture capability inferred from nonmissing sensor values without Ice labels',
                'prior_age_cap_minutes': 30, 'history_window': '60 minutes including source timestamp; source strictly before target',

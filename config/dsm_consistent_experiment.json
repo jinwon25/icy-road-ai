@@ -1,0 +1,11 @@
+{
+  "experiment_id": "20261008_consistent_dsm_height_forward",
+  "rationale": "관측소와 새 구간에 동일한 DSM 높이 정의를 적용한 열·수분 모델을 검증한다.",
+  "train_before": "2025-03-01",
+  "validate_from": "2025-11-01",
+  "model": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "positive_weight": 20.0,
+  "max_compute_threads": 2,
+  "candidates": ["thermal_dsm"],
+  "limitations": ["관측소 제공 고도와 DSM 높이를 혼합하지 않는다.", "그 밖의 지형·복사 특성은 추가하지 않는다.", "공식 보호 지점 제외", "다음 겨울 외부 정답을 임계값 선택에 사용하지 않음"]
+}
