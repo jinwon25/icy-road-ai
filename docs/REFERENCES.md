@@ -1,5 +1,17 @@
 # 공식 자료·선행연구 목록
 
+## 온도 교차 추정·상태 분류·점수 이전 — 2026-10-09
+
+[최신 실험 보고서](JOINT_SURFACE_REVIEW_20261009.md)에 출처별 실제 적용과 한계를 연결했습니다. 원문 URL·수집 시각·SHA256는 비공개 검토 폴더에 보존합니다.
+
+- Karsisto, V. E. (2024), [RoadSurf 1.1: open-source road weather model library](https://gmd.copernicus.org/articles/17/4837/2024/), GMD 17, 4837–4853, DOI 10.5194/gmd-17-4837-2024. 온도 에너지수지와 물·눈·얼음·착빙 저장량을 구분하는 근거입니다. 이번 데이터 모델을 RoadSurf 구현이나 검증된 물리 모델로 부르지 않습니다.
+- [Vaisala RWS200 Surface state and temperature sensors](https://docs.vaisala.com/r/M211607EN-AA/en-US/GUID-8FB4E70E-7340-403E-BD77-6ED1D7F3AA0A), 문서 M211607EN-AA. 광학·매립 방식과 수분·약품·동결점·측정 면적·설치 영향을 해석하는 공식 기술 자료입니다. 대회 지점의 실제 장비 모델이나 센서 오류를 확인한 근거는 아닙니다.
+- [scikit-learn 1.6 StackingClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingClassifier.html)와 [HGBClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html). 같은 학습행의 보조 예측 재사용이 초래하는 과적합 위험, 교차 검증 예측과 이진/다중 손실을 확인했습니다. 여기서는 공간 그룹을 직접 제외해 온도를 입력으로 만들었습니다.
+- Lipton, Z. C., Wang, Y.-X., Smola, A. J. (2018), [Detecting and Correcting for Label Shift with Black Box Predictors](https://proceedings.mlr.press/v80/lipton18a.html), ICML, PMLR 80, 3122–3130. 양성 비율 이동의 추정·보정에는 클래스 조건부 입력 분포 유지와 혼동행렬의 가역성 등 조건이 필요합니다. 지점별 정답 비율이 다르다는 사실만으로 이 조건이 성립한다고 판단하지 않습니다.
+- [scikit-learn 1.6 CalibratedClassifierCV](https://sklearn.org/1.6/modules/generated/sklearn.calibration.CalibratedClassifierCV.html). 모델 학습과 보정 자료의 분리, 작은 자료의 isotonic 과적합 한계를 확인했습니다. 보정과 BBSE는 후속 실행 가설이며 이번에 수행한 모델 성과가 아닙니다.
+
+공식 문제·데이터 본문·제출 공지·참가 서약과 여섯 Q&A를 이번 작업에서도 재확인했습니다. 직전 원문과 일치하며 633번 답변은 여전히 없습니다. 확정 답변과 [미확정 규격](QUESTIONS_FOR_ORGANIZER.md)을 구분합니다.
+
 ## 제공 설명서 기반 도로교·보도교·철교 구분 — 2026-10-09
 
 제공 `other_spatial.zip` 내부의 **국토지리정보원 전국 연속수치지형도 데이터베이스설계서 v5.1.1(2014-12-30)를** 직접 확인했다. 3쪽은N3A 교량/터널 면 레이어와1:5,000 목록,21쪽은교량 KIND/QUAL 코드 및EYMD설치연도,22·27쪽은FMTA제작정보 참조(SL_PRODUCT_INFO),27쪽은터널 필드/통합코드다. 해당 공급 버전의 속성 의미를 해석하는 근거이며 최신 고시·현재 구조물 현황·치수 단위·실제 차로 소속의 증명이 아니다.

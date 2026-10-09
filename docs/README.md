@@ -6,9 +6,10 @@
 
 1. [현재 진행 상태](PROJECT_STATUS.md): 완료·미완료와 다음 분석의 우선순위를 확인합니다.
 2. [공식 정보 재검토](OFFICIAL_REVIEW_20261009.md): 최신 Q&A 633의 미답변 상태와 기존 확정 답변을 확인합니다.
-3. [온도·수분 가안과 다음 겨울 결과](THERMAL_ICE_AND_RESERVED_REVIEW_20261009.md): 개발 개선·지점/사건 손실·기존 독립 겨울 결과를 구분합니다.
-4. [기상 단독 온도·대표성](WEATHER_FALLBACK_REVIEW_20261009.md): 온도 개선의 분모·선택 조건과 상태 분포 차이를 확인합니다.
-5. [검증 규약](VALIDATION_PROTOCOL.md)과 [실행 안내](RUNBOOK.md): 누수 차단·일별 지표·재현 조건을 확인합니다.
+3. [온도 교차 추정·상태 분류·점수 이전](JOINT_SURFACE_REVIEW_20261009.md): 최신 두 후보의 미채택과 보정 검증 우선순위를 확인합니다.
+4. [온도·수분 가안과 다음 겨울 결과](THERMAL_ICE_AND_RESERVED_REVIEW_20261009.md): 개발 개선·지점/사건 손실·기존 독립 겨울 결과를 구분합니다.
+5. [기상 단독 온도·대표성](WEATHER_FALLBACK_REVIEW_20261009.md): 온도 개선의 분모·선택 조건과 상태 분포 차이를 확인합니다.
+6. [검증 규약](VALIDATION_PROTOCOL.md)과 [실행 안내](RUNBOOK.md): 누수 차단·일별 지표·재현 조건을 확인합니다.
 
 ## 주제별 문서
 
@@ -20,7 +21,7 @@
 | 검증·실행 | [검증 설계](VALIDATION_PROTOCOL.md) · [단계별 실행 안내](RUNBOOK.md) · [실험 기록](EXPERIMENT_LOG.md) | 학습·평가 분리, 실제 명령, 실행 시점별 결과 |
 | 온도 예측 | [단순 기온 기준](BASELINE_REPORT.md) · [기상 결합 모델](WEATHER_FUSION_REPORT.md) | 기온을 노면온도 대신 쓰는 기준과 여러 기상 변수를 사용한 모델 |
 | 주변 도로 관측 | [주변 관측 비교](NEIGHBOR_RWIS_REPORT.md) · [다음 겨울 검증](NEIGHBOR_TRANSFER_REPORT.md) | 주변 노면온도의 추가 효과와 검증 조건의 차이 |
-| 최신 개발 | [열·수분·독립 겨울](THERMAL_ICE_AND_RESERVED_REVIEW_20261009.md) · [기상 단독 온도](WEATHER_FALLBACK_REVIEW_20261009.md) · [가중치 미채택](ICE_GROUP_BALANCED_REVIEW_20261009.md) · [병목 진단](ICE_BOTTLENECK_REVIEW_20261009.md) | 최신 결과와 실패·지점·사건별 손실 |
+| 최신 개발 | [상태 분류·점수 이전](JOINT_SURFACE_REVIEW_20261009.md) · [열·수분·독립 겨울](THERMAL_ICE_AND_RESERVED_REVIEW_20261009.md) · [기상 단독 온도](WEATHER_FALLBACK_REVIEW_20261009.md) · [가중치 미채택](ICE_GROUP_BALANCED_REVIEW_20261009.md) · [병목 진단](ICE_BOTTLENECK_REVIEW_20261009.md) | 최신 결과와 실패·지점·사건별 손실 |
 | 결빙 판정 | [첫 분류 모델](ICE_BASELINE_REPORT.md) · [비선형 모델](ICE_NONLINEAR_REPORT.md) | 결빙 적중·오경보·놓친 결빙을 함께 비교 |
 | 추가 입력·구간 | [시설·과거 기상 실험](FACILITY_HISTORY_REPORT.md) · [정정본 전 작업](PRE_CORRECTION_WORK_REPORT.md) | 채택하지 않은 입력, 주변 관측의 정보량, 위험 점수 없는 도로 구간 |
 | 연구 근거 | [후속 실험 설계](FOLLOWUP_EVIDENCE.md) · [자료·선행연구](REFERENCES.md) | 실험을 선택한 이유와 참고 자료의 적용 한계 |

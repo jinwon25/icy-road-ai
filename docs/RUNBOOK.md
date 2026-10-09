@@ -21,6 +21,19 @@ python scripts/check_markdown.py
 
 ## 최신 개발 진단 재현
 
+온도 교차 추정·이진/다중 상태 실험은 기존 첫 겨울 입력과 감사된 HGB 회귀 모델이 있어야 실행됩니다. **새 출력 폴더만 허용**하며 다음 겨울·보호 지점 정답을 읽지 않습니다. 현재 원본 실험은 두 새 후보 모두 미채택입니다.
+
+```powershell
+python scripts/evaluate_joint_surface.py --output outputs/private/joint_surface_reproduction_v2
+python scripts/audit_joint_surface.py --experiment outputs/private/joint_surface_reproduction_v2
+python scripts/diagnose_joint_surface.py --experiment outputs/private/joint_surface_reproduction_v2
+python scripts/plot_joint_surface.py --experiment outputs/private/joint_surface_reproduction_v2 --output outputs/private/joint_surface_reproduction_v2/review.png
+```
+
+평가·감사·사후 순위 진단·집계 그림 순서입니다. 입력 파일과 고정 매개변수는 첫 명령의 `paths`·`PLAN`에 명시합니다. 자동 등록된 기존 100단계와 서명된 수정본을 변경하지 않는 별도 개발 실험이며, [최신 보고서](JOINT_SURFACE_REVIEW_20261009.md)에 분모·누수 경계·실패·다음 실행 조건을 정리했습니다.
+
+## 직전 고정 진단 재현
+
 다음 명령은 저장소 루트에서 실행합니다. 필요한 기존 입력은 Git에 포함하지 않습니다.
 
 ```powershell
