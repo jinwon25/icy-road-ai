@@ -19,7 +19,33 @@ python scripts/check_markdown.py
 
 단위 테스트는 합성 데이터로 수행합니다. 노트북 실행과 전체 모델 성능 재현은 비공개 산출물이 필요하므로 데이터 없는 검증 명령에 포함하지 않습니다. GFM은 로컬에서 렌더하며 문서를 외부 렌더 서비스에 전송하지 않습니다.
 
-## 최신 개발 진단 재현
+## 연구 인계물 검산
+
+참가자 본인의 로컬 `outputs/private/research_delivery_20261009_v2/`에 코드·모델·첫 겨울 학습 표·새 8지점 고정 입력과 정답·구간 결과·문서를 묶었습니다. 인증키·보호 정답·기존 다음 겨울 9지점 정답은 포함하지 않습니다. 제공 자료에서 파생한 파일이 있으므로 외부 업로드용이 아닙니다.
+
+```powershell
+python -X utf8 scripts/reproduce_research_delivery.py --delivery outputs/private/research_delivery_20261009_v2 --verify-only
+```
+
+전체 패키지 재현은 실제 실행했고 완료 기록을 남겼습니다. 재실행은 기록을 덮어쓰지 않고 거부합니다. 다른 위치에 패키지를 복사해 첫 검산할 때는 패키지 `README.md`의 설치·실행 명령을 따릅니다. 원본 캐시 없이 첫 겨울 23지점 회귀 재적합·기존 저장 모델 추론·새 8지점 고정 예측·지표를 재현하지만, 전 구간 GIS 원천 재구축까지 재현하는 패키지는 아닙니다.
+
+새 지점 수집·평가는 완료했습니다. `fresh_station_validation.py prepare/collect/evaluate`를 완료 지점에서 다시 실행하지 않습니다. 이미 정답 요청 이력이 있는 8지점에 새 블라인드 봉인을 만드는 것도 코드에서 차단합니다. 아래 감사 결과는 원본 폴더의 `independent_verification.json`으로 확인하며, 기존 감사 파일이 있는 재실행은 거부됩니다. 수집 간격 편차와 성능 검산의 구분은 [새 지점 보고서](FRESH_STATION_REVIEW_20261009.md)에 있습니다.
+
+## 보정·상태·구간 진입점
+
+아래 명령은 원본 첫 겨울 학습 입력·고정 모델·링크·기상 캐시가 있어야 실행됩니다. 이미 완료한 원본 폴더를 덮어쓰지 않도록 **새 출력 폴더만** 지정합니다.
+
+```powershell
+python -X utf8 scripts/evaluate_score_calibration.py --output outputs/private/score_calibration_reproduction_v2
+python -X utf8 scripts/audit_score_calibration.py --experiment outputs/private/score_calibration_reproduction_v2
+python -X utf8 scripts/diagnose_state_temperature.py --output outputs/private/state_temperature_reproduction_v2
+python -X utf8 scripts/build_segment_exposure.py --winter first --output outputs/private/segment_exposure_reproduction_v2
+python -X utf8 scripts/audit_segment_exposure.py --experiment outputs/private/segment_exposure_reproduction_v2
+```
+
+두 번째 겨울의 기상 전용 구간 재구축은 `--winter second`와 다른 새 출력 폴더를 사용합니다. 코드가 AWS·ASOS만 읽으며 RWIS 정답을 입력으로 받지 않습니다. `render_segment_review.py`는 감사된 두 원본 겨울 폴더에서 JPG·HTML을 새 `--output`에 생성합니다. 1km는 하위 중앙점 통계의 길이 가중 평균이라는 [필드 정의](SEGMENT_EXPOSURE_REVIEW_20261009.md#필드와-1km-집계-의미)를 함께 읽습니다.
+
+## 직전 상태 분류 진단 재현
 
 온도 교차 추정·이진/다중 상태 실험은 기존 첫 겨울 입력과 감사된 HGB 회귀 모델이 있어야 실행됩니다. **새 출력 폴더만 허용**하며 다음 겨울·보호 지점 정답을 읽지 않습니다. 현재 원본 실험은 두 새 후보 모두 미채택입니다.
 

@@ -1,5 +1,19 @@
 # 공식 자료·선행연구 목록
 
+## 최신 보정·관측 대표성·전북 구간 — 2026-10-09
+
+[점수 보정 보고서](SCORE_CALIBRATION_REVIEW_20261009.md)와 [구간·환경 보고서](SEGMENT_EXPOSURE_REVIEW_20261009.md)에 실제 적용과 한계를 연결했습니다. 앞선 문서의 ‘보정 미실행’은 당시 상태이며 이번에는 중첩 sigmoid·사전 비율 점수 보정을 구현·검산하고 미채택했습니다. 원 논문의 성능·계수·배점을 가져오지 않았습니다.
+
+| 1차 자료 | 이번 적용·확인 | 한계 |
+| --- | --- | --- |
+| [RoadSurf, Karsisto 2024](https://gmd.copernicus.org/articles/17/4837/2024/) | 열수지·수분/눈/얼음 저장량 구분, 단순 저온·수분 가안 해석 | 완전한 물리 모델·제빙 과정 구현 아님 |
+| [Vaisala 센서 공식 설명](https://docs.vaisala.com/r/M211607EN-AA/en-US/GUID-8FB4E70E-7340-403E-BD77-6ED1D7F3AA0A) | 광학/매립·관측 영역·상태/온도 불일치 가설 검토 | 실제 설치 장비 모델·오라벨 확인 불가 |
+| [Lipton·Wang·Smola 2018](https://proceedings.mlr.press/v80/lipton18a.html), [scikit-learn 보정](https://scikit-learn.org/1.6/modules/generated/sklearn.calibration.CalibratedClassifierCV.html) | 클래스 조건부 분포 가정·모델 학습/보정 분리 | 순수 label shift를 가정하지 않음. BBSE는 구현하지 않음 |
+| [SGIS 통계경계 설명](https://sgis.mods.go.kr/view/pss/openDataIntrcn), [경계 API](https://sgis.mods.go.kr/developer/html/newOpenApi/api/dataApi/addressBoundary.html) | EPSG:5179,2024년전북35경계의 자기영역조회·해시 | API 표현 경계·원문출처보존. 법정측량경계·재배포권한 확정 아님 |
+| [국토교통부2023표준노드링크기준](https://www.codil.or.kr/filebank/moct2014/202301/MOCT3000_1.PDF?nserialno=3000), [FHWA ESS입지](https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm) | ROADTYPE003/004·LANES/MAXSPD/UPDATEDATE해석·지역/국지대표성 구분 | 과거링크코드≠구조물정확경계. 현행제한속도·한국효과크기 아님 |
+
+공식 문제·자료 본문·Q&A6건·공지·참가서약 재조회 원문은 `outputs/private/final_review_20261009_v1/`에 SHA256와 함께 보존했습니다. SGIS 원천응답·조회조건은 `outputs/private/sgis_boundary_2024_v1/`에 보존했습니다. 키·인증 응답·요청 토큰은 출처 문서에 넣지 않습니다. 시간 블록 재표집은 자체 정의한 고정지점 민감도 계산이며 원 논문의 엄밀한 신뢰구간 구현이라고 주장하지 않습니다.
+
 ## 온도 교차 추정·상태 분류·점수 이전 — 2026-10-09
 
 [최신 실험 보고서](JOINT_SURFACE_REVIEW_20261009.md)에 출처별 실제 적용과 한계를 연결했습니다. 원문 URL·수집 시각·SHA256는 비공개 검토 폴더에 보존합니다.
@@ -36,7 +50,7 @@
 
 | 1차 자료 | 확인 및 적용 | 한계 |
 | --- | --- | --- |
-| [RoadSurf v7.0 논문, FMI, 2024](https://gmd.copernicus.org/articles/17/4837/2024/gmd-17-4837-2024.html), [공식 MIT 소스](https://github.com/fmidev/RoadSurf) | 복사·노면 에너지 수지와 물·얼음 저장량이 중요한 과정임을 확인. 냉각·수분·운량·복사·차폐 특성의 설계 근거 | 완전한 RoadSurf를 이식하거나 제빙제·물 저장량을 재현한 모델은 아님. 소스 열람만 했으며 코드 복제 없음 |
+| [RoadSurf 1.1 논문, FMI, 2024](https://gmd.copernicus.org/articles/17/4837/2024/gmd-17-4837-2024.html), [공식 MIT 소스](https://github.com/fmidev/RoadSurf) | 복사·노면 에너지 수지와 물·얼음 저장량이 중요한 과정임을 확인. 냉각·수분·운량·복사·차폐 특성의 설계 근거 | 완전한 RoadSurf를 이식하거나 제빙제·물 저장량을 재현한 모델은 아님. 소스 열람만 했으며 코드 복제 없음 |
 | [METRo, Crevier & Delage, 2001](https://journals.ametsoc.org/view/journals/apme/40/11/1520-0450_2001_040_2026_manmfr_2.0.co_2.xml) | 노면 열수지·수분과 관측 결합의 근거 | METRo의 검증 수치를 본 프로젝트에 전용하지 않음 |
 | [Sensors 26(13), 4225, 2026](https://www.mdpi.com/1424-8220/26/13/4225) | 국내 무관측 도로 결빙 예방 연구의 입력·정답·분할을 검토 | 규칙 생성 예방 위험 3분류 및 무작위 분할의 높은 F1을 실제 Ice·공간 제외 검증과 비교할 수 없음 |
 | [기상청 ASOS 설명](https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmN=) | 겨울철 강수 관측 간격과 QC·결측 설명 확인 | 빈 강수·적설·일사 값을 무조건 0으로 대체하지 않음 |

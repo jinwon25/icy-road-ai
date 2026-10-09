@@ -1,0 +1,25 @@
+{
+  "plan_id": "20261009_new_station_blind_v1",
+  "source": "https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293",
+  "endpoint": "https://apihub.kma.go.kr/api/typ01/url/road_stn_obs.php",
+  "development_start_kst": "2024-11-01",
+  "development_end_kst": "2025-02-28",
+  "station_groups": {
+    "seohaean_daecheon": ["12206", "12407"],
+    "seohaean_south": ["12104", "12212"],
+    "honam_gwangju": ["23206", "23406"],
+    "tongyeong_sancheong": ["33209", "33415"]
+  },
+  "competition_stations_excluded_from_external_requests": ["12103", "12209", "12210", "12211", "12306", "12409", "12410", "23202", "23203", "23204", "23402", "23403", "33103", "33206", "33312", "33409", "33410", "33411", "33412", "12207", "12408", "23205", "23404", "33205", "33207", "33408", "33413", "33414"],
+  "collector_permitted_partition": "development_only",
+  "minimum_request_interval_seconds": 1.2,
+  "request_maximum_minutes": 1440,
+  "window_minutes": 720,
+  "selection_basis": "Metadata only: previously unused basic/icing/representative stations on the same three routes, grouped in nearby corridors outside the original 23 training stations. No outcome or availability based reselection.",
+  "frozen_policies": ["original_ice", "thermal_moisture"],
+  "temperature_comparison": ["original_weather_ridge", "weather_hgb23"],
+  "thresholds": "Original competition14 Ice model retains its existing threshold. Thermal rule: estimated temperature <=0 and dewpoint >= estimated temperature or prior3h rain>0 or ASOS snow>0. No new threshold search.",
+  "gate": "Prepare every planned ten-minute prediction and seal models, inputs, plan and source before any new station observation request. Open outcomes once, report all eight stations including missing/undefined states. Never tune using these outcomes.",
+  "primary_comparison": "Same valid Ice rows, complete-day and event denominators; both FP and FN must fall for a joint improvement claim. Temperature uses shared finite rows and station macro MAE/RMSE. Report weather distance, coverage, response-coordinate differences and station-specific failures.",
+  "limitations": ["Spatial generalization only: same winter, existing weather network and stations outside Jeonbuk. Not an independent future-winter or official score.", "Metadata does not establish independent sensors, historical availability or conditional distribution stability.", "Honam pair is nearly colocated; report station and group counts separately.", "First request time and complete prediction seal establish prospectivity; local hashes alone are not third-party proof."]
+}
