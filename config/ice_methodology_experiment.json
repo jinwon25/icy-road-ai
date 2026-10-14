@@ -1,0 +1,19 @@
+{
+  "experiment_id": "20261010_spatial_ice_methodology_v1",
+  "candidates": ["hgb_long300", "hgb_no_distance", "hgb_history", "hgb_balanced", "catboost400", "hurdle_non_dry"],
+  "hgb": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "catboost": {"iterations": 400, "depth": 4, "learning_rate": 0.03, "l2_leaf_reg": 20.0, "loss_function": "Logloss", "random_seed": 20260923, "bootstrap_type": "Bayesian", "bagging_temperature": 1.0, "random_strength": 1.0, "grow_policy": "SymmetricTree", "boosting_type": "Plain", "nan_mode": "Min", "thread_count": 2, "use_best_model": false, "allow_writing_files": false, "verbose": false},
+  "positive_weight": 20.0,
+  "history_columns": ["estimated_weather_temp", "aws_air_temp", "aws_humidity", "aws_dewpoint", "aws_rain_15m", "aws_wind_speed"],
+  "history_windows_minutes": [60, 180],
+  "history_coverage": 0.8,
+  "history_boundary": "[t-window,t), 현재 시각과 미래 시각 제외. 정확히 t-60분 값으로 변화량 계산. 목표 실제 온도·상태 미사용.",
+  "hurdle_labels": "1단계 공식01 대 나머지 정의된 코드. 2단계 비01 학습행에서 공식04 대 나머지. 13/15는 Ice로 재분류하지 않음.",
+  "comparators": ["original", "thermal14", "binary100_control"],
+  "threshold_selection": "403개 고정 임계값 중 내부 original FP/FN 예산을 모두 충족하는 후보에서 실제 결빙일 F1, 시점 F1, 높은 임계값 순으로 하나 선택. 불가능하면 FP 예산 후보를 진단용으로 기록하되 채택하지 않음.",
+  "promotion_gate": "내부 original와 thermal14 모두에 대해 FP/FN, 모든 양성 지점 TP, 사건/단일시점 탐지, 네 F1 비악화 및 엄격 개선 요구. 적격 후보의 실제 결빙일 F1 우선. 없으면 original 유지.",
+  "scope": "반복 검토한 첫 겨울 개발 자료. 공간 OOF이나 독립 평가·공식 점수·미래 예보 아님.",
+  "estimated_temperature": "기존 독립 감사 통과 joint_surface의 3개 보조 공간 블록 온도만 재사용. 모델 비교와 온도 후보 변경을 동시에 하지 않음.",
+  "protected_or_assessment_outcomes_used": false,
+  "max_compute_threads": 2
+}

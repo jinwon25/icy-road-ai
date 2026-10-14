@@ -1,0 +1,105 @@
+{
+  "checked_date_kst": "2026-10-13",
+  "timezone": "Asia/Seoul",
+  "problem_id": "PROB_000000000004604",
+  "application_deadline_date": "2026-11-06",
+  "application_deadline_is_result_deadline": false,
+  "result_submission": {
+    "open_as_of_check": false,
+    "opening_date": null,
+    "deadline_date": null,
+    "deadline_time_if_announced": "23:59",
+    "timezone": "Asia/Seoul",
+    "schedule_status": "운영진 별도 공지 대기",
+    "status_basis": "공개 공지564와 일반 답변632 기준",
+    "authenticated_submission_form_verified": false
+  },
+  "application": {
+    "handwritten_signature_required": true,
+    "typed_signature_rejected": true,
+    "previous_bytes": 133120,
+    "current_bytes": 222720,
+    "current_sha256": "f2a615e512d556d326164e65a77a9c9878f881512352d67b85cedeb69560c5d0",
+    "submitted_application_modified": false,
+    "participant_account_approval_verified": false
+  },
+  "ai": {
+    "design_and_development_assistance_allowed": true,
+    "usage_and_review_record_required": true,
+    "external_api_direct_analysis_or_prediction": "원칙적 비허용; 문제별 제한사항 별도 확인",
+    "public_weather_data_training": "문제별588 답변에서 출처·근거 제시 조건으로 허용",
+    "evaluation_time_raw_data_api_access": "명시적 추가 답변 미확인",
+    "project_inference": "캐시·로컬 저장 모델 기반; 검토 패키지 외부 예측 API 호출0"
+  },
+  "evaluation": {
+    "problem_and_data_content_unchanged": true,
+    "displayed_release": "20261007",
+    "full_zip_byte_identity_verified": false,
+    "official_ice_code": "04",
+    "known_non_ice_codes": [
+      "01",
+      "02",
+      "03",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "qa633_answer_present": false,
+    "incomplete_day_policy_status": "미확정",
+    "single_metric_zero_denominator_policy_status": "미확정",
+    "csv_schema_status": "해당 문제의 구체 규격 미확정",
+    "faq_screenshot_schema_applies_to_this_problem": false
+  },
+  "sources": {
+    "problem_page": {
+      "url": "https://aida.kisti.re.kr/competition/main/problem/PROB_000000000004604/detail.do",
+      "response_sha256": "bbfe375f78ed60742c4a208aed6b53c6462a26a8658e95f5b4f35cbf10e498b1",
+      "status": 200
+    },
+    "notice_639": {
+      "url": "https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=639",
+      "response_sha256": "c296095755a24f98c1dceb7f5af98d223a31ff7bc0b83714e86f666b229c82fa",
+      "status": 200
+    },
+    "notice_564": {
+      "url": "https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=564",
+      "response_sha256": "a2a7477a4875cb4d8aba6d4ece60b4ca72ca33ab520801ce8f06b67a0329258c",
+      "status": 200
+    },
+    "problem_qa_633": {
+      "url": "https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=633",
+      "response_sha256": "5c1dc7fdc4839ef7288012acacf5f8e88d2ef97d874ab75c5df83e68d40b1eb9",
+      "status": 200
+    },
+    "problem_qa_588": {
+      "url": "https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=588",
+      "response_sha256": "dfedb6ee2d1e9fb5e605f9ac581bf231984fe99e46cf50b37b17275467222db5",
+      "status": 200
+    },
+    "general_qa_632": {
+      "url": "https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=632",
+      "response_sha256": "a93e7f5c2cb8319a255f9c73cef0a57ca9c2e38c8691421cfa571e63571a0a70",
+      "status": 200
+    },
+    "general_qa_618": {
+      "url": "https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=618",
+      "response_sha256": "f0e3a55e53b0f9fdded5b3b0b1336a02d0707af78e21b6ab36faaf56cb14505f",
+      "status": 200
+    },
+    "problem_tabs": {
+      "url": "https://aida.kisti.re.kr/competition/main/problem/loadOverview.do?probId=PROB_000000000004604",
+      "response_sha256": "d4c64e294bac4e1f7cf653dcf9c1971350d723fa98544a904ed15f67c2a2a2a4",
+      "status": 200
+    },
+    "current_application": {
+      "url": "https://aida.kisti.re.kr/competition/cmm/fms/FileDown.do?atchFileId=FILE_000000000003138&fileSn=0",
+      "response_sha256": "f2a615e512d556d326164e65a77a9c9878f881512352d67b85cedeb69560c5d0",
+      "status": 200
+    }
+  },
+  "external_publication_made": false,
+  "competition_submission_made": false
+}

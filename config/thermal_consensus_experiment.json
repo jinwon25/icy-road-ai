@@ -1,0 +1,19 @@
+{
+  "experiment_id": "20261013_thermal_consensus_v1",
+  "scope": "이미 반복 사용한 첫 겨울 개발 자료의 후속 비교이며 독립 최종 평가가 아니다.",
+  "temperature_aggregation": ["mean", "coldest", "warmest"],
+  "cold_threshold_celsius": [-0.5, 0.0, 0.5],
+  "dewpoint_margin_celsius": [0.0, 1.0],
+  "rain_threshold_mm": 0.0,
+  "snow_threshold_cm": 0.0,
+  "baseline": "original_trio",
+  "selection": "다른 세 공간 그룹의 이중 제외 예측으로만 선택. 144 및 1 유효슬롯 조건에서 P/R/F1 동시 비악화, 합산 FP/FN 비악화, 양성 지점 TP 유지, 기존 사건 손실0을 모두 요구. 적격 후보 중 F1 최대, FP 최소, 이름순. 미통과 시 기존 기준 유지.",
+  "coverage_sensitivity": [144, 130, 72, 1],
+  "independent_assessment_outcomes_used": false,
+  "maximum_compute_threads": 2,
+  "references": [
+    "https://journals.ametsoc.org/view/journals/apme/48/12/2009jamc1900.1.xml",
+    "https://scikit-learn.org/1.6/modules/classification_threshold.html",
+    "https://jmlr.org/papers/v11/cawley10a.html"
+  ]
+}

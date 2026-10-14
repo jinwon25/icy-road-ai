@@ -2,7 +2,140 @@
 
 공식 규격·관측 정의·모델·공간 처리의 근거를 정리합니다. 각 출처의 실제 적용과 한계를 함께 표시하며 문헌의 성능·계수를 이 프로젝트의 결과로 옮기지 않습니다.
 
-[문서 목록](README.md) · [최신 연구 인계](RESEARCH_DELIVERY_REVIEW_20261009.md)
+[문서 목록](README.md) · [최신 평균·새 호남 검증](TEMPERATURE_MEAN_AND_BLIND_REVIEW_20261010.md) · [거리·기상망 검토](WEATHER_DISTANCE_AND_NETWORK_REVIEW_20261010.md)
+
+## 결빙점 가중 학습과 보고서 개편 — 2026-10-14
+
+[새 모델·보고서 검토](MODEL_REPORT_UPGRADE_20261014.md)에서 다음 자료의 적용 조건과 실제 결과를 정리했습니다.
+
+| 자료 | 적용 |
+| --- | --- |
+| [도로온도 XGBoost 보정, 2026](https://doi.org/10.1175/JAMC-D-25-0189.1) | 결빙점 부근 가중 학습의 동기. 자체 고정 가중식으로 공간 제외 실험 |
+| [Ma 등 국내 LSTM, 2026](https://doi.org/10.3390/app16199487) | 과거 노면온도가 필요한 지점별 예측과 현재 미관측 위치 추정의 입력 차이 |
+| [Li 등 LSTM·스태킹, 2026](https://doi.org/10.5194/gmd-19-9035-2026) | OOF 결합과 시간 이력의 조건, 주변 구간으로의 전이 한계 |
+| [RoadSurf 1.1, 2024](https://doi.org/10.5194/gmd-17-4837-2024) | 열·수분 저장량과 현지 도로 물성의 필요성 |
+| [SURFEX-TEB 교통 영향, 2025](https://doi.org/10.5194/gmd-18-9945-2025) | 교통의 열·복사·난류 경로. 관측 없이 계수를 적용하지 않음 |
+| [scores 블록 재표집](https://scores.readthedocs.io/en/stable/tutorials/Block_Bootstrapping.html) | 날짜의 연속성과 여러 지점의 동시 기상 상관을 고려한 민감도 |
+| [FHWA 겨울 도로 운영 지침](https://www.fhwa.dot.gov/publications/research/safety/95202/002.cfm) | 기상·노면·순찰·처리 이력을 함께 확인하는 운영 판단 |
+
+공식 문제·Q&A·제출 공지·참가 서약도 다시 확인했습니다. 출판사 HTTP 403 및 대체 열람 범위는 `outputs/private/report_references_20261014_v1/review_receipt.json`에 기록했습니다. 직접 열지 못한 전문을 읽은 것으로 표시하지 않았습니다.
+
+## 새 Q&A633와 일별 분모 확인 — 2026-10-13
+
+[633의 새 댓글](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=633)은10월13일 답변입니다. 미탐일Precision은 평균에서 제외하고 Recall·F1은0으로 반영합니다. [556의 지점별 평균](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=556), [555의 무결빙·무예측 제외](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=555)와 함께 적용했습니다.39공개 응답·비교·원문 해시는 `official_updates_20261013_v2/`이며 이전 스냅샷을 보존합니다.
+
+[일반524](https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=524)의11월25일 발표·시상은 세부 추후 안내를 전제로 한 계획입니다. [일반547](https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=547)의 보고서·발표자료 안내는 다른 어선 문제 질문이므로 그 결과 열·확장 구현을 결빙 규격으로 옮기지 않습니다. [후속 계산·분모·미정 항목](OFFICIAL_QNA_20261013.md)을 같이 확인합니다.
+
+## 기상 이력 온도·공간 오차 범위 후속 연구 — 2026-10-13
+
+[새 보고서](WEATHER_MEMORY_REVIEW_20261013.md)는 각 방법의 실제 적용·평가 결과와 조건 차이를 정리합니다. 공개 원문·PDF5개·시각·해시는 `outputs/private/weather_memory_references_20261013_v1/`에 보존합니다.
+
+| 일차 문헌 | 적용과 한계 |
+| --- | --- |
+| [Li 등2026, LSTM·스태킹](https://gmd.copernicus.org/articles/19/9035/2026/) | 다시간 열 이력·OOF 결합 검토. 과거 대상RST와 미래 시간 예보를 이번 미관측 도로 상태 추정에 그대로 적용하지 않음 |
+| [Jiang·Xie2026, LSCP](https://proceedings.mlr.press/v306/jiang26at.html) | 공간 이질성과 지점별 포함률 검토. 논문 방법·교환가능성·mixing 가정 재현을 주장하지 않음 |
+| [Tibshirani 등2019](https://arxiv.org/abs/1904.06019) | 밀도비·공변량 이동 조건이 없는 단순 가중 경험범위의 보장 한계 |
+| [Gneiting·Raftery2007](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf) | 식43의 interval score로 폭과 범위 밖 오차를 함께 평가 |
+| [Cawley·Talbot2010](https://jmlr.org/papers/v11/cawley10a.html), [HGB 공식1.6](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html) | 반복 개발·내부 선택·고정 후보 구별과 동일 HGB300 조건의 MSE/MAE 비교 |
+
+익명10건 중9건200, METRo 출판사 원문403을 기록했습니다. 실패 응답을 읽은 논문으로 계산식에 사용하지 않았습니다. 공식 목록·제출564·633 재조회는 새 마감 날짜나 답변을 확인하지 못한 상태입니다.
+
+## 공식 사이트 추가 정보 — 2026-10-13
+
+[최신 대조](OFFICIAL_UPDATE_20261013.md)의 근거는 공식 공개 응답27건·내장 이미지10개·이전/신규 HWP 본문입니다. 원문·시각·해시는 `outputs/private/official_updates_20261013_v1/`에 보존합니다.
+
+| 공식 출처 | 실제 확인 | 반영·한계 |
+| --- | --- | --- |
+| [FAQ639](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=639) | 10월12일 새 공지. 자필서명·제안서·로그인·신청 처리·팀원·제출 안내 | 다른 문제의 화면 예시를 해당 결빙 CSV 규격으로 이식하지 않음 |
+| [제출 준비564](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=564), [일반632](https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=632) | 준비 안내·접수 전·추후 일정 공지·23:59 한국 시간 | 참가신청 종료11월6일과 결과물 제출 마감 날짜를 구별 |
+| [일반 AI618](https://aida.kisti.re.kr/competition/main/selectQna.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=618), [문제588](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=588) | 설계·개발 AI 지원 허용·검토 내역 제출, 외부 API 직접 분석/예측 원칙 제한과 공개 기상자료 학습 허용 | 캐시 로컬 추론 검증. 평가 중 원자료 조회 세부는 미확정 |
+| [문제·현재 양식](https://aida.kisti.re.kr/competition/main/problem/PROB_000000000004604/detail.do) | 두 실제 본문 SHA 동일, 새HWP222,720바이트·자필서명 안내 추가 | 제공 ZIP을 재다운로드하지 않아 전체 바이트 동일성 주장 없음. 기존 신청서 변경 없음 |
+| [일별 질문633](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=633) | 여전히 미답변, 기존5건 공식 댓글도 본문 동일 | 기존 지표·잠정 정책·개봉 평가 보존 |
+
+## 결빙 학습 대안·과거 기상·도로관리 사례 — 2026-10-10
+
+[결빙 방법론 보고서](ICE_METHODOLOGY_REVIEW_20261010.md)는 학습 길이·거리 제거·기상 이력·클래스 가중치·CatBoost·2단계 비건조 분류를 같은 공간 분할에서 실제 비교합니다.
+
+| 일차 자료 | 적용·확인 | 한계 |
+| --- | --- | --- |
+| [scikit-learn1.6 HGBClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html) | 학습 자료의 클래스 빈도로 계산하는 균형 가중치와 고정 HGB 설정 | 가중 점수를 보정된 확률로 해석하지 않음 |
+| [scikit-learn 과거 시계열 입력](https://scikit-learn.org/1.6/auto_examples/applications/plot_time_series_lagged_features.html) | 과거 입력의 시간 경계·공백·평가 목표를 명시 | 같은 겨울의 공간 검증을 미래 시간 검증으로 전용하지 않음 |
+| [CatBoost2018 원 논문](https://papers.neurips.cc/paper_files/paper/2018/file/14491b756b3a51daac41c24863285549-Paper.pdf), [공식 설정](https://catboost.ai/en/docs/references/training-parameters/common) | 11쪽 원문·대표4쪽 렌더 확인, 수치20개·Plain·400회·고정 가중치 | Ordered·범주형 목표 통계와 이번 실행을 구별 |
+| [FHWA Anti-icing Manual](https://www.fhwa.dot.gov/reports/mopeap/mop0296a.htm) §2.2·3.2·4.1, [RWIS FAQ](https://ops.fhwa.dot.gov/weather/faq.htm) | 노면 열응답 지연·강수·습기·처리 조건과 노면 결빙점·화학 농도의 관측 구분 | 현재는 기상 이력만 추가. 실제 제설·염분·센서 이력 미확보 |
+| [Baldwin·Reeves·Rosenow2023 NOAA 소개](https://repository.library.noaa.gov/view/noaa/56154), DOI10.1175/WAF-D-23-0137.1 | 웹 초록·서지에서 동결 강수 조건의 별도 평가와 강수 형태 입력 필요성 확인 | AMS·NOAA PDF 로컬403, 웹 PDF 크기 제한. 전문·계수·성능 수치 전용 없음 |
+| [Roberts등2017](https://www.biom.uni-freiburg.de/mitarbeiter/dormann/roberts-et-al-2017-ecography.pdf/at_download/file), [Cawley·Talbot2010](https://jmlr.org/papers/v11/cawley10a.html) | 공간 그룹 전체 제외·반복 개발의 선택 편향을 구별 | 새 위치·다음 겨울·공식 성능 보증 아님 |
+
+익명 HTTP17건 중13건 성공·4건 실패, 공식 숨김 본문·Q&A633 미답변과 같은 해시의 참가서약을 `outputs/private/ice_methodology_references_20261010_v1/`에 보존했습니다. MDPI 원문403·NSSL 연결 실패도 남겼습니다. 2단계 비건조는 이번 자체 가설이며 다른 문헌에서 효과가 입증된 기법으로 소개하지 않습니다.
+
+추가 오차 범위는 Angelopoulos·Bates의 [A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification](https://arxiv.org/abs/2107.07511),2022 공개 원고51쪽에서 별도 보정 자료·주변적/조건부 포함률·분포 변화 논의를 참고했습니다. 원문·대표5/15쪽 렌더는 `outputs/private/temperature_uncertainty_references_20261010_v1/`에 보존했습니다. 실행한 것은 지점 가중 경험분위수이며 현재 공간/시간 교환가능성과 보정/최종 모델의 동일 분포가 입증되지 않아 conformal 보장을 주장하지 않습니다.
+
+## 방법론 블렌딩·세 단계 공간 검증 — 2026-10-10
+
+[블렌딩 보고서](METHOD_BLENDING_REVIEW_20261010.md)에 실제 적용·실패·검증 조건을 정리했습니다. 논문 이론의 가정과 현재4공간그룹·반복 개발의 차이를 유지합니다.
+
+- Breiman, L. (1996), [Stacked Regressions](https://statistics.berkeley.edu/sites/default/files/tech-reports/367.pdf), Machine Learning24:49–64. 16쪽 저자기관 PDF에서 교차 검증 예측·비음수 최소제곱·합1 논의를 확인했습니다. 합1 제약과 지점별 동일 비중은 이번 고정 설계이며 재표본 적합 점수를 검증 성능으로 표현하지 않습니다.
+- van der Laan·Polley·Hubbard (2007), [Super Learner](https://biostats.bepress.com/ucbbiostat/paper222/)와 Polley·van der Laan (2010), [Super Learner In Prediction](https://biostats.bepress.com/ucbbiostat/paper266/). Berkeley 작업문헌의 초록·교차 검증 선택 논의를 참고했습니다. 점근적 oracle 결과를 현재 공간 전이 보증으로 전용하지 않습니다.
+- [Wang등 예측 결합 검토](https://arxiv.org/abs/2205.04216), [Cawley·Talbot 선택 편향](https://jmlr.org/papers/v11/cawley10a.html): 균등 평균·단독 모델 대조·반복 개발의 한계를 적용했습니다.
+- Roberts등 (2017), [구조적 교차 검증 원문](https://www.biom.uni-freiburg.de/mitarbeiter/dormann/roberts-et-al-2017-ecography.pdf/at_download/file), Ecography40:913–929. Wiley403·WSL404는 실패 기록으로 보존하고 저자 대학의17쪽 원문을 확보했습니다. 초록·검증 구조와 예측 목표의 논의를 읽고 공간 블록 적용을 검토했습니다.
+- [scikit-learn1.6 StackingRegressor](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingRegressor.html)·[VotingClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.VotingClassifier.html): prefit 동일 학습행의 과적합과 soft voting의 보정 조건을 반영했습니다. 새 평균 점수에 기존 보정 모델을 이식하지 않았습니다.
+
+원문·요청시각·해시는 `outputs/private/method_blending_references_20261010_v1/`에 보존합니다. 공식 제출 공지·서약·Q&A633을 재조회했으며 서약은 이전 원문과 같은 해시이고633은 미답변입니다. 공개 허용·제출 의무를 구별합니다.
+
+## 고정 평균·새 공간 검증의 근거 — 직전 2026-10-10
+
+[평균 후보 보고서](TEMPERATURE_MEAN_AND_BLIND_REVIEW_20261010.md)에 문헌에서 채택한 판단과 실제 실패를 연결했습니다. 문헌의 예제 성능·효과 크기를 이 프로젝트의 결과로 옮기지 않습니다.
+
+- Clemen, R. T. (1989), [Combining forecasts: A review and annotated bibliography](https://scholars.duke.edu/publication/765653), International Journal of Forecasting5(4):559–583. 저자 소속기관의 초록·서지에서 단순 결합의 비교 가치를 확인했습니다. 전문 전체를 읽었다고 주장하지 않습니다.
+- Wang, X., Hyndman, R. J., Li, F., Kang, Y. (2023), [Forecast combinations: An over 50-year review](https://robjhyndman.com/publications/combinations/), International Journal of Forecasting39(4):1518–1547, DOI10.1016/j.ijforecast.2022.11.005. 실제 읽은 자료는 [2022 공개 원고](https://arxiv.org/abs/2205.04216)의56쪽PDF이며 파일5/6쪽을 렌더해 확인했습니다. 단순 평균·가중치 추정 오차·성분 오차 상관을 검토했습니다. 저자 소개 페이지의 로컬403과 공개 원고 성공을 함께 보존했습니다.
+- Hyndman·Athanasopoulos, [Forecasting: Principles and Practice3, §13.4](https://otexts.com/fpp3/combinations.html), [scikit-learn1.6 VotingRegressor](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.VotingRegressor.html). 고정 평균의 정의를 참고했으며 새로운 가중치 탐색·VotingRegressor 재적합을 사용하지 않았습니다. 다른 예측 대상의 수치를 전용하지 않습니다.
+- [Cawley·Talbot2010](https://jmlr.org/papers/v11/cawley10a.html), [Roberts등2017](https://doi.org/10.1111/ecog.02881). 이미 개봉된 반복 개발과 새 지점의 사전 봉인·일회 평가를 구분했습니다. 거리 상한·공간 그룹만으로 전북 목표 영역의 적용 범위가 입증됐다고 주장하지 않습니다.
+- [기상청 AWS 안내](https://apihub.kma.go.kr/apiList.do?seqApi=2&seqApiSub=239), [기상자료개방포털 AWS](https://data.kma.go.kr/data/grnd/selectAwsRltmList.do?pgmNo=56). 실제AWS733 확인 요청403·정상CSV 로그인 분기·익명 세션 상태를 확인했습니다. 계정 로그인·활용신청·AWS 확장 원문 확보는 하지 않았습니다.
+- [날씨누리 AWS](https://www.weather.go.kr/w/weather/land/aws-obs.do), [국립환경과학원 기상자료](https://www.data.go.kr/data/15150439/fileData.do). 전자는 필요한 첫 겨울 전체 제공을 확인하지 못했고 후자는2024년8,783행 샘플로 명시됩니다. 전체 AWS 관측 대체자료로 사용하지 않았습니다.
+
+원문·URL·시각·해시는 `outputs/private/temperature_mean_references_20261010_v1/`에, 정상 포털 접근 분기와 대체자료6개 공개 응답·익명 상태 기록은 별도 manifest에 보존했습니다. 인증키·인증 URL·계정 정보는 기록하지 않습니다. 공식 문제·공지·참가서약 재확인에서도 Q&A633은 미답변이며 수집·평가·공개 허용을 혼동하지 않습니다.
+
+## 거리 변수 제거·기상 관측망 확대의 근거
+
+[후속 보고서](WEATHER_DISTANCE_AND_NETWORK_REVIEW_20261010.md)에 실제 실험·공개 지점 자료·미확보 관측값을 구분했습니다. 확인일은 2026-10-10입니다.
+
+| 일차 자료 | 이번 확인·적용 | 한계 |
+| --- | --- | --- |
+| [Roberts 등2017, Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure](https://doi.org/10.1111/ecog.02881), Ecography40:913–929 | 구조가 있는 자료의 무작위 분할 문제, 공간 이전 목적에 맞는 그룹 제외와 외삽 해석 | 웹 본문을 확인. 로컬 다운로드는 HTTP 오류였으며 원문 저장 성공으로 표시하지 않음 |
+| [Dumitrescu2026, A deep learning framework for gridding daily climate variables from a sparse station network](https://gmd.copernicus.org/articles/19/8895/2026/), GMD19:8895–8913, 2026-09-21 | 루마니아2020–2023년 기온·강수 격자화. 사전 고정 테스트26곳·학습130곳 및 관측망/지형 대표성 점검 참고 | 일평균 기온·강수 보간이며10분 노면온도·Ice 과제가 아님. 신경망 구현·논문 성능 이전 없음 |
+| [기상청 관측지점정보](https://data.kma.go.kr/tmeta/stn/selectStnList.do?pgmNo=123) | 공개 CSV의 AWS2,619·ASOS148 이력, 날짜 경계·좌표·기간 안정 후보 검산 | 날짜 단위의 시작/종료일이며 실제 관측 가용성·센서 정상·정확한 변경 시각을 입증하지 않음 |
+| [기상청 지상관측 지점정보 API](https://apihub.kma.go.kr/apiList.do?seqApi=2&seqApiSub=317) | 기준 시각의 지점정보 의미·활용 조건 확인 | 실제 인증 요청403. 공개 CSV 확보와 API 사용 승인을 구별 |
+| [기상청 AWS 매분자료 API](https://apihub.kma.go.kr/apiList.do?seqApi=2&seqApiSub=239) 및 공식 첨부 명세서21쪽 | KST·WS10/WS1·15분 누적강수·결측/오류 값·단일지점 최대24시간·403/401 오류 표 확인. 핵심3쪽 렌더 | 개발 AWS733의11분 확인 요청403. 추가4곳 실제 자료·확장 모델은 미완료 |
+
+기상청 명세서는 새 API 자료의 -50 이하를 오류/결측으로 설명합니다. 기존 대회 원본 유효 범위·결측 규칙에 소급 적용하지 않았습니다. 날짜/시간·풍속 평균·강수 누적 단위가 다르면 가까운 관측소를 추가해도 같은 입력 비교가 아니므로 원본 AWS 헤더와 대조했습니다. 공개 원문·포털 CSV·실패/성공 다운로드·PDF 해시는 비공개 `weather_network_review_20261010_v1/`에 있습니다. 인증키는 포함하지 않습니다.
+
+앞서 확인한 Cawley·Talbot의 모델 선택 편향과 scikit-learn1.6 HGB 문서를 재사용해, 같은100회 모델·같은 행에서 거리2개만 제거했습니다. 문헌은 비교 설계의 근거이며 현재 후보 채택 또는 새 독립 성능의 증거가 아닙니다.
+
+## 미해결 사항의 추가 근거
+
+[순차 검토 보고서](UNRESOLVED_EVIDENCE_REVIEW_20261010.md)에 위치·지표 분모·입력 범위·지도 적용 조건을 연결했습니다. 공식 페이지와 논문 원문19개의 수집 시각·URL·해시는 비공개 `unresolved_review_20261010_v1/source_manifest.json`에 보존했습니다.
+
+| 1차 자료 | 실제 반영 | 적용 한계 |
+| --- | --- | --- |
+| [도로기상 API 공식 설명](https://apihub.kma.go.kr/apiList.do?seqApi=971&seqApiSub=293), [기상청 지점 메타데이터](https://data.kma.go.kr/tmeta/stn/selectStnList.do?pgmNo=123), [MTMS 가입 화면](https://mtms.kma.go.kr/registUser.do) | 관측 좌표·정적 목록과 실제 설치/교정 이력을 구별. 소속기관·업체 및 승인 구조 확인 | 공개 화면에서 실제 도로 지점 대장을 확보한 것은 아님 |
+| [FHWA ESS 추가 고려사항](https://ops.fhwa.dot.gov/publications/ess05/ess0505.htm) | 위치·노출·유지관리·변경 이력의 확인 항목 | 미국 일반 지침이며 한국 지점 이설의 증거가 아님 |
+| [scikit-learn 1.6.1 F1](https://scikit-learn.org/1.6/modules/generated/sklearn.metrics.f1_score.html), [평가 지표](https://scikit-learn.org/1.6/modules/model_evaluation.html) | P 또는 R 미정의여도 F1이0인 실패일 보존. 96개 분모/미정의 조건 검산 | 대회 Q&A633의 미확정 세부 규정을 대신하지 않음 |
+| [Li 등 ILES 2026](https://gmd.copernicus.org/articles/19/9035/2026/), DOI10.5194/gmd-19-9035-2026 | 2026-09-24 발표. 3.5·4.4절의 대상 과거 온도와 지점별 재학습 확인 | 현재 무관측 공간 이전 성능과 직접 비교 불가. ILES는 구현하지 않음 |
+| [Meyer·Pebesma AOA](https://arxiv.org/abs/2005.07939), DOI10.1111/2041-210X.13650 | 학습 범위와 새 지점 입력 조건 차이를 점검 | 이번 개별 변수 범위/백분위 비교는 다변량 AOA 구현이 아님 |
+| [Barber 등 비교환 자료 conformal](https://arxiv.org/abs/2202.13415), DOI10.1214/23-AOS2276 | 시간·공간 변화에서 민감도와 오차 보장을 구별 | conformal 구간·90% 보장을 구현/검증한 것은 아님 |
+
+## 최신 전이·현장 운영 근거 — 2026-10-10
+
+[후속 연구 보고서](AWARD_READINESS_REVIEW_20261010.md)에 출처별 실제 구현·평가·한계를 연결했습니다. 온도6개 후보와 일별 임계값 정책을 구현했으며 새4개 지점의 봉인 평가에서 채택 조건 실패를 확인했습니다.
+
+- [2026 공식 대회 소개](https://aida.kisti.re.kr/competition/main/overview.do): 창의성20·우수성50·효과성30을 현재 심사 관점 검토에 사용했습니다. 2025년 내용이 남은 과거 상세 페이지와 구별하며 자체 판단을 공식 점수로 표현하지 않습니다.
+- [Cawley & Talbot 2010, JMLR](https://jmlr.org/papers/v11/cawley10a.html): 모델 선택과 반복 검증의 편향 근거. 새 정답 요청 전에 입력·모델·전슬롯 예측을 봉인하는 절차에 반영했습니다.
+- [scikit-learn 1.6 HGBRegressor](https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html), [임계값 선택](https://scikit-learn.org/1.6/modules/classification_threshold.html): 날씨14·열24·잔차 비교, 제곱/절대 손실 및100/300회, 학습과 다른 그룹의 일별 선택을 구현했습니다. 개발 최저 오차를 새 독립 성능이라고 보고하지 않습니다.
+- [2024 MDSS 독립 평가 보고서](https://rosap.ntl.bts.gov/view/dot/81833), FHWA/IN/JTRP-2024/31: 독립 기상·마찰·차량·제설 기록과 사건별 운영 판단 비교. PDF28쪽의 파일4·17·23쪽을 중점 검토했습니다. 이 프로젝트에 해당 현장 자료가 확보됐다는 의미는 아닙니다.
+- [2026 Mobile RWIS Phase II](https://rosap.ntl.bts.gov/view/dot/92061), FHWA-ICT-26-008, DOI10.36501/0197-9191/26-008: 센서 교정·연결·운영 인력·단계적 확장과 제설 사용량 평가. PDF97쪽의 파일60·81~83쪽을 중점 검토하고 권고 페이지를 렌더해 확인했습니다. 해외 절감률·비용 효과를 국내 결과로 전용하지 않았습니다.
+- [FHWA 교량 결빙 사례](https://ops.fhwa.dot.gov/weather/resources/publications/tech_briefs/cs037.htm): 노면·기상·수분/약품 측정과 현장 판단의 연결을 검토했습니다. 현재 지도의 위험 등급이나 사고 감소를 증명하는 자료는 아닙니다.
+- [기상청 지상기상관측지침2024.10](https://data.kma.go.kr/resources/images/publication/%EC%A7%80%EC%83%81%EA%B8%B0%EC%83%81%EA%B4%80%EC%B8%A1%EC%A7%80%EC%B9%A8.pdf): 도로기상 장 파일186–196쪽을 읽고 파일190쪽을 렌더해 확인했습니다. 취약 위치·차로 대표성, 위치 변화·광학 센서 점검과MTMS 기록 확인 경로를 반영했습니다. 실제 지점의 이설·장비 불량 대장은 확보하지 못했습니다.
+
+RoadSurf2024와 METRo2001의 적용 한계는 아래에 이어 기록합니다. 이번 METRo 직접 조회는 접근 제한이 있어 전문을 모두 재검토했다고 주장하지 않습니다. 최신 공식·논문·PDF 원문과 해시는 `outputs/private/judge_followup_20261009_v1/`에 있습니다. 발견한33407 좌표 차이는 원문 데이터 증거이며 문헌만으로 이동·센서 고장 원인을 확정하지 않습니다.
 
 ## 최신 보정·관측 대표성·전북 구간 — 2026-10-09
 

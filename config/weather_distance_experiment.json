@@ -1,0 +1,29 @@
+{
+  "experiment_id": "20261010_weather_distance_ablation_nested_v1",
+  "scope": "이미 개봉한 첫 겨울 개발 23곳의 반복 연구 비교. 새 독립 성능이 아니며 최종 모델 승격 없음.",
+  "candidate": "weather12_no_distance",
+  "removed_features": ["aws_distance_km", "asos_distance_km"],
+  "baseline": "같은 행·같은 제외 그룹·기상14의 기존 HGB squared_error 100회",
+  "hgb_parameters": {
+    "learning_rate": 0.05,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "maximum_station_harm": 0.05,
+  "max_compute_threads": 2,
+  "selection": "외부 그룹 G 제외, 내부 H도 제외한 OOF로 평균 MAE·RMSE 개선, 각 지점 MAE 악화 5% 이하, 관측 -2~2도 MAE 비악화. 미충족 시 기존 모델 유지.",
+  "ice_diagnostic": "기존 0도·이슬점/과거3시간 강수/ASOS 적설 규칙과 동일 원래 Ice 판정의 결측 복귀. 온도만 변경. 새 임계값 탐색 없음.",
+  "excluded_outcomes": "보호3·다음겨울·개봉8·개봉4 지점 모두 학습·선택·후보 성능 평가에서 제외",
+  "weather_network_changed": false,
+  "model_promoted": false,
+  "references": [
+    "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html",
+    "https://doi.org/10.1111/ecog.02881",
+    "https://jmlr.org/papers/v11/cawley10a.html",
+    "https://arxiv.org/abs/2005.07939"
+  ]
+}

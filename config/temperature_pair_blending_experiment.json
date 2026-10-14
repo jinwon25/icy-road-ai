@@ -1,0 +1,17 @@
+{
+  "experiment_id": "20261010_fixed_strong_temperature_pairs_v1",
+  "scope": "9종·학습형 블렌딩 개발 비교 이후 제안한 후속 가안. 반복 연구이며 독립 성능이 아님.",
+  "primary_baseline": "weather_mse300",
+  "blends": {
+    "equal_distance_mse300": ["weather12_no_distance", "weather_mse300"],
+    "equal_mse_mae300": ["weather_mse300", "weather_mae300"],
+    "equal_distance_mse_mae300": ["weather12_no_distance", "weather_mse300", "weather_mae300"]
+  },
+  "weights": "각 후보의 성분에 균등 비중. 탐색·학습 없음.",
+  "selection": "기존300 단독 대비 내부 지점 평균 MAE·RMSE 동시 개선·모든 지점 MAE 악화5% 이하·저온 표본 존재와 MAE 비악화. 적격 최소 macro MAE·RMSE·이름, 없으면300단독.",
+  "maximum_station_harm": 0.05,
+  "new_base_fits": 0,
+  "new_outcome_requests": false,
+  "model_promotion": false,
+  "references": ["https://arxiv.org/abs/2205.04216", "https://jmlr.org/papers/v11/cawley10a.html"]
+}

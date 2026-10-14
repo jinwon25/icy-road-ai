@@ -117,8 +117,12 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--render-dir', type=Path)
+    parser.add_argument('--include-untracked', action='store_true', help='새 Markdown도 Git 제외 규칙에 따라 함께 검사한다.')
     args = parser.parse_args()
-    names = subprocess.check_output(['git', 'ls-files', '-z', '*.md'], cwd=ROOT).decode('utf-8').split('\0')
+    command = ['git', 'ls-files', '-z']
+    if args.include_untracked:
+        command += ['--cached', '--others', '--exclude-standard']
+    names = subprocess.check_output(command + ['*.md'], cwd=ROOT).decode('utf-8').split('\0')
     names = list(filter(None, names))
     if args.render_dir and not args.render_dir.resolve().is_relative_to((ROOT / 'outputs/private').resolve()):
         parser.error('렌더 결과는 outputs/private 내부에 저장하세요.')

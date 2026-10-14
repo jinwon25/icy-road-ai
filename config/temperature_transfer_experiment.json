@@ -1,0 +1,25 @@
+{
+  "experiment_id": "20261009_weather_residual_thermal_nested_v1",
+  "scope": "반복 사용한 첫 겨울 개발 자료의 중첩 공간 검증. 새 블라인드·미래 겨울·공식 점수가 아님.",
+  "baseline": "기존 동일 제외 그룹의 direct weather14 HGB. 이전 학습 서명과 예측 일치를 검산하여 재사용.",
+  "candidates": ["residual_weather14", "direct_thermal24", "residual_thermal24"],
+  "target_residual": "road_temp - asos_air_temp; 추론에서 ASOS 기온을 다시 더함",
+  "thermal_additions": ["asos_ground_temp", "asos_cloud_tenths", "asos_solar_mj_m2", "asos_rain_mm", "asos_snow_cm", "asos_humidity", "air_min_3h", "rain15_max_3h", "air_dewpoint_gap", "ground_air_gap"],
+  "hgb_parameters": {
+    "learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15,
+    "min_samples_leaf": 100, "l2_regularization": 10.0,
+    "early_stopping": false, "random_state": 20260923
+  },
+  "weights": "동일 유효 학습 행·행 가중치 1. 정답 재분류·지점 보정·리샘플링 없음.",
+  "selection": "외부 그룹을 제외하고 나머지 3개 그룹의 내부 OOF에서 baseline 대비 지점 평균 MAE·RMSE 엄격한 감소, 각 지점 MAE 악화 5% 이하, 관측 -2~2°C MAE 비악화. 적격 후보 중 지점 평균 MAE·RMSE·이름 순으로 선택, 없으면 baseline.",
+  "maximum_station_harm": 0.05,
+  "max_compute_threads": 2,
+  "outcome_window_kst": ["2024-11-01", "2025-02-28"],
+  "excluded_outcomes": "보호 3개 지점, 다음 겨울, 이미 개봉된 새 8개 지점은 사용하지 않음.",
+  "model_promotion": false,
+  "references": [
+    "https://gmd.copernicus.org/articles/17/4837/2024/",
+    "https://journals.ametsoc.org/view/journals/apme/40/11/1520-0450_2001_040_2026_manmfr_2.0.co_2.xml",
+    "https://jmlr.org/papers/v11/cawley10a.html"
+  ]
+}

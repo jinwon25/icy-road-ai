@@ -1,0 +1,28 @@
+{
+  "experiment_id": "20261009_weather_loss_iteration_nested_v1",
+  "scope": "동일 첫 겨울 개발 자료의 사전 고정 후속 가안. 반복 연구 선택의 영향이 남으며 독립 성능이 아님.",
+  "baseline": "기존 동일 제외 그룹의 weather14 HGB squared_error 100회.",
+  "candidates": ["weather_mae100", "weather_mse300", "weather_mae300"],
+  "thermal_additions": [],
+  "hgb_parameters": {
+    "learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15,
+    "min_samples_leaf": 100, "l2_regularization": 10.0,
+    "early_stopping": false, "random_state": 20260923
+  },
+  "model_overrides": {
+    "weather_mae100": {"loss": "absolute_error", "max_iter": 100},
+    "weather_mse300": {"loss": "squared_error", "max_iter": 300},
+    "weather_mae300": {"loss": "absolute_error", "max_iter": 300}
+  },
+  "comparison": "같은14변수·같은행·같은공간제외. 100회에서 목적함수 변경, squared_error에서 100→300회, absolute_error에서 100→300회의 효과를 각각 보고.",
+  "selection": "외부 그룹 제외·다른3그룹 내부 OOF: baseline 대비 지점 평균 MAE·RMSE 모두 감소, 각 지점 MAE 악화 5% 이하, 관측 -2~2°C MAE 비악화. 적격 후보 중 MAE·RMSE·이름 순, 없으면 baseline.",
+  "maximum_station_harm": 0.05,
+  "max_compute_threads": 2,
+  "outcome_window_kst": ["2024-11-01", "2025-02-28"],
+  "excluded_outcomes": "보호3·다음겨울·이미 개봉된 새8지점 사용 금지.",
+  "model_promotion": false,
+  "references": [
+    "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html",
+    "https://jmlr.org/papers/v11/cawley10a.html"
+  ]
+}

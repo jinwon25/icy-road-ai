@@ -13,7 +13,14 @@ FORBIDDEN = {'.zip', '.csv', '.xlsx', '.xls', '.pdf', '.hwp', '.docx', '.tif', '
 
 
 def main():
-    paths = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode('utf-8').split('\0')
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--include-untracked', action='store_true', help='Git 제외 규칙을 지키는 새 파일도 함께 검사한다.')
+    args = parser.parse_args()
+    command = ['git', 'ls-files', '-z']
+    if args.include_untracked:
+        command += ['--cached', '--others', '--exclude-standard']
+    paths = subprocess.check_output(command, cwd=ROOT).decode('utf-8').split('\0')
     errors = []
     checked = 0
     for name in filter(None, paths):
@@ -41,7 +48,7 @@ def main():
         checked += 1
     if errors:
         raise SystemExit('\n'.join(errors))
-    print(f'추적 파일 {checked}개 검사 통과: 제외 자료·인증정보 형식·노트북 출력 없음')
+    print(f'{"추적·새 파일" if args.include_untracked else "추적 파일"} {checked}개 검사 통과: 제외 자료·인증정보 형식·노트북 출력 없음')
 
 
 if __name__ == '__main__':

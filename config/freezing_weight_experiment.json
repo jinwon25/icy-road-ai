@@ -1,0 +1,19 @@
+{
+  "experiment_id": "20261014_freezing_weight_v1",
+  "scope": "반복 개발 연구. 첫 겨울 허용23곳만 사용하며 독립 평가나 최종 모델 승격으로 해석하지 않는다.",
+  "baseline": "equal_nohistory_pair",
+  "secondary_baseline": "equal_distance_mse_mae300",
+  "models": ["freezing_mse300", "freezing_mae300"],
+  "candidates": ["freezing_mse300", "freezing_mae300", "freezing_pair", "blend_half", "blend_quarter"],
+  "weight": {"amplitude": 4.0, "sigma_celsius": 2.0, "formula": "(1+4*exp(-0.5*(training_road_temp/2)^2))/mean_training_weight"},
+  "weight_scope": "학습 지점의 실제 노면온도만 사용. 가중 평균1로 정규화해 L2규제의 상대 크기 유지. 논문의 정확한 가중식 재현이 아닌 사전 고정 응용 가설.",
+  "hgb_parameters": {"learning_rate": 0.05, "max_iter": 300, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "selection": "외부G 제외. 다른H 예측도 G와H 모두 제외 학습. 기존 pair 대비 내부 평균MAE/RMSE 감소, 각 지점MAE 악화5% 이하, 실제 -2~2도MAE 비악화, 144/1슬롯 일별P/R/F1 비악화, FP/FN 비증가, 각 지점TP 유지, 기존 탐지사건 손실0을 모두 만족. 최소MAE/RMSE/이름 선택, 없으면 기존 pair.",
+  "fixed_blending": {"freezing_pair": "MSE/MAE 1:1", "blend_half": "기존 pair 0.5 + freezing_pair 0.5", "blend_quarter": "기존 pair 0.75 + freezing_pair 0.25"},
+  "ice_rule": "이전 0도·수분 조건과 개발 fallback 그대로. 임계값 추가 탐색 없음.",
+  "allowed_window": ["2024-11-01", "2025-03-01"],
+  "forbidden_outcomes": "보호3·개봉8/4/2·둘째 겨울 정답",
+  "max_compute_threads": 2,
+  "model_promotion": false,
+  "references": ["https://doi.org/10.1175/JAMC-D-25-0189.1", "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html", "https://jmlr.org/papers/v11/cawley10a.html", "https://doi.org/10.1111/ecog.02881"]
+}

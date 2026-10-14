@@ -1,0 +1,15 @@
+{
+  "experiment_id": "20261013_weather_memory_same_parameter_controls_v1",
+  "scope": "기상 이력v2 결과 이후 제안한 개발 대조군. 반복 연구이며 독립 평가 아님.",
+  "hypothesis": "거리 없는 기상12·300회·MSE/MAE·학습 행을 유지하고 추가 이력30개만 제거해 이력의 효과를 분리한다.",
+  "models": ["nohistory12_mse300", "nohistory12_mae300"],
+  "blends": ["equal_nohistory_pair", "equal_trio_nohistory"],
+  "source": "weather_memory_temperature_20261013_v2",
+  "primary_baseline": "equal_distance_mse_mae300",
+  "hgb_parameters": {"learning_rate": 0.05, "max_iter": 300, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "new_outcome_requests": false,
+  "model_promotion": false,
+  "maximum_station_harm": 0.05,
+  "max_compute_threads": 2,
+  "references": ["https://gmd.copernicus.org/articles/19/9035/2026/", "https://jmlr.org/papers/v11/cawley10a.html", "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html"]
+}

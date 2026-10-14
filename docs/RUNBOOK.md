@@ -4,6 +4,99 @@
 
 [문서 목록](README.md) · [현재 상태](PROJECT_STATUS.md) · [공식 재검토](OFFICIAL_REVIEW_20261009.md)
 
+## 제출 후보의 실제 실행
+
+[통합 결과](SUBMISSION_CANDIDATE_20261013.md)의 비공개 후보는 `outputs/private/submission_candidate_20261013_v1/`입니다. 그 폴더의 README와 한국어 PDF에서 고정 환경·입력 계약·추론·재적합·위치별 CSV 내보내기 명령을 확인합니다. `code/predict.py`는 무손실 CSV 읽기를 사용하며 원래 기본 파서의 실패 결과를 보존합니다.
+
+포함된 대표 모델과 학습 표의 재현, 공통 기상 그룹 추론, 개발 지표 재집계는 로컬 자료로 실행합니다. 원본 GIS·기상 원자료의 전체 재구축은 원본 작업 공간 의존입니다. 완료 폴더·봉인·예측을 다시 만들지 않고 새 출력 경로를 사용합니다. 원본 프로젝트의 보고서·지도·브라우저 데모 생성에는 `requirements-delivery.txt`의 추가 환경이 필요하며 추론만 실행할 때는 후보 폴더의 간단한 `requirements.txt`를 사용합니다.
+
+## 새 Q&A633와 기존 판정 재집계
+
+[최신 답변 검토](OFFICIAL_QNA_20261013.md)의 원문은 `outputs/private/official_updates_20261013_v2/`, 사실/미정 항목은 `config/official_requirements_20261013_v2.json`입니다. `review_official_answers_20261013.py`·`complete_official_qna_review.py`는 새 공개 스냅샷을 만들고 이전 완료본을 보존합니다. 기존 출력이 있으면 재실행하지 않습니다.
+
+`evaluate_qa633_development.py`는 최신 온도/결빙 방법의 감사된 개발 예측3파일에서21개 고정 판정을 읽습니다. `audit_qa633_development.py`는 같은 학습 데이터를 다시 만드는 대신 저장 판정·일별 혼동행렬·지점 평균·CSV를 독립 계산으로 검산합니다. 새 모델 학습·임계값 선택은 없고 이미 개봉한 평가/다음 겨울/보호 정답도 사용하지 않습니다.
+
+완료본 `qa633_development_20261013_v1/`의 `research_daily_metrics.csv`·`research_station_metrics.csv`는 지표별 날짜 수·관측량4조건·미정의 지점을 포함한 연구용 형식입니다. 주최 측이 정한 제출CSV 열·결측 표기가 아닙니다. `check_qa633_quality.py`는 공개 원문·새 설정·지표 감사·옛 모델/예측·봉인·전체 검사·로컬 GFM의 완료 영수증을 남깁니다.
+
+## 기상 이력 온도 후속 연구 재현
+
+최종 추가 비교는 `evaluate_weather_memory_controls.py`·`audit_weather_memory_controls.py`·`review_weather_memory_tradeoffs.py`입니다. 기상12·300회·MSE/MAE·학습 행을 유지하고 이력30개만 제거하며, 이전 온도·결빙 기준과 사건 유지 조건을 바꾸지 않습니다. 완료본 `weather_memory_controls_20261013_v1/`의 모델20개·예측·감사를 보존합니다.
+
+`build_weather_control_bundle.py`의 고정2모델 평균 예제는 다음으로 재실행합니다. 이 하루에 입력 누락이 없음을 검사하며 일반 결측 환경의fallback 모델을 모두 포함한 운영 패키지는 아닙니다.
+
+```powershell
+.\.venv_research\Scripts\python.exe -X utf8 outputs/private/weather_control_offline_bundle_20261013_v1/run_offline.py
+```
+
+최종 품질 영수증은 `weather_memory_quality_20261013_v2/`이며 먼저 완료한 이력 연구의v1 영수증은 당시 스냅샷으로 보존합니다.
+
+[새 보고서](WEATHER_MEMORY_REVIEW_20261013.md)의 현재 완료본은 `outputs/private/weather_memory_temperature_20261013_v2/`입니다. 기존 `weather_distance`의23개 첫 겨울 입력과 감사된 `temperature_pair_blending`의 G/H 제외 예측이 필요합니다. 보호·개봉 평가·다음 겨울을 새로 읽거나 원래 완료 폴더를 덮어쓰는 흐름이 아닙니다.
+
+`research_weather_memory_20261013.py`는 일차 문헌과 공식 공개 응답을 보존합니다. `evaluate_weather_memory_temperature_stable.py`는 고정소수점 이력과20모델을 학습하고, `audit_weather_memory_temperature_stable.py`는 정수 합성곱·모델 재예측·대표 재적합·같은 분모 지표를 확인합니다. `review_weather_memory_events.py`는347사건의 정체성과 기존 탐지 사건 손실을 대조합니다. 이전 부동소수점v1과 실패 묶음은 별도 보존합니다.
+
+`build_weather_memory_stable_bundle.py`의 완료 묶음은5모델·216기상행·특징/예측 대조값만 담습니다. 고정 의존성을 설치한 환경에서 다음 읽기 실행이 가능합니다.
+
+```powershell
+.\.venv_research\Scripts\python.exe -X utf8 outputs/private/weather_memory_offline_bundle_20261013_v2/run_offline.py
+```
+
+144행 추론에 앞선12시간72행을 준비 입력으로 사용하며 실제 정답·키·원본ZIP은 포함하지 않습니다. 접속 시도0·특징6,048값 정확히 일치·예측/경계1,296값 허용오차1e-10 이내를 확인합니다. `check_weather_memory_quality.py`는 v1/v2·실패 로그·사건 검토·묶음·봉인·전체 검사·로컬 GFM의 새 완료 영수증을 남깁니다. 완료 영수증은 재실행으로 덮어쓰지 않습니다.
+
+## 10월13일 공식 확인·오프라인 재현
+
+[공식 변경 보고서](OFFICIAL_UPDATE_20261013.md)의 원문은 `outputs/private/official_updates_20261013_v1/`, 확인한 사실·미정 날짜는 `config/official_requirements_20261013.json`입니다. 익명 조회·이미지/HWP 추출·답변 대조는 `review_official_updates_20261013.py`·`fetch_official_details_20261013.py`·`inspect_official_updates_20261013.py`·`compare_official_answers_20261013.py`가 담당합니다. 기존 영수증이 있으면 재실행을 거부하며 새 날짜는 새 출력 버전으로 설정해야 합니다. HWP 읽기는 기존 비공개 도구 `outputs/private/official_review_20261007/tools/olefile`0.47을 사용하고 라이선스를 유지합니다.
+
+`verify_offline_inference_20261013.py`는 감사된 온도3성분·미채택 CatBoost·경험적 범위와12207의 하루 캐시를 읽어 외부 접속 차단 상태로1,008개 예측을 대조합니다. `build_offline_review_bundle_20261013.py`는 모델4개·입력/대조자료3개·실행 코드2개·환경·README의11파일을 별도 묶음으로 준비하고 별도 Python에서576개 최종 출력 일치를 확인합니다. 완료본을 다시 만들거나 모델을 새 학습하는 명령이 아닙니다.
+
+현재 설치된 Python 환경에서 완료 묶음을 읽어 재실행할 수 있습니다.
+
+```powershell
+.\.venv_research\Scripts\python.exe -X utf8 outputs/private/offline_review_bundle_20261013_v1/run_offline.py
+```
+
+묶음의 고정 환경 목록을 먼저 설치해야 하며 설치와 추론 실행은 구별합니다. 추론에는 인증키·외부 예측 서비스·새 관측 다운로드가 필요하지 않습니다. 네트워크 가드는 Python DNS·주요 소켓 인터페이스의 시도를 기록·차단하며 OS 전체 격리 보장은 아닙니다. 미채택 후보와 하루 개발 예제이므로 실제 운영·최종 제출·독립 성능의 검증과 구별합니다.
+
+`check_official_updates_20261013.py`는 원문·양식·확정 사실·추론·묶음의 해시, 데이터 열의 목표 정답 미포함, 기존 봉인·전체 테스트·소스·로컬 GFM을 검증해 새 품질 영수증을 남깁니다. 문의·로그인·참가신청·결과물 제출·공개는 이 흐름에 포함하지 않습니다.
+
+## 결빙 방법론 여섯 가지 재현
+
+[비교 보고서](ICE_METHODOLOGY_REVIEW_20261010.md)의 완료본은 `outputs/private/ice_methodology_20261010_v1/`입니다. 기존 첫 겨울23곳의 `ice_group_balanced` 개발 입력·독립 감사된 `joint_surface_20261009_v1`의 온도 교차 추정·보조 모델·학습/쿼리 행이 필요합니다. 데이터 없는 clone에서는 전체 학습을 실행할 수 없습니다.
+
+```powershell
+python scripts/evaluate_ice_methodology.py --output outputs/private/reproduction_ice_methodology_새버전
+python scripts/audit_ice_methodology.py --experiment outputs/private/reproduction_ice_methodology_새버전
+```
+
+`config/ice_methodology_experiment.json`의 고정6후보는10개 공간 제외 맥락에서 새 분류70모델을 적합합니다. 기존 HGB100을 대조로 재사용하며 새 온도 적합은 없습니다. `src/ice_methodology.py`의 과거 평균은 목표 실제 관측 없이 계산하고 미정의 상태 행의 기상도 포함합니다. 감사는 누적합·시간 경계로 이력을 별도 계산하고 전체 모델의 예측·대표7모델 재적합·11,284개 임계값·4개 선택과10개 정책의 지표를 확인합니다.
+
+`research_ice_methodology.py`·`inspect_ice_methodology_evidence.py`·`fetch_ice_practice_references.py`는 원문·접근 실패·공식 본문의 날짜별 보존 도구이며 기존 영수증이 있으면 중단합니다. 새 날짜의 재조회는 새 출력 버전으로 별도 설정합니다. `inspect_ice_methodology_results.py`는 선택 완료 후에만 진단 CSV를 추가합니다. `plot_ice_methodology.py`는 독립 감사 영수증을 확인한 뒤 집계 그림을 생성하며 기존 그림을 덮어쓰지 않습니다.
+
+`check_ice_methodology_quality.py`는 최종 문서·그림 확인 후 전체 테스트, 추적·새 파일, 로컬 GFM, 실험 서명과 기존47/549고정 파일·세 평가 봉인을 검증해 별도 품질 영수증을 남깁니다. 기존 평가 지점을 새 후보로 다시 채점하는 명령은 이 흐름에 포함하지 않습니다.
+
+추가 온도 범위는 `temperature_pair_blending_20261010_v1`의 감사된 내부/외부 예측을 사용합니다. `evaluate_temperature_uncertainty.py`의 고정 두 후보·경험적90분위수는 새 모델 적합 없이 평가 그룹 밖의 지점 균등 오차로 계산합니다. `audit_temperature_uncertainty.py`가8개 분위수와621,028개 하한/상한·전체/지점/저온/경계 지표를 별도 검산합니다. 완료 폴더는 `outputs/private/temperature_uncertainty_20261010_v1/`이며 이 날짜의 보존 명령을 다시 실행하면 중단합니다. 재실험은 새 출력 버전을 지정하도록 설정해야 합니다. 90% 보장·04 확률로 해석하지 않습니다.
+
+`research_temperature_uncertainty.py`는 관련51쪽 원문과 대표 페이지를 보존합니다. `plot_temperature_uncertainty.py`의 수정본은 기존 범례 겹침 초안을 비공개로 보존한 뒤 확인했습니다. 최종 품질 검사는 분류와 온도 범위의 두 감사 영수증·원문 해시를 함께 확인합니다.
+
+## 방법론 블렌딩 재현
+
+[최신 검토](METHOD_BLENDING_REVIEW_20261010.md)의 완료본은 온도·분류 각각 `outputs/private/method_blending_20261010_v2/`·`score_blending_20261010_v2/`입니다. 기존 첫 겨울23개 개발 지점의 비공개 입력·감사된 모델90개·분류20개와 보조 온도 산출물이 필요합니다. 공개 clone의 데이터 없는 실행과 구별합니다. 완료·실패 폴더는 덮어쓰지 않습니다.
+
+```powershell
+python scripts/evaluate_method_blending.py --output outputs/private/reproduction_method_blending_새버전
+python scripts/audit_method_blending.py --experiment outputs/private/reproduction_method_blending_새버전
+python scripts/evaluate_score_blending.py --output outputs/private/reproduction_score_blending_새버전
+python scripts/audit_joint_surface.py --experiment outputs/private/joint_surface_20261009_v1 --output outputs/private/reproduction_score_blending_새버전/component_reaudit.json
+python scripts/audit_score_blending.py --experiment outputs/private/reproduction_score_blending_새버전
+python scripts/evaluate_temperature_pairs.py --output outputs/private/reproduction_temperature_pairs_새버전
+python scripts/audit_temperature_pairs.py --experiment outputs/private/reproduction_temperature_pairs_새버전
+```
+
+설정은 `config/method_blending_experiment.json`입니다. 온도는3그룹 제외36개 기본 적합·32개 메타 적합을 만들고 기존1/2그룹 제외 예측을 재사용합니다. 감사는126개 저장 모델의 재예측과 대표9종 재적합,511개 활성 집합으로 가중치 최적값을 검산합니다. 분류는 새 적합 없이4개 점수 평균·2개 논리 판정, 내부403개 임계값을 비교합니다. 기존 평가·보호·다음 겨울 정답을 사용하지 않고 새 정답 API 요청도 없습니다.
+
+`research_method_blending.py`·`inspect_blending_evidence.py`·`fetch_spatial_blending_reference.py`는 이번 날짜의 출처·실패 기록 보존용이며 기존 결과 파일이 있으면 중단합니다. 재조회는 새 버전을 지정하도록 별도 설정이 필요합니다. 이번 원문과 공식 숨김 본문은 기존 출력 폴더에서 읽을 수 있습니다. `plot_method_blending.py`는 세 실험의 독립 검산 영수증을 확인하고 집계 그림을 생성하며 기존 그림은 덮어쓰지 않습니다.
+
+고정 쌍·삼중 결합은 `temperature_pair_blending_experiment.json`과 감사된 `method_blending_20261010_v2`의 예측을 사용합니다. 주 대조군은300회 단독이며 기존100회 대조를 보조로 유지합니다. 새 학습 없이3종 평균과 내부 선택을 검산합니다. `plot_method_blending.py`는 이 세 번째 영수증까지 확인합니다. `check_blending_quality.py`는 세 완료본의 서명·봉인과 전체 테스트·새 파일·GFM을 검사하고 신규 품질 폴더에 Python 종료 코드·환경 버전·파일 해시를 남깁니다.
+
 ## 데이터 없는 검증 실행
 
 프로젝트 루트에서 실행합니다.
@@ -18,6 +111,93 @@ python scripts/check_markdown.py
 ```
 
 단위 테스트는 합성 데이터로 수행합니다. 노트북 실행과 전체 모델 성능 재현은 비공개 산출물이 필요하므로 데이터 없는 검증 명령에 포함하지 않습니다. GFM은 로컬에서 렌더하며 문서를 외부 렌더 서비스에 전송하지 않습니다.
+
+## 최신 고정 평균·새 호남 평가 — 2026-10-10
+
+[후속 보고서](TEMPERATURE_MEAN_AND_BLIND_REVIEW_20261010.md)의 개발 비교는 기존 감사된 기상14/12 예측을 같은 행에서1:1 평균합니다. 가중치 탐색·추가 모델 적합 없이 같은 내부/외부 그룹에서 평가합니다. 참가자 로컬 비공개 캐시와 앞선 감사가 있는 작업 공간에서 **새 출력 폴더**에 개발 계산만 재현할 수 있습니다.
+
+```powershell
+python -X utf8 scripts/evaluate_temperature_mean.py --output outputs/private/temperature_mean_reproduction_v2
+python -X utf8 scripts/audit_temperature_mean.py --experiment outputs/private/temperature_mean_reproduction_v2
+```
+
+완료된 개발 폴더는 `outputs/private/temperature_mean_20261010_v1/`입니다. `config/temperature_mean_experiment.json`은 같은 분모·고정0.5/0.5·지점 손실5%·저온 비악화 조건을 기록합니다. 보호·개봉8/4/2·완료된 다음 겨울 정답은 새 후보 학습·선택에 쓰지 않습니다.
+
+`temperature_mean_blind_validation.py`의 `prepare/audit/collect/evaluate`는 새 위치 선택→모델/입력/예측 봉인→사전 재학습 검산→첫 겨울 수집→일회 평가 절차입니다. 이번23102·23407은 이미 수집·평가·감사 완료했으므로 **두 지점에서 새 블라인드로 다시 실행하지 않습니다.** `prepare`는 기존 요청 ID를 거부하고 `evaluate`와 `audit_temperature_mean_blind.py`는 기존 결과·감사 덮어쓰기를 거부합니다. 완료 폴더는 `outputs/private/temperature_mean_blind_20261010_v1/`입니다.
+
+현재 해시 확인은 정답 재수집·추가 후보 선택 없이 실행합니다.
+
+```python
+from pathlib import Path
+from scripts.fresh_station_validation import verify_seal, old_freezes
+seal = verify_seal(Path('outputs/private/temperature_mean_blind_20261010_v1'))
+print(seal['rows'], seal['stations'], old_freezes())
+```
+
+`summary.json`은 저온 오차 증가에 따른 온도 기준 실패, `independent_verification.json`은 원문/예측 검산 일치와 사전 결빙 기준 실패를 기록합니다. 독립 감사는 수집 전에 기록한 `ice_gate`를 별도 계산했습니다. 위치9.1/11.1m는 정적 표기 허용 범위 안이며 두 지점이 전북 밖임을 확인한 별도 지리 검토와 구분합니다. `review_temperature_mean_failure.py`는 완료한 개봉 결과의 기술 표만 만들고 `plot_temperature_mean_review.py`는 감사된 결과만 그립니다. 기존 실패 기술·그림·영수증의 덮어쓰기를 거부합니다.
+
+AWS 서비스403·전체 첫 겨울 관측 확보는 아직 해결되지 않았습니다. 공개 샘플이나 더 가까운 지점 좌표를 실제 관측자료로 교체하지 않습니다. 향후 기상망 확장 비교는 기존 계획4곳 원문·품질 감사가 선행되어야 합니다.
+
+## 직전 거리 제거·기상 지점 이력 검산 — 2026-10-10
+
+[후속 보고서](WEATHER_DISTANCE_AND_NETWORK_REVIEW_20261010.md)의 비교는 원래 첫 겨울 개발23곳만 사용합니다. 봉인된 개봉8/4곳·보호3곳·완료된 다음겨울 정답으로 새 후보를 선택하지 않습니다. 다음 명령은 비공개 원천과 앞선 감사 결과가 있는 로컬 작업 공간에서 기존에 없는 출력 폴더에 실행합니다.
+
+```powershell
+python -X utf8 scripts/evaluate_weather_distance.py --output outputs/private/weather_distance_reproduction_v2
+python -X utf8 scripts/audit_weather_distance.py --experiment outputs/private/weather_distance_reproduction_v2
+```
+
+`config/weather_distance_experiment.json`은 기상14 HGB100의 같은 조건에서 거리2개만 제거하는 후보 하나를 고정합니다. 앞선 온도 입력·기준 모델의 해시를 확인하고 새 후보10개를 학습합니다. 현재 `weather_distance_20261010_v1/`는 실행·별도 재추론 감사까지 완료했으며 덮어쓰기를 거부합니다. 지점 손실 기준 실패와 독립 감사 일치는 서로 다른 결론입니다.
+
+공개 지점 이력 재현은 새 비공개 review 폴더에 `portal_station_lists_v2/AWS.csv`, `ASOS.csv`, 성공 응답의 `portal_station_manifest_v2.json`, 실제 접근 상태의 `aws_probe_manifest.json`을 준비한 뒤 실행합니다. CSV는 기상청 공개 포털에서 받은 cp949 지점 이력이어야 합니다. 관측값이나 대회 정답을 이 CSV에 넣지 않습니다.
+
+```powershell
+python -X utf8 scripts/plan_weather_network_expansion.py --review outputs/private/weather_network_reproduction_v2
+python -X utf8 scripts/audit_weather_network_expansion.py --review outputs/private/weather_network_reproduction_v2
+```
+
+두 명령은 API 요청·관측 수집·모델 학습을 하지 않습니다. 기존 첫 겨울 개발 ID와 정적 위치만 읽으며 생산 필터/순위와 별도 계산을 대조합니다. 현재 `weather_network_review_20261010_v1/metadata_analysis/`는 감사 완료 상태이며 새 영수증 생성·기존 분석 덮어쓰기를 거부합니다. AWS341의관측 기간과 ASOS좌표 차이를 별도 파일로 남깁니다.
+
+`metadata_analysis/aws_expansion_plan.json`은 AWS614·647·730·914 추가만 고정한 후속 계획입니다. 실제 AWS 서비스403을 해결하고 원문·단위·기간·누락·좌표 감사를 완료해야 기상망 확장 비교를 시작할 수 있습니다. 공개 지점 후보나 거리 감소를 실제 관측 확보·성능 개선으로 간주하지 않습니다. `plot_weather_distance_review.py`는 현재 감사 결과로만 그림을 만드는 일회 진입점이며 완료 그림·영수증을 보존합니다.
+
+## 직전 온도·일별 임계값 비교 — 2026-10-10
+
+추가 [미해결 사항 검토](UNRESOLVED_EVIDENCE_REVIEW_20261010.md)는 이미 개봉한 첫 겨울 자료의 좌표·분모·입력 조건을 진단합니다. 원본 예측과 봉인을 보존하고 새 모델 학습·재추론을 하지 않습니다. 로컬 원천이 있는 작업 공간에서 새 폴더로 재현할 수 있습니다.
+
+```powershell
+python -X utf8 scripts/review_unresolved_evidence.py --output outputs/private/unresolved_reproduction_v2/analysis
+python -X utf8 scripts/audit_unresolved_evidence.py --review outputs/private/unresolved_reproduction_v2
+```
+
+기존 `unresolved_review_20261010_v1/analysis/`와 `verification/`에는 실행을 완료했으며 덮어쓰기를 거부합니다. 재현 폴더에 공개 원문 목록이 없으면 관측·평가 계산만 수행합니다. 원문 목록이 있는 경우 해시를 함께 확인합니다. `plot_unresolved_evidence.py`는 고정 원본 진단으로 그림을 만드는 일회 진입점이며 현재 그림·기록이 있으면 재실행을 거부합니다.
+
+[심사 관점 보고서](AWARD_READINESS_REVIEW_20261010.md)의 실험은 수정본의 첫 겨울 23개 지점 고정 입력을 사용합니다. 아래 명령은 참가자의 원본 작업 공간에서 **기존에 없는 새 출력 폴더**에만 실행합니다. 반복 개발 재현이며 새 독립 성능을 만드는 명령이 아닙니다.
+
+```powershell
+python -X utf8 scripts/evaluate_temperature_transfer.py --profile thermal --output outputs/private/temperature_transfer_reproduction_v2
+python -X utf8 scripts/audit_temperature_transfer.py --experiment outputs/private/temperature_transfer_reproduction_v2
+python -X utf8 scripts/evaluate_temperature_transfer.py --profile loss --output outputs/private/temperature_loss_reproduction_v2
+python -X utf8 scripts/audit_temperature_transfer.py --experiment outputs/private/temperature_loss_reproduction_v2
+python -X utf8 scripts/evaluate_daily_threshold_transfer.py --output outputs/private/daily_primary_reproduction_v2
+python -X utf8 scripts/audit_daily_threshold_transfer.py --experiment outputs/private/daily_primary_reproduction_v2
+python scripts/check_repository.py --include-untracked
+python scripts/check_markdown.py --include-untracked --render-dir outputs/private/markdown_review_20261010
+```
+
+`thermal`은 날씨14 잔차·열24 직접/잔차 후보, `loss`는 날씨14 절대 손실100·제곱 손실300·절대 손실300 후보입니다. 중첩 선택은 외부 그룹과 내부 그룹을 모두 학습에서 제외합니다. 입력·모델·실행 소스 스냅샷·선택 기록·유효 분모·기존47/549 고정 파일 검증을 보존합니다.
+
+이번 새4개 지점은 `outputs/private/temperature_blind_20261010_v1/`에 수집·일회 평가·감사까지 완료했습니다. `temperature_blind_validation.py`의 `prepare/audit/collect/evaluate`는 단계별 봉인 파이프라인이며 **현재 네 지점에서 다시 실행하지 않습니다.** 이미 요청한 지점의 새 블라인드 봉인과 기존 결과 덮어쓰기는 차단됩니다. `audit_temperature_blind_validation.py`도 기존 감사 파일이 있으면 덮어쓰지 않고 종료합니다.
+
+봉인 자료의 현재 해시만 확인할 때는 다음 Python 코드를 실행할 수 있습니다. 정답을 수집하거나 지표를 새로 선택하지 않습니다.
+
+```python
+from pathlib import Path
+from scripts.fresh_station_validation import verify_seal, old_freezes
+seal = verify_seal(Path('outputs/private/temperature_blind_20261010_v1'))
+print(seal['rows'], seal['stations'], old_freezes())
+```
+
+`summary.json`은 사전 온도 채택 조건 실패를, `independent_verification.json`은 원문·지표 검산 일치와 **33407 위치 확인 필요**를 기록합니다. 간격539개 모두1.3초 이상이나 위치 검증까지 통과한 결과가 아닙니다. 비교 그림의 생성 코드는 `plot_temperature_transfer_review.py`이며 기존 그림·영수증을 보존하려고 재생성을 거부합니다.
 
 ## 연구 인계물 검산
 

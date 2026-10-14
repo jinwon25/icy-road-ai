@@ -1,0 +1,21 @@
+{
+  "experiment_id": "20261010_temperature_equal_mean_nested_v1",
+  "scope": "기존 첫 겨울 개발23곳의 반복 비교. 개봉8/4·보호3·다음겨울 정답 제외.",
+  "candidate": "equal_mean_weather14_weather12",
+  "components": ["direct_weather14", "weather12_no_distance"],
+  "weights": [0.5, 0.5],
+  "weight_search_performed": false,
+  "source_experiment": "outputs/private/weather_distance_20261010_v1",
+  "maximum_station_harm": 0.05,
+  "selection": "동일한 내부 OOF의 지점 평균 MAE/RMSE 동시 개선·각 지점 MAE 악화5% 이하·관측 -2~2도 MAE 비악화. 미충족시 기준14 유지.",
+  "ice_policy": "기존 0도·이슬점/과거3시간 강수/적설 규칙 고정. 온도만 변경. 새 임계값 탐색 없음.",
+  "missing_policy": "두 성분의 유한 예측 행이 동일해야 함. 결측 성분을 한쪽 예측으로 대체하지 않음.",
+  "new_model_fitting_performed": false,
+  "final_model_promoted": false,
+  "references": [
+    "https://robjhyndman.com/publications/combinations/",
+    "https://otexts.com/fpp3/combinations.html",
+    "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.VotingRegressor.html",
+    "https://jmlr.org/papers/v11/cawley10a.html"
+  ]
+}

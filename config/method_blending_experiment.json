@@ -1,0 +1,33 @@
+{
+  "experiment_id": "20261010_method_blending_three_level_v1",
+  "scope": "반복 첫 겨울 개발 비교. 독립·공식 성능이 아니며 모델 승격하지 않음.",
+  "temperature_components": ["direct_weather14", "weather12_no_distance", "residual_weather14", "direct_thermal24", "residual_thermal24", "weather_mae100", "weather_mse300", "weather_mae300", "augmented_ridge"],
+  "temperature_blends": ["equal_nine", "equal_weather_trio", "simplex_mse", "simplex_shrink"],
+  "trio_components": ["direct_weather14", "weather12_no_distance", "weather_mse300"],
+  "shrink_penalty": 0.1,
+  "meta_objective": "지점별 동일 비중 MSE + 고정 lambda * 균등 가중치로부터의 제곱 거리. 가중치 비음수·합1, 절편 없음.",
+  "meta_validation": "외부 G, 내부 선택 H, 가중치 학습 K: 기본 모델은 G+H+K 전체 지점 제외. H 평가에는 G+H 제외 예측. 외부 가중치는 G+K 제외 OOF로 학습, 외부 예측은 G 제외 모델.",
+  "maximum_station_harm": 0.05,
+  "temperature_selection": "내부 MAE/RMSE 동시 감소, 모든 지점 MAE 악화 <=5%, 관측 -2~2도 비어 있지 않고 MAE 비악화. 적격 최소 macro MAE·RMSE·이름. 기본14와 기존300 단독을 별도 대조.",
+  "score_blends": ["equal_original_binary", "equal_original_joint", "equal_binary_joint", "equal_three_scores"],
+  "score_semantics": "가중 학습 점수이므로 보정된 확률로 주장하지 않음. 고정 균등 결합, 403개 임계값은 내부 그룹만 사용.",
+  "ice_guard": "FP/FN 비증가, micro·지점 평균·전체 완전일·실제 결빙일 F1 비악화, 모든 양성 지점 TP와 사건·단일 표본 탐지 비감소, 적어도 하나 개선.",
+  "rule_blends": ["original_and_thermal14", "original_or_thermal14"],
+  "thermal_rule": "온도<=0 및 이슬점>=온도 또는 강수>0 또는 적설>0. 입력 부족 시 기존 예측. 규칙·임계값 변경 없음.",
+  "outcome_window_kst": ["2024-11-01", "2025-03-01"],
+  "allowed_stations": ["12103", "12209", "12210", "12211", "12409", "23202", "23203", "23204", "23403", "33103", "33206", "33409", "33410", "33412", "12207", "12408", "23205", "23404", "33205", "33408", "33207", "33413", "33414"],
+  "excluded_outcomes": "보호3, 기존 새8·새4·새2 평가 지점, 다음 겨울, 공식 평가 정답",
+  "new_outcome_requests": false,
+  "model_promotion": false,
+  "max_compute_threads": 2,
+  "hgb_parameters": {"learning_rate": 0.05, "max_iter": 100, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "references": [
+    "https://statistics.berkeley.edu/sites/default/files/tech-reports/367.pdf",
+    "https://biostats.bepress.com/ucbbiostat/paper222/",
+    "https://jmlr.org/papers/v11/cawley10a.html",
+    "https://doi.org/10.1111/ecog.02881",
+    "https://arxiv.org/abs/2205.04216",
+    "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.StackingRegressor.html",
+    "https://scikit-learn.org/1.6/modules/ensemble.html#voting-classifier"
+  ]
+}
