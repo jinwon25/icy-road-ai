@@ -21,6 +21,9 @@ def main():
     if args.include_untracked:
         command += ['--cached', '--others', '--exclude-standard']
     paths = subprocess.check_output(command, cwd=ROOT).decode('utf-8').split('\0')
+    # 작업 트리 모드에서는 삭제 예정 추적 파일을 제외한다.
+    if args.include_untracked:
+        paths = [name for name in paths if name and (ROOT / name).is_file()]
     errors = []
     checked = 0
     for name in filter(None, paths):

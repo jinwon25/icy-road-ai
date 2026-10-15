@@ -87,7 +87,7 @@ def main():
 
 ## 확인 순서
 
-1. `code/docs/RESEARCH_DELIVERY_REVIEW_20261009.md`에서 결과와 미충족 조건을 확인합니다.
+1. `code/docs/delivery/RESEARCH_DELIVERY_REVIEW_20261009.md`에서 결과와 미충족 조건을 확인합니다.
 2. `review/segment_review.html`을 브라우저로 열어 두 겨울·노선·방향을 선택합니다. 외부 통신이나 인증키가 필요하지 않습니다.
 3. `segments/2024-25/`, `segments/2025-26/`의 CSV·GeoPackage·Shapefile과 필드 정의를 함께 읽습니다.
 4. 아래 명령으로 파일 해시·첫 겨울 23지점 회귀 재적합·새 8지점 고정 예측·분류 및 온도 지표를 재현합니다.

@@ -14,7 +14,7 @@ inventory = pd.read_csv(IN / "file_inventory.csv")
 quality = pd.read_csv(IN / "variable_quality.csv").set_index(["kind", "column"])
 lines = ["# 변수 사전과 품질 요약", "",
          "원본 변수의 이름·단위·처리 방식과 결측 현황을 확인하는 사전입니다. 원본 열 이름은 코드와 대조할 수 있도록 그대로 유지했습니다.", "",
-         "[문서 목록·용어 풀이](README.md) · [프로젝트 소개](../README.md)", "",
+         "[문서 목록·용어 풀이](../README.md) · [프로젝트 소개](../../README.md)", "",
          "## 표를 읽는 방법", "",
          "- **원본형 / 처리형:** 원본을 읽은 자료형과 분석할 때의 자료형입니다. `string`은 문자열, `float64`는 실수, `datetime`은 날짜·시각입니다. `candidate`는 사용 후보, `provisional`은 잠정 가정입니다.",
          "- **분모 / 결측토큰 / 숫자 오류:** 점검한 행 수 / 누락을 뜻하는 값의 개수 / 숫자로 바꾸지 못한 값의 개수입니다. 빈 칸은 0이 아니라 해당 통계를 적용하지 않은 항목입니다.",
@@ -72,5 +72,5 @@ lines += [
     "",
     "세부 오류 문자열과 건수는 Git에서 제외된 `outputs/private/full/variable_quality.csv`에 보존했다. 이 사전은 원본 값을 변경하지 않는다.",
 ]
-(ROOT / "docs" / "VARIABLE_DICTIONARY.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
+(ROOT / "docs" / "data" / "VARIABLE_DICTIONARY.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
 print("columns",sum(len(inventory.loc[inventory.kind == kind, "header"].iloc[0].split(" | ")) for kind in present_kinds))

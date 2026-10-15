@@ -91,7 +91,7 @@ def main():
 
 ## 검토 순서
 
-1. `docs/EVALUATION_STATUS.md`: 고정 평가 결과와 위험도 제안의 적용 범위.
+1. `docs/validation/EVALUATION_STATUS.md`: 고정 평가 결과와 위험도 제안의 적용 범위.
 2. `data/`: 구간 요약·환경조건·임계값·일별 평가. 전체 10분 CSV 위치는 `data/data_index.json`.
 3. `figures/`: 조건 노출의 JPG/PNG·Shapefile 전체 부속 파일·GPKG. 공식 이정·방향은 미확정.
 4. `model/`: 온도·분류 저장 모델과 모델 카드. 실제 실행용 같은 모델은 원래 `outputs/private/model_candidates/`에도 있다.
@@ -110,7 +110,7 @@ python -m venv .venv
 .\\.venv\\Scripts\\python.exe scripts/check_notebook.py
 ```
 
-학습·추론 전체 순서는 `docs/RUNBOOK.md`와 `config/notebook_workflow.json`에 있다. 학습 재실행은 별도 복사본에서 수행하고 기존 고정 평가 파일을 덮어쓰지 않는다. 이 패키지에는 이미 평가한 보호 정답이 있으므로 새 모델을 개발한 뒤 같은 지점을 독립 최종 검증이라고 보고할 수 없다. 고정·예측·평가 세 명령은 기존 기록이 있으면 재실행을 차단한다. 모델 출력은 회귀 °C와 보정되지 않은 분류 점수이며 외부 API 인증정보나 상용 LLM 서비스 호출이 필요하지 않다. 외부 원자료와 저작권·이용 고지는 `outputs/private/external/`에 있다.
+학습·추론 전체 순서는 `docs/delivery/RUNBOOK.md`와 `config/notebook_workflow.json`에 있다. 학습 재실행은 별도 복사본에서 수행하고 기존 고정 평가 파일을 덮어쓰지 않는다. 이 패키지에는 이미 평가한 보호 정답이 있으므로 새 모델을 개발한 뒤 같은 지점을 독립 최종 검증이라고 보고할 수 없다. 고정·예측·평가 세 명령은 기존 기록이 있으면 재실행을 차단한다. 모델 출력은 회귀 °C와 보정되지 않은 분류 점수이며 외부 API 인증정보나 상용 LLM 서비스 호출이 필요하지 않다. 외부 원자료와 저작권·이용 고지는 `outputs/private/external/`에 있다.
 
 ## 제출 전 남은 확인
 

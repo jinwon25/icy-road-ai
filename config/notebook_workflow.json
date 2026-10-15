@@ -75,7 +75,7 @@
       "command": [
         "scripts/make_variable_dictionary.py"
       ],
-      "artifact": "docs/VARIABLE_DICTIONARY.md",
+      "artifact": "docs/data/VARIABLE_DICTIONARY.md",
       "summary_keys": []
     },
     {

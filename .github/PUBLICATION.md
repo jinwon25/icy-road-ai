@@ -12,8 +12,8 @@
 - 참가 양식의 경진대회 규정 3항: 제공 데이터는 승인받은 목적에 이용하고, 승인받지 않은 제3자에게 열람·제공하지 않으며 대회 완료 후 폐기한다. 원본 참가신청서는 개인정보를 포함하므로 저장소에서 제외한다.
 - 참가 규정 8항: 수상 결과물의 주최 측 공개에 동의한다. 이 조항을 참가자가 대회 진행 중 코드·데이터·실험 결과를 자유롭게 공개해도 된다는 승인으로 해석하지 않는다.
 - [9월 30일 제출 공지](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=564): 실행 코드·환경·노트북·데모·AI 활용 및 주요 검토 기록을 요구한다. 제출 의무와 공개 허용은 별도로 확인한다.
-- [데이터 정정 Q&A](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=555): 최신 정정본은 20261007이며 별도 수정본 작업 환경에서 분석했다. 보호·기존 다음 겨울 평가와 최신 개발 결과를 구분한다. [공식 재검토](../docs/OFFICIAL_REVIEW_20261009.md) 참고.
-- 10월 14일 문제 페이지·제출 공지·FAQ·AI 활용 답변과 공개 빈 참가양식을 다시 대조했다. 참가양식의 제3자 제공 제한·종료 후 폐기·수상 결과물 공개 조항은 유지됐다. [최신 대회 현황](../docs/COMPETITION_STATUS_20261014.md)과 [문헌·서약 재검토](../docs/MODEL_REPORT_UPGRADE_20261014.md)를 참고한다.
+- [데이터 정정 Q&A](https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=555): 최신 정정본은 20261007이며 별도 수정본 작업 환경에서 분석했다. 보호·기존 다음 겨울 평가와 최신 개발 결과를 구분한다. [공식 재검토](../docs/competition/OFFICIAL_REVIEW_20261009.md) 참고.
+- 10월 14일 문제 페이지·제출 공지·FAQ·AI 활용 답변과 공개 빈 참가양식을 다시 대조했다. 참가양식의 제3자 제공 제한·종료 후 폐기·수상 결과물 공개 조항은 유지됐다. [최신 대회 현황](../docs/delivery/COMPETITION_STATUS_20261014.md)과 [문헌·서약 재검토](../docs/delivery/MODEL_REPORT_UPGRADE_20261014.md)를 참고한다.
 
 ## 적용 방침
 

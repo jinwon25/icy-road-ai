@@ -81,7 +81,7 @@ def main():
 
 - [최신 분석 보고서](reports/current/전북_고속도로_결빙_분석_보고서.pdf): 12쪽. 지점별 결과·실제 오판·가중 모델 비교·날짜와 지역 민감도·지도·문헌 13개·실행 방법
 - [편집 가능한 원고](reports/current/전북_고속도로_결빙_분석_보고서.md)
-- [모델·보고서 변경 근거](docs/MODEL_REPORT_UPGRADE_20261014.md)
+- [모델·보고서 변경 근거](docs/delivery/MODEL_REPORT_UPGRADE_20261014.md)
 - [AI 활용과 주요 선택](AI_USAGE.md)
 
 이전 6쪽 보고서는 `reports/archive/`에 보존합니다. 이전 문서의 1.200531°C는 전체 행 MAE이며, 지점 균등 MAE는 1.200440°C입니다.

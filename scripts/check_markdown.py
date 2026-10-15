@@ -124,6 +124,9 @@ def main():
         command += ['--cached', '--others', '--exclude-standard']
     names = subprocess.check_output(command + ['*.md'], cwd=ROOT).decode('utf-8').split('\0')
     names = list(filter(None, names))
+    # 문서 이동 후 커밋 전에도 현재 작업 트리를 검증한다.
+    if args.include_untracked:
+        names = [name for name in names if (ROOT / name).is_file()]
     if args.render_dir and not args.render_dir.resolve().is_relative_to((ROOT / 'outputs/private').resolve()):
         parser.error('렌더 결과는 outputs/private 내부에 저장하세요.')
     errors = inspect_documents(ROOT, names, args.render_dir)
