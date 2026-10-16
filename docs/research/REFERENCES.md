@@ -4,6 +4,18 @@
 
 [문서 목록](../README.md) · [최신 평균·새 호남 검증](TEMPERATURE_MEAN_AND_BLIND_REVIEW_20261010.md) · [거리·기상망 검토](WEATHER_DISTANCE_AND_NETWORK_REVIEW_20261010.md)
 
+## 단순 기준선과 집계·CSV 재현성 — 2026-10-16
+
+[기준선·재현성 검토](../delivery/REVIEW_RESPONSE_20261016.md)에 다음 1차 자료를 적용했습니다. 원문 응답 5개를 보존했고 날짜·지점 평균에 관한 일반 논의와 이번 고정 개발 결과를 구별했습니다.
+
+| 자료 | 실제 적용 |
+| --- | --- |
+| [Lipton 등, 2014](https://arxiv.org/abs/1402.1892) | 정보 없는 분류기에서 전부 양성 예측이 F1 최적이 될 수 있다는 이론적 사례. 이번 집계 순위의 직접 증명으로 확대하지 않음 |
+| [Reinke 등, Nature Methods 2024](https://www.nature.com/articles/s41592-023-02150-0) | 날짜·지점·시점 집계와 미정의 분모를 함께 표시 |
+| [Saito·Rehmsmeier, PLOS ONE 2015](https://doi.org/10.1371/journal.pone.0118432) | 불균형 자료에서 Precision·Recall·혼동행렬을 함께 검토 |
+| [scikit-learn 1.6.1 DummyClassifier](https://scikit-learn.org/1.6/modules/generated/sklearn.dummy.DummyClassifier.html) | 입력을 무시하는 상수 기준선의 명시적 비교 |
+| [pandas 2.2.3 read_csv](https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.read_csv.html) | round_trip 파서와 실제 분기 경계 회귀 검증 |
+
 ## 결빙점 가중 학습과 보고서 개편 — 2026-10-14
 
 [새 모델·보고서 검토](../delivery/MODEL_REPORT_UPGRADE_20261014.md)에서 다음 자료의 적용 조건과 실제 결과를 정리했습니다.

@@ -1,5 +1,6 @@
 """검토된 보고서와 별도 연구 재현 자료를 기존 실행 후보에 합쳐 새 비공개 묶음 생성."""
 from datetime import datetime,timezone
+import argparse
 from pathlib import Path
 import json
 import shutil
@@ -14,6 +15,8 @@ from scripts.evaluate_method_blending import read,write,preservation
 from src.data_source import sha256_file as sha
 from src.method_blending import domain,ALLOWED
 from src.submission_runtime import FEATURES,WATER
+from src.submission_archive import restore_archive
+from src.submission_metadata import temperature_evidence
 
 PRIVATE=ROOT/'outputs/private'
 BASE=PRIVATE/'submission_candidate_unpack_20261014_v1'
@@ -25,8 +28,14 @@ DIAG=PRIVATE/'submission_diagnostics_20261014_v1'
 
 
 def main():
+    global BASE, OUT
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--base-archive',type=Path,default=PRIVATE/'submission_candidate_20261014_v1.zip')
+    parser.add_argument('--output',type=Path,default=OUT)
+    args=parser.parse_args(); OUT=args.output
     if OUT.exists():raise FileExistsError('Preserve previous deliveries')
-    assert BASE.exists()
+    BASE=OUT.parent/(OUT.name+'_restored_base')
+    restore_archive(args.base_archive,BASE)
     assert read(QUALITY/'quality_receipt.json')['status']=='model_report_quality_checks_passed'
     assert read(REPORT/'visual_review.json')['status']=='all_12_pages_visually_reviewed'
     frozen=preservation();OUT.mkdir()
@@ -54,6 +63,11 @@ def main():
                 target=OUT/path.relative_to(ROOT);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,target)
     shutil.copy2(ROOT/'AI_USAGE.md',OUT/'AI_USAGE.md')
     shutil.copy2(ROOT/'requirements-delivery.txt',OUT/'requirements-delivery.txt')
+    shutil.copy2(ROOT/'src/submission_runtime.py',OUT/'code/runtime.py')
+    shutil.copy2(ROOT/'src/submission_io.py',OUT/'code/submission_io.py')
+    card=read(OUT/'model/model_card.json')
+    card['source_development'].update(temperature_evidence(pd.read_parquet(OUT/'data/development_temperature_oof.parquet')))
+    (OUT/'model/model_card.json').write_text(json.dumps(card,ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf-8')
     report_dest=OUT/'reports/current'
     report_dest.mkdir()
     for path in REPORT.rglob('*'):
@@ -135,7 +149,7 @@ python -X utf8 code/reproduce_freezing.py --output validation/new_freezing_repla
     for path in BASE.rglob('*'):
         if not path.is_file():continue
         rel=path.relative_to(BASE);name=rel.as_posix()
-        if name.startswith(('model/','data/weather_groups/','data/prediction_groups/')) or name in ['data/protected_predictions_10min.csv.gz','data/point_prediction_index.csv','data/prediction_group_manifest.json']:
+        if (name.startswith('model/') and name.endswith('.joblib')) or name.startswith(('data/weather_groups/','data/prediction_groups/')) or name in ['data/protected_predictions_10min.csv.gz','data/point_prediction_index.csv','data/prediction_group_manifest.json']:
             assert sha(path)==sha(OUT/rel),name
             immutable.append(name)
     for name,args in [('research_replay',['code/reproduce_freezing.py','--output','validation/new_freezing_replay']),

@@ -6,14 +6,16 @@
 
 ## 처음 읽는 순서
 
-1. [현재 진행 현황](STATUS.md)
-2. [최신 모델·보고서 판단](delivery/MODEL_REPORT_UPGRADE_20261014.md)
-3. [대회 현황·입력 공백](delivery/COMPETITION_STATUS_20261014.md)
-4. [제출 후보 구성](delivery/SUBMISSION_CANDIDATE_20261013.md)
-5. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [전체 실행 안내](delivery/RUNBOOK.md)
+1. [10월 16일 기준선 비교·재현성 수정](delivery/REVIEW_RESPONSE_20261016.md)과 [공식 사이트 재확인](competition/OFFICIAL_UPDATE_20261016.md)
+2. [현재 진행 현황](STATUS.md)
+3. [10월 14일 모델·보고서 판단](delivery/MODEL_REPORT_UPGRADE_20261014.md)
+4. [입력 공백 검토](delivery/COMPETITION_STATUS_20261014.md)
+5. [제출 후보 구성](delivery/SUBMISSION_CANDIDATE_20261013.md)
+6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [전체 실행 안내](delivery/RUNBOOK.md)
 
 ## 대회
 
+- [공식 사이트 전체 재확인 — 2026-10-16](competition/OFFICIAL_UPDATE_20261016.md)
 - [대회 요구사항과 적용 범위 — 2026-10-14](competition/COMPETITION_REQUIREMENTS.md)
 - [공식 Q&A633 답변과 일별 평가 후속 검증 — 2026-10-13](competition/OFFICIAL_QNA_20261013.md)
 - [공식 정보 재검토와 저장소 검증 — 2026-10-09](competition/OFFICIAL_REVIEW_20261009.md)
@@ -65,6 +67,7 @@
 
 ## 제출
 
+- [단순 기준선·모델 카드·CSV·ZIP 복원 수정 — 2026-10-16](delivery/REVIEW_RESPONSE_20261016.md)
 - [10월14일 대회 현황과 제출 후보 후속 검토](delivery/COMPETITION_STATUS_20261014.md)
 - [결빙점 가중 모델 검증과 보고서 개편](delivery/MODEL_REPORT_UPGRADE_20261014.md)
 - [연구 결과물 인계·마감 판단 — 2026-10-09](delivery/RESEARCH_DELIVERY_REVIEW_20261009.md)

@@ -1,7 +1,13 @@
 import unittest
+from pathlib import Path
+import tempfile
+import io
+from contextlib import redirect_stdout
+from unittest.mock import patch
 import numpy as np
 import pandas as pd
-from src.submission_runtime import FEATURES, prepare_weather, infer
+from src.submission_runtime import FEATURES, prepare_weather, infer, main
+from src.submission_io import read_weather
 
 
 def example():
@@ -9,6 +15,7 @@ def example():
     f['station'] = 'example'; f['time'] = pd.date_range('2024-12-01',periods=3,freq='10min')
     f['asos_air_temp'] = -1.; f['aws_dewpoint'] = 0.
     f['rain15_max_3h'] = 0.; f['asos_snow_cm'] = 0.
+    f[['aws_age_minutes', 'asos_age_minutes']] = 10.
     return f
 
 
@@ -16,6 +23,11 @@ class Model:
     feature_names_in_ = np.array(FEATURES)
     def __init__(self, value=-1.): self.value = value
     def predict(self, x): return np.full(len(x), self.value)
+
+
+class BoundaryModel(Model):
+    def predict(self, x):
+        return np.where(x.hour_sin.to_numpy() >= 0.10000000000000002, -1., 1.)
 
 
 class RuntimeTests(unittest.TestCase):
@@ -56,6 +68,30 @@ class RuntimeTests(unittest.TestCase):
         f=example(); f['time']=pd.date_range('2024-11-30 15:00',periods=3,freq='10min',tz='UTC')
         clean,_,_=prepare_weather(f)
         self.assertEqual(clean.time.iloc[0],pd.Timestamp('2024-12-01'))
+
+    def test_canonical_station_duplicate_and_zero_age_rejected(self):
+        f=example(); f.loc[0,'station']='12207'; f.loc[1,'station']='12207.0'
+        f.loc[1,'time']=f.time.iloc[0]
+        with self.assertRaises(ValueError): prepare_weather(f)
+        for column in ['aws_age_minutes','asos_age_minutes']:
+            f=example(); f.loc[0,column]=0
+            with self.assertRaises(ValueError): prepare_weather(f)
+
+    def test_cli_preserves_float_boundary_across_csv_and_parquet(self):
+        f=example(); f['hour_sin']=0.10000000000000002
+        with tempfile.TemporaryDirectory() as tmp:
+            outputs=[]
+            for extension in ['csv','parquet']:
+                source=Path(tmp)/('input.'+extension); target=Path(tmp)/('output.'+extension)
+                if extension=='csv': f.to_csv(source,index=False)
+                else: f.to_parquet(source,index=False)
+                with patch('sys.argv',['predict','--input',str(source),'--output',str(target)]), \
+                        patch('src.submission_runtime.joblib.load',return_value=BoundaryModel()), redirect_stdout(io.StringIO()):
+                    main()
+                outputs.append(read_weather(target))
+            np.testing.assert_array_equal(outputs[0].estimated_road_temp_c,[-1.,-1.,-1.])
+            for column in ['estimated_road_temp_c','predicted_ice']:
+                np.testing.assert_array_equal(outputs[0][column],outputs[1][column])
 
 
 if __name__=='__main__': unittest.main()

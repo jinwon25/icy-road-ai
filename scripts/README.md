@@ -12,10 +12,21 @@
 | GFM 렌더·링크·앵커 검사 | [check_markdown.py](check_markdown.py) |
 | 현재 후보 보고서 작성 | [build_revised_submission_report.py](build_revised_submission_report.py) |
 | 최신 보고서 후보 묶기 | [package_model_report_upgrade.py](package_model_report_upgrade.py) |
-| 제출 후보 실행 | [demo_inference.py](demo_inference.py) |
+| 현재 2모델 평균 후보의 CSV·Parquet 추론 | [submission_runtime.py](../src/submission_runtime.py) |
+| 제출 ZIP 해시 검증·새 폴더 복원 | [submission_archive.py](../src/submission_archive.py) |
+| 과거 Ridge·HGB 기준선 데모 | [demo_inference.py](demo_inference.py) |
 | 데이터 버전별 작업 복사본 | [prepare_release_workspace.py](prepare_release_workspace.py) |
 
 학습·공식 사이트 수집·패키징은 출력 경로와 선행 조건을 확인한 뒤 실행합니다. 현재 후보 묶음과 이미 완료한 평가를 덮어쓰지 않습니다. 수정본 연구는 별도 작업 루트의 실행 안내를 따릅니다.
+
+현재 후보를 저장소에서 실행하려면 ZIP의 해시 목록을 확인해 새 폴더로 복원한 뒤 그 폴더의 모델을 명시합니다. 원본 저장소에는 모델이 포함되지 않습니다.
+
+```powershell
+python -m src.submission_archive --archive outputs/private/submission_candidate_20261016_v1.zip --output outputs/private/candidate_work_20261016
+python -m src.submission_runtime --input outputs/private/candidate_work_20261016/data/weather_example.csv --models outputs/private/candidate_work_20261016/model --output outputs/private/new_candidate_prediction.csv
+```
+
+복원 경로·예측 경로가 이미 존재하면 중단합니다. 예제는 현재 학습 모델의 실행 확인용이며 새 지점 성능 평가가 아닙니다. [기준선·재현성 후속 검토](../docs/delivery/REVIEW_RESPONSE_20261016.md)
 
 ## 전체 스크립트 목록
 

@@ -11,6 +11,7 @@ import pandas as pd
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from scripts.evaluate_method_blending import read,write,preservation
 from src.data_source import sha256_file as sha
+from src.submission_metadata import temperature_evidence
 
 OUT=ROOT/'outputs/private/submission_candidate_20261013_v1'
 
@@ -64,7 +65,8 @@ def main():
     card=dict(name='weather12_MSE_MAE300_equal_mean',status='representative_submission_candidate_not_promoted',
         training_stations=read(OUT/'training_plan.json')['allowed_stations'],training_rows=397126,training_period_kst=['2024-11-01','2025-03-01'],
         temperature_unit='degree_Celsius',ice_output='0/1/null fixed cold_moisture criterion; uncalibrated',
-        source_development=dict(rows=155257,valid_ice_rows=155118,temperature_mae_station_mean=1.200530946,
+        source_development=dict(rows=155257,valid_ice_rows=155118,
+            **temperature_evidence(pd.read_parquet(OUT/'data/development_temperature_oof.parquet')),
             daily_precision_defined_station_mean=.052802601704912216,daily_recall_defined_station_mean=.7746879109406813,daily_f1_defined_station_mean=.03063282424209388,
             recall_defined_stations=8,recall_all_nine_stations=None,coverage_condition_144_is_provisional=True),
         limitations=['반복 개발·새 지점 일반화 미입증','기존 온도3종 평균보다 일평균Precision 하락','입력부족은기존분류fallback 대신null',

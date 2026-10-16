@@ -15,7 +15,7 @@ def domain(frame):
     times = pd.to_datetime(frame.time)
     if times.dt.tz is not None or times.isna().any() or not (times.ge('2024-11-01') & times.lt('2025-03-01')).all():
         raise ValueError('Only naive KST first-winter development permitted')
-    if ((times.dt.minute % 10 != 0) | (times.dt.second != 0) | (times.dt.microsecond != 0)).any():
+    if ((times.dt.minute % 10 != 0) | (times.dt.second != 0) | (times.dt.microsecond != 0) | (times.dt.nanosecond != 0)).any():
         raise ValueError('Exact ten-minute grid required')
     return frame
 

@@ -18,6 +18,10 @@ def score(f, pop=('12207',), threshold=144, end='2024-11-03'):
 
 
 class Qa633Tests(unittest.TestCase):
+    def test_nanosecond_off_grid_observation_rejected(self):
+        f=day(); f.loc[0,'time']+=pd.Timedelta(nanoseconds=1)
+        with self.assertRaises(ValueError): score(f)
+
     def test_missed_day_excludes_precision_but_keeps_zero_recall_f1(self):
         f = pd.concat([day(), day(date='2024-11-02', y=[([0], 1)])], ignore_index=True)
         d, s, st = score(f)
