@@ -1,0 +1,28 @@
+{
+  "experiment_id": "20261016_air_road_blending_v1",
+  "scope": "첫 겨울 허용 개발 자료만 반복 비교. 새 독립 평가·최종 모델 채택이 아님.",
+  "cold_sources": ["air", "mean_air_road"],
+  "cold_threshold_celsius": [-2.0, -1.0, 0.0],
+  "moisture_gates": ["none", "humidity80", "dew_or_precip"],
+  "minimum_consecutive_slots": [1, 3],
+  "union_current": [false, true],
+  "fixed_policy_count": 72,
+  "humidity_percent": 80.0,
+  "dewpoint_spread_celsius": 2.0,
+  "current": "기상12 MSE·MAE 평균의 추정온도<=0 및 이슬점/강수/적설 조건. 부족 입력의 고정 개발 판정은0; 제출 출력 정책과 구별.",
+  "selection_origin": "외부 G를 선택에서 제외. 내부 H 입력의 온도 모델은 G+H 전체 지점을 제외한 기존 저장 모델. 외부 예측은 G 제외 모델.",
+  "research_f1_track": "144 및1 관측 조건의 일별 F1이 ASOS<=0·항상결빙·현재 기준을 모두 초과, FP<=ASOS, 현재 탐지 사건 손실0, 현재 대비 양성 지점 TP 비감소. 적격 최대144 F1·최소FP·이름순. 부적격 시 ASOS 기준선으로 복귀. 선택 결과와 원래 엄격 기준을 구별.",
+  "strict_track": "현재 대비 FP/FN 비증가, 144 및1 관측 조건의 P/R/F1 비악화, 사건 손실0과 지점TP 보존을 만족하며 ASOS·항상결빙의 F1을 넘는 후보만 적격. 부적격 시 현재 기준 유지.",
+  "coverage_sensitivity": [144, 130, 72, 1],
+  "new_model_fits": 0,
+  "evaluation_outcomes_used": false,
+  "promotion": "본 연구에서 실행 모델을 바꾸지 않음. 미사용 지점 평가와 지표별 부담 검토 필요.",
+  "references": [
+    "https://scikit-learn.org/1.6/modules/classification_threshold.html",
+    "https://arxiv.org/abs/1402.1892",
+    "https://jmlr.org/papers/v11/cawley10a.html",
+    "https://www.weather.gov/safety/fog-freezing",
+    "https://www.fhwa.dot.gov/publications/research/safety/95202/003.cfm",
+    "https://ops.fhwa.dot.gov/publications/ess05/ess0503.htm"
+  ]
+}

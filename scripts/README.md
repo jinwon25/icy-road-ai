@@ -28,6 +28,29 @@ python -m src.submission_runtime --input outputs/private/candidate_work_20261016
 
 복원 경로·예측 경로가 이미 존재하면 중단합니다. 예제는 현재 학습 모델의 실행 확인용이며 새 지점 성능 평가가 아닙니다. [기준선·재현성 후속 검토](../docs/delivery/REVIEW_RESPONSE_20261016.md)
 
+## 10월 16일 추가 연구
+
+현재 실행 모델은 유지합니다. 다음 실험은 기존 개발 자료·공간 제외 저장 모델·감사 자료가 필요하며, 완료 폴더나 감사 영수증이 있으면 덮어쓰지 않고 중단합니다. 공개 코드만으로 연구 전체를 재현할 수 있다는 뜻이 아닙니다. [결과·선행연구·한계](../docs/research/AIR_ROAD_AND_INPUT_GAPS_20261016.md)
+
+| 목적 | 실행 파일 |
+| --- | --- |
+| 같은 날 공식 원문·양식 재대조 | [review_official_followup_20261016.py](review_official_followup_20261016.py) |
+| 72개 기온·노면 규칙과 두 내부 선택 경로 | [evaluate_air_road_blending.py](evaluate_air_road_blending.py) |
+| 시간창·지표·사건·20모델 재추론 독립 검산 | [audit_air_road_blending.py](audit_air_road_blending.py) |
+| ASOS 대체·개발 648개 합성 공백 | [evaluate_asos_gap_fallback.py](evaluate_asos_gap_fallback.py) |
+| ASOS 행별 선택·온도·참고 출력 검산 | [audit_asos_gap_fallback.py](audit_asos_gap_fallback.py) |
+| 원 ASOS 공백 1회 조회 | [probe_asos_gap_source.py](probe_asos_gap_source.py) |
+| 정상 ASOS 대조군·첫 겨울 직전 원 관측 3회 조회 | [collect_asos_gap_controls.py](collect_asos_gap_controls.py) |
+| 둘째 겨울 직전·장수 공백·AWS 접근 3회 조회 | [collect_weather_gap_followup.py](collect_weather_gap_followup.py) |
+| 원 기상과 캐시·결측·최초 입력 대조 | [audit_weather_source_gaps.py](audit_weather_source_gaps.py) |
+| 기존 위치 표와 현재 요청 이력만으로 미사용 지점 점검 | [audit_remaining_station_metadata.py](audit_remaining_station_metadata.py) |
+| 후속 연구 4쪽 PDF 작성·렌더링 | [build_air_road_gap_report.py](build_air_road_gap_report.py) |
+| 새 실험·문서·PDF·보존 해시 종합 검사 | [check_air_road_followup_quality.py](check_air_road_followup_quality.py) |
+
+인증 조회 세 파일은 기존 `KMA_AUTH_KEY` 환경값 또는 로컬 `secret.env`가 필요합니다. 키·키 포함 URL을 출력하거나 저장하지 않습니다. API 요청량은 합계 7회이며 공식 원 기상만 읽습니다. 보호·이미 개봉한 도로 정답이나 외부 예측 서비스는 요청하지 않습니다. AWS 응답은 403이었으며 이를 접근 성공으로 표시하지 않습니다.
+
+기존 결과가 없는 별도 작업 공간에서 실행할 때는 `python scripts/파일명.py`를 사용합니다. 실험 다음 해당 감사를 실행합니다. 원 기상 감사는 세 수집 파일이 모두 완료돼야 합니다. 보고서 작성은 모든 감사가 통과한 뒤 수행합니다. 현재 보존된 결과를 다시 생성하려고 삭제하지 않습니다.
+
 ## 전체 스크립트 목록
 
 파일명의 기능을 기준으로 찾기 쉽게 묶었습니다. 현재 후보에서 직접 쓰는 파일과 과거 실험 파일을 모두 포함합니다.

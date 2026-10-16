@@ -38,6 +38,7 @@
 
 ## 연구
 
+- [기온·노면 72개 결합과 관측 공백·미사용 지점 검토 — 2026-10-16](research/AIR_ROAD_AND_INPUT_GAPS_20261016.md)
 - [심사 관점 후속 연구·새 지점 평가 — 2026-10-10](research/AWARD_READINESS_REVIEW_20261010.md)
 - [단순 기온 기준과 보정 결과](research/BASELINE_REPORT.md)
 - [실행·실험 기록](research/EXPERIMENT_LOG.md)

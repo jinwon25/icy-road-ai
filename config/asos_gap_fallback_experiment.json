@@ -1,0 +1,21 @@
+{
+  "experiment_id": "20261016_asos_gap_fallback_v1",
+  "scope": "관측 공백의 입력 가용성 연구. 보호·개봉 평가 정답은 읽지 않음.",
+  "maximum_distance_km": 50.0,
+  "maximum_extra_distance_km": 30.0,
+  "maximum_age_minutes": 60,
+  "strictly_earlier": true,
+  "synthetic_mask_days": [5, 15, 25],
+  "synthetic_mask_target_slots": ["12:10", "12:20", "12:30", "12:40", "12:50", "13:00"],
+  "synthetic_mask": "첫 겨울 개발9곳의 매월 5·15·25일 정오6슬롯에서 최근접 ASOS를 제외. 날짜 대체 없음.",
+  "quality_gate": {
+    "minimum_available_fraction_each_station": 0.5,
+    "minimum_paired_temperature_rows_each_station": 36,
+    "maximum_station_mae_relative_harm": 0.10,
+    "maximum_station_mean_temperature_change_celsius": 0.75
+  },
+  "validation": "기존 외부 그룹 제외 MSE·MAE 모델로 원래 입력·대체 입력을 같은 유효행에서 비교. 새 지점 검증으로 해석하지 않음.",
+  "threshold_origin": "거리·허용 악화·기온 차이 한도는 실행 전에 고정한 자체 연구 기준이며 문헌의 보장값이 아님.",
+  "output_policy": "보호18공백의 대체 입력·참고 예측만 별도 보존. 기존 실행 ZIP·정식 예측·정답·평가 분모는 변경하지 않음. 대체 자료가 없으면null.",
+  "network_requests": 0
+}
