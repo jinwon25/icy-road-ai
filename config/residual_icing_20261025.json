@@ -1,0 +1,23 @@
+{
+  "purpose": "기온 기준선을 XGBoost 학습의 고정 시작값으로 제공하는 잔차 보정과 직접 학습 대조",
+  "source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "out": "outputs/private/residual_icing_20261025_v1",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "models": [
+    {"name": "offset_day", "prior": "temperature", "weights": "day"},
+    {"name": "offset_row", "prior": "temperature", "weights": "row"},
+    {"name": "direct_day", "prior": "zero", "weights": "day"}
+  ],
+  "parameters": {"objective": "binary:logistic", "tree_method": "hist", "device": "cpu", "max_depth": 2, "eta": 0.03, "min_child_weight": 100, "lambda": 30.0, "alpha": 1.0, "max_delta_step": 1.0, "max_bin": 64, "base_score": 0.5, "seed": 20261025, "nthread": 2},
+  "rounds": [20, 80],
+  "caps_c": [0.25, 0.5, 1.0, 2.0],
+  "directions": ["symmetric", "reject_only"],
+  "prior": "시작 마진 b=-ASOS기온/2. 0.5 문턱에서 ASOS<=0도와 동일. 결빙 확률로 보정된 값이 아님. 직접 학습 대조는 b=0",
+  "policy": "모델 전체 마진에서 제공한 b를 빼서 잔차 r을 얻고 delta=clip(2*r,-cap,+cap). 최종 판정은 ASOS기온<=delta. reject_only는 양의 delta를 0으로 제한. 입력 가용 마스크 동일",
+  "validation": "허용 23곳만. 기존 외부 개발 9곳·4지역의 단일 제외 4세트와 이중 제외 6세트. 3모델×10세트=30적합. 20/80회 prefix는 같은 학습 경로. 48정책+기온 기준선=49. 외부 지역은 내부 선택용 학습에도 제외",
+  "selection": "주 guarded는 내부 F1 상대 1% 개선, 정밀도·재현율·두 겨울·각 지점 F1 비악화를 모두 요구하고 없으면 ASOS 복귀. 보조 maximum_f1은 내부 F1 최대. 동률은 단순한 기준선·작은 보정폭·적은 반복 우선",
+  "success": "외부 주 선택 F1 상대 1% 개선, 각 겨울·지역·지점 F1 비악화, 정밀도·재현율 비악화, 기온 기준선 사건 손실 0. 반복 개발 실험이며 새 독립 검증 아님",
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "protection": "새 4지역을 학습·선택·평가에 사용하지 않음. 기존 47+549 봉인·새4지역 봉인·완료 요약·v5 ZIP 보존. 외부 코드·가중치·자료 미도입. 설치된 XGBoost 3.0.1 사용",
+  "references": ["https://xgboost.readthedocs.io/en/release_3.0.0/tutorials/intercept.html", "https://github.com/dmlc/xgboost/blob/v3.0.1/LICENSE", "https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html"]
+}

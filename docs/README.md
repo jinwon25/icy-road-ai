@@ -2,7 +2,9 @@
 
 이 페이지는 현재 결과와 과거 근거를 찾아가는 목차입니다. **처음 읽는다면 [프로젝트·지표·버전 설명](START_HERE.md)부터 확인하세요.** 날짜가 붙은 실험 문서는 그때의 조건과 판단을 보존하며, 현재 상태를 뜻하지 않습니다.
 
-최신 후속 연구는 [성암교·진천터널외부 원문 진단과 추가 탐지 20모델](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)입니다. CCTV 목록은 실제 확보했고 센서·제설 자료는 [미발송 요청 초안](research/RWIS_DATA_REQUEST_20261025.md)으로 구체화했습니다. 추가 모델은 안정적 개선 조건을 통과하지 못해 기존 제출 모델을 유지합니다.
+현재 확인할 문서는 [기온 시작값 30모델·관측 지연·입력 정보량 진단](research/RESIDUAL_AND_INFORMATION_20261025.md)과 [v6 검토 묶음](delivery/REVIEW_BUNDLE_V6_20261025.md)입니다. 안정적 성능 개선을 확인하지 못해 모델은 유지하며, 2쪽 요약과 파일·예측·노트북 검사 명령으로 결과물의 검토 경로를 보완했습니다. 아래 v5와 이전 연구는 각 시점의 기록입니다.
+
+앞선 후속 연구는 [성암교·진천터널외부 원문 진단과 추가 탐지 20모델](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)입니다. CCTV 목록은 실제 확보했고 센서·제설 자료는 [미발송 요청 초안](research/RWIS_DATA_REQUEST_20261025.md)으로 구체화했습니다. 추가 모델은 안정적 개선 조건을 통과하지 못해 기존 제출 모델을 유지합니다.
 
 앞선 후속 연구는 [새 4지역의 기상 품질·예측 봉인·일회 평가 완료](research/BLIND_ICING_20261025.md)입니다. 주 후보의 평균 F1은 높아졌지만 재현율·사건 손실과 자료 품질 조건에 실패해 미채택했습니다. 입력 가용률과 센서 정답 품질, 새 지역 평가와 반복 개발 점수, F1 증가와 실제 사건 탐지 개선을 구별합니다. 현재 상태는 [현황](STATUS.md)에서 확인합니다. 기존 v5 모델·ZIP은 보존하며 후속 연구가 그 ZIP 안에 들어 있다고 표현하지 않습니다.
 
@@ -10,7 +12,7 @@
 
 10월 25일 [공식 규정·제출 일정](competition/OFFICIAL_UPDATE_20261025.md)을 상세 본문과 참가서약까지 재확인했습니다. 결과물 날짜는 공식적으로 별도 공지 예정이며, 데모에 서비스 구축이 필수가 아니라는 답변을 반영했습니다. 새 연구의 [문헌·공개 구현](research/ICING_REFERENCES_20261025.md)과 [전이·임계값 비교](research/ICING_TRANSITION_REVIEW_20261025.md)를 연결합니다.
 
-현재 v5는 [결빙 전이 연구·최신 규정·문서 정리](research/ICING_TRANSITION_REVIEW_20261025.md)를 추가하고 아래 모델과 결과물을 보존합니다.
+앞선 v5는 [결빙 전이 연구·최신 규정·문서 정리](research/ICING_TRANSITION_REVIEW_20261025.md)를 추가한 당시 묶음입니다. 최신 v6는 이후 연구·품질 진단을 추가하며 아래 모델과 결과물을 보존합니다.
 
 앞선 v4: [후속 11개 온도 대조·14개 결빙 상태 정책과 구간 탐색](delivery/FOLLOWUP_UPGRADE_20261024.md)을 완료하고 v3 모델을 유지했습니다. [기존 모델·실행 계약·검산](delivery/EXTENDED_UPGRADE_20261024.md), [확장 실험](research/EXTENDED_SEARCH_20261024.md), [최신 논문·GitHub·Hugging Face와 대회 조건 검토](research/OPEN_SOURCE_REVIEW_20261024.md)를 함께 확인합니다. 같은 개발 기준의 온도 MAE는 이전 v2보다 13.66% 낮고, 결빙 판정은 v2를 유지합니다.
 
@@ -26,7 +28,7 @@
 2. [현재 진행 현황](STATUS.md): 완료한 일, 채택한 모델, 아직 남는 한계.
 3. [최신 공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 확정 조건과 공지 대기 항목.
 4. [원문 진단·추가 탐지 연구](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md), [자료 요청·수령 조건](research/RWIS_DATA_REQUEST_20261025.md). 앞선 [새 4지역 평가](research/BLIND_ICING_20261025.md): 사전 고정과 일회 평가 근거. 배경은 [제한 보정 연구](research/ANCHORED_ICING_20261025.md), [자료 확보](research/ICING_ACQUISITION_20261025.md), [기준선 미탐 원인](research/ICING_GAP_AND_SYNOPTIC_20261025.md)에서 확인합니다.
-5. [v5 추가 내용](research/ICING_TRANSITION_REVIEW_20261025.md), [보존한 v4 구성과 검증](delivery/FOLLOWUP_UPGRADE_20261024.md), [CSV 규약](delivery/CSV_CONTRACT.md): 결과물 읽기.
+5. [v6 구성과 실행 검사](delivery/REVIEW_BUNDLE_V6_20261025.md), [보존한 v4 구성과 검증](delivery/FOLLOWUP_UPGRADE_20261024.md), [CSV 규약](delivery/CSV_CONTRACT.md): 결과물 읽기.
 6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [스크립트 안내](../scripts/README.md): 실행·검산. [상세 실행 이력](delivery/RUNBOOK.md)은 필요한 단계만 참고합니다.
 
 ## 대회

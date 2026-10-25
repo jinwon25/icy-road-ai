@@ -2,7 +2,24 @@
 
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
-## 최신: 원문 이상 진단과 경보를 보존하는 추가 탐지
+## 최신: 기온 시작값·시간 보정·정보량 진단과 v6 검토
+
+[연구 결과](../docs/research/RESIDUAL_AND_INFORMATION_20261025.md)와 [v6 실행 안내](../docs/delivery/REVIEW_BUNDLE_V6_20261025.md)를 먼저 읽습니다. 기존 허용 개발 자료만 쓰며 보호 정답과 개봉한 새 4지역은 추가 학습·선택에서 제외합니다. 완료한 출력 경로는 재사용하지 않습니다.
+
+| 스크립트 | 역할 |
+| --- | --- |
+| `evaluate_residual_icing.py` | 기온 시작값·가중치 3조건, 30적합·49정책의 내부 선택과 외부 지역 비교 |
+| `evaluate_causal_trend.py` | 엄격히 과거 두 시간의 기온 변화·경과분으로 보정하는 10정책 비교 |
+| `audit_residual_and_trend.py` | 30모델 독립 재학습·전량 마진·내부 선택·시간 입력·최종 지표 검산 |
+| `diagnose_weather_information.py` | 동일 입력별 결빙·비결빙 중복과 정답을 알고 계산한 전체 행 F1 상한 진단 |
+| `audit_weather_information.py` | 별도 튜플 계수로 8개 입력 구분의 72개 수치 대조 |
+| `build_v6_review_brief.py` | 검산 완료 집계로 2쪽 검토 PDF 작성. 별도 페이지 렌더·시각 검수 필요 |
+| `review_submission_bundle.py --smoke` | 묶음 루트에서 무결성 검사 후 예측 144행·예제 노트북 5개 코드 셀 실행 |
+| `package_review_v6.py --stage prepare/verify/package` | 세 단계를 각각 순서대로 실행. v5 자산 보존·Git 인덱스 스냅샷·실행 검사·ZIP 전체 대조 |
+
+패키징은 원 비공개 작업 공간과 완료 감사·PDF 검수 기록이 있어야 실행됩니다. `prepare/verify/package`는 하나의 문자열 옵션이 아니라 순서대로 호출할 세 옵션입니다. v6의 단순 추론 검사는 연구 원자료 없이 포함 자료로 실행합니다. 연구 재학습 입력까지 ZIP에 모두 들어 있지는 않습니다.
+
+## 앞선 원문 이상 진단과 경보를 보존하는 추가 탐지
 
 [결과·출처·한계](../docs/research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)와 [미발송 자료 요청·수령 조건](../docs/research/RWIS_DATA_REQUEST_20261025.md)을 먼저 읽습니다. 아래 분석은 기존 4지역의 완료 평가를 수정하지 않으며 제출 모델을 바꾸지 않습니다.
 
