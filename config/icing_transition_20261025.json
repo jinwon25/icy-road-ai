@@ -1,0 +1,26 @@
+{
+  "purpose": "결빙 시작·유지·해제를 기상 조건부 전이로 학습하고, 실제 이전 정답 없이 상태 점수를 전달하는 새 대조",
+  "data": "outputs/private/solar_memory_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "candidates": [
+    {"name": "thermal22_row", "features": "thermal", "weights": "row"},
+    {"name": "solar63_row", "features": "combined_asos_solar", "weights": "row"},
+    {"name": "solar63_transition", "features": "combined_asos_solar", "weights": "station_transition"}
+  ],
+  "parameters": {"learning_rate": 0.05, "max_iter": 200, "max_leaf_nodes": 7, "min_samples_leaf": 300, "l2_regularization": 20.0, "early_stopping": false, "random_state": 20261025},
+  "memory_strengths": [0.0, 0.5, 1.0],
+  "selection_tracks": ["mean_f1", "worst_winter_f1"],
+  "threads": 2,
+  "previous_training_state": "학습 범위 안에서만 같은 지점의 정확히 10분 전 유효 Ice를 사용한다. 양쪽 기상 입력이 가용하고 두 정답이 유효한 전이만 학습한다.",
+  "inference": "실측 Ice·노면온도·이전 예측 이진값을 입력받지 않는다. p0=P형 점수(y=1|이전상태=0,x), p1=점수(y=1|이전상태=1,x)를 미리 계산하고 q_t=(1-r)*p0+r*p1, r=alpha*q_prev+(1-alpha)*학습 양성비율로 진행한다. 확률 보정은 주장하지 않는다.",
+  "reset": "같은 지점의 10분 연속성 단절·입력 결측·겨울 경계에서 학습 양성비율로 초기화한다. 현재와 미래 정답은 절대 읽지 않는다. alpha=0은 같은 학습 모델의 상태 전달 제거 대조다.",
+  "weighting": "station_transition은 지점·겨울 안의 (이전상태,현재상태)별 총 가중치를 균등하게 하고 지점·겨울 총량도 균등하게 한다. 평균1 정규화→최대20 절단→평균1 재정규화. 절단 후 완전 균등은 아니다.",
+  "validation": "동일 반복 개발 9곳·4지역. 4단일+6이중 지역 제외, 3설정×10=30적합. 외부 G의 임계값·방법 선택은 G와 H 모두 제외한 모델의 H 결과만 사용. 두 겨울 전체 제외. 새 독립 검증 아님.",
+  "thresholds": "기존 64개 src.award_ice.THRESHOLDS를 결과 전 고정. 내부 일별 지점 F1 또는 두 겨울 중 낮은 F1로 선택. 동률 FP 적음·높은 임계값·사전 이름 순. 외부 점수로 조기 종료하지 않음.",
+  "adoption": "기존 config/extended_adoption_20261024.json의 모든 결빙 기준을 유지하고, 같은 가용 범위 ASOS<=0 기준선 F1도 넘어야 한다. 미달이면 v4와 기존 결빙 판정을 유지.",
+  "references": ["https://doi.org/10.1002/we.70110", "https://hmmlearn.readthedocs.io/en/stable/tutorial.html", "https://arxiv.org/abs/2609.33528", "https://github.com/yunam-seo/road-icing-forced-threshold"],
+  "scope": "풍력 결빙 HMM의 시간 의존성 개념을 참고한 자체 조건부 전이 분류기. 방출분포·EM·Viterbi·미래 평활을 사용하는 원 논문 HMM 재현이 아님.",
+  "protected_labels_read": false,
+  "external_data_weights_or_code_copied": false,
+  "new_independent_assessment": false
+}

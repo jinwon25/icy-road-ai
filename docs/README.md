@@ -1,6 +1,12 @@
 # 문서 안내
 
-현재 v4: [후속 11개 온도 대조·14개 결빙 상태 정책과 구간 탐색](delivery/FOLLOWUP_UPGRADE_20261024.md)을 완료하고 v3 모델을 유지했습니다. [기존 모델·실행 계약·검산](delivery/EXTENDED_UPGRADE_20261024.md), [확장 실험](research/EXTENDED_SEARCH_20261024.md), [최신 논문·GitHub·Hugging Face와 대회 조건 검토](research/OPEN_SOURCE_REVIEW_20261024.md)를 함께 확인합니다. 같은 개발 기준의 온도 MAE는 이전 v2보다 13.66% 낮고, 결빙 판정은 v2를 유지합니다.
+이 페이지는 현재 결과와 과거 근거를 찾아가는 목차입니다. **처음 읽는다면 [프로젝트·지표·버전 설명](START_HERE.md)부터 확인하세요.** 날짜가 붙은 실험 문서는 그때의 조건과 판단을 보존하며, 현재 상태를 뜻하지 않습니다.
+
+10월 25일 [공식 규정·제출 일정](competition/OFFICIAL_UPDATE_20261025.md)을 상세 본문과 참가서약까지 재확인했습니다. 결과물 날짜는 공식적으로 별도 공지 예정이며, 데모에 서비스 구축이 필수가 아니라는 답변을 반영했습니다. 새 연구의 [문헌·공개 구현](research/ICING_REFERENCES_20261025.md)과 [전이·임계값 비교](research/ICING_TRANSITION_REVIEW_20261025.md)를 연결합니다.
+
+현재 v5는 [결빙 전이 연구·최신 규정·문서 정리](research/ICING_TRANSITION_REVIEW_20261025.md)를 추가하고 아래 모델과 결과물을 보존합니다.
+
+앞선 v4: [후속 11개 온도 대조·14개 결빙 상태 정책과 구간 탐색](delivery/FOLLOWUP_UPGRADE_20261024.md)을 완료하고 v3 모델을 유지했습니다. [기존 모델·실행 계약·검산](delivery/EXTENDED_UPGRADE_20261024.md), [확장 실험](research/EXTENDED_SEARCH_20261024.md), [최신 논문·GitHub·Hugging Face와 대회 조건 검토](research/OPEN_SOURCE_REVIEW_20261024.md)를 함께 확인합니다. 같은 개발 기준의 온도 MAE는 이전 v2보다 13.66% 낮고, 결빙 판정은 v2를 유지합니다.
 
 앞선 v2: [두 겨울 후보](delivery/AWARD_UPGRADE_20261024.md). 앞선 [CSV 정리](delivery/DELIVERY_UPGRADE_20261024.md)는 v1의 기록이며 [열·단위·집계 규약](delivery/CSV_CONTRACT.md)은 v3의 두 온도 출력을 포함합니다.
 
@@ -10,18 +16,19 @@
 
 ## 처음 읽는 순서
 
-1. [10월 19일 누수·지표·제출 노트북 검토](delivery/DELIVERY_REVIEW_20261019.md)와 [공식 변경·미확인 범위](competition/OFFICIAL_UPDATE_20261019.md)
-2. [현재 진행 현황](STATUS.md)
-3. [10월 14일 모델·보고서 판단](delivery/MODEL_REPORT_UPGRADE_20261014.md)
-4. [입력 공백 검토](delivery/COMPETITION_STATUS_20261014.md)
-5. [제출 후보 구성](delivery/SUBMISSION_CANDIDATE_20261013.md)
-6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [전체 실행 안내](delivery/RUNBOOK.md)
+1. [처음 읽는 안내](START_HERE.md): 해결할 문제, 온도와 결빙의 차이, 용어와 버전.
+2. [현재 진행 현황](STATUS.md): 완료한 일, 채택한 모델, 아직 남는 한계.
+3. [최신 공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 확정 조건과 공지 대기 항목.
+4. [결빙 전이·임계값 연구](research/ICING_TRANSITION_REVIEW_20261025.md): 질문, 방법, 결과와 선택 근거.
+5. [v5 추가 내용](research/ICING_TRANSITION_REVIEW_20261025.md), [보존한 v4 구성과 검증](delivery/FOLLOWUP_UPGRADE_20261024.md), [CSV 규약](delivery/CSV_CONTRACT.md): 결과물 읽기.
+6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [스크립트 안내](../scripts/README.md): 실행·검산. [상세 실행 이력](delivery/RUNBOOK.md)은 필요한 단계만 참고합니다.
 
 ## 대회
 
+- [공식 상세·참가서약 재확인과 데모 답변 — 2026-10-25](competition/OFFICIAL_UPDATE_20261025.md)
 - [공식 새 게시물과 미확인 범위 — 2026-10-19](competition/OFFICIAL_UPDATE_20261019.md)
 - [공식 사이트 전체 재확인 — 2026-10-16](competition/OFFICIAL_UPDATE_20261016.md)
-- [대회 요구사항과 적용 범위 — 2026-10-14](competition/COMPETITION_REQUIREMENTS.md)
+- [대회 요구사항과 적용 범위 — 2026-10-25](competition/COMPETITION_REQUIREMENTS.md)
 - [공식 Q&A633 답변과 일별 평가 후속 검증 — 2026-10-13](competition/OFFICIAL_QNA_20261013.md)
 - [공식 정보 재검토와 저장소 검증 — 2026-10-09](competition/OFFICIAL_REVIEW_20261009.md)
 - [문제설명·데이터 설명·Q&A 통합 검토 — 2026-10-07](competition/OFFICIAL_TABS_REVIEW_20261007.md)
@@ -43,6 +50,10 @@
 
 ## 연구
 
+- [결빙 전이와 임계값 정확 탐색 — 2026-10-25](research/ICING_TRANSITION_REVIEW_20261025.md)
+- [새 논문·공개 구현과 이용조건 — 2026-10-25](research/ICING_REFERENCES_20261025.md)
+- [온도 확장 연구 — 2026-10-24](research/EXTENDED_SEARCH_20261024.md)
+- [논문·GitHub·Hugging Face 자료 검토 — 2026-10-24](research/OPEN_SOURCE_REVIEW_20261024.md)
 - [기온·노면 72개 결합과 관측 공백·미사용 지점 검토 — 2026-10-16](research/AIR_ROAD_AND_INPUT_GAPS_20261016.md)
 - [심사 관점 후속 연구·새 지점 평가 — 2026-10-10](research/AWARD_READINESS_REVIEW_20261010.md)
 - [단순 기온 기준과 보정 결과](research/BASELINE_REPORT.md)
@@ -82,7 +93,7 @@
 
 ## 과거 기록
 
-- [현재 진행 상태 — 2026-10-14](history/PROJECT_STATUS.md)
+- [누적 진행 이력 — 당시 상태 보존](history/PROJECT_STATUS.md)
 - [이전 README 전체 결과·소개](history/PROJECT_OVERVIEW_20261014.md)
 
 ## 용어와 해석

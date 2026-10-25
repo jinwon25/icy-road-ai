@@ -1,8 +1,10 @@
 # 제출 후보 패키지와 추가 판정 검증
 
+> **읽는 범위:** 아래 내용은 해당 문서의 작성·실험 시점 기록입니다. 현재 모델·마감·완료 상태는 [진행 현황](../STATUS.md)을 기준으로 읽고, 약어와 지표는 [처음 읽는 안내](../START_HERE.md)에서 확인합니다.
+
 모델·10분 예측·구간 지도·기준표·보고서·실행 데모를 하나의 비공개 후보로 통합했습니다. 새 열·수분 가설은 기존 사건 손실 등으로 채택하지 않았습니다. 실행용 대표 후보를 준비한 것과 새 지점 성능 입증·최종 모델 승격·공식 제출을 구별합니다.
 
-[문서 목록](../README.md) · [현재 상태](../history/PROJECT_STATUS.md) · [공식 Q&A633](../competition/OFFICIAL_QNA_20261013.md) · [기존 후보 비교](../research/WEATHER_MEMORY_REVIEW_20261013.md)
+[문서 목록](../README.md) · [현재 상태](../STATUS.md) · [공식 Q&A633](../competition/OFFICIAL_QNA_20261013.md) · [기존 후보 비교](../research/WEATHER_MEMORY_REVIEW_20261013.md)
 
 ## 이번 판단
 

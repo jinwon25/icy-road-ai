@@ -1,10 +1,12 @@
 # 문제설명·데이터 설명·Q&A 통합 검토 — 2026-10-07
 
-[현재 상태](../history/PROJECT_STATUS.md) · [수정본 전환·기준 모델](OFFICIAL_UPDATE_20261007.md) · [요구사항](COMPETITION_REQUIREMENTS.md)
+> **읽는 범위:** 아래 내용은 해당 문서의 작성·실험 시점 기록입니다. 현재 모델·마감·완료 상태는 [진행 현황](../STATUS.md)을 기준으로 읽고, 약어와 지표는 [처음 읽는 안내](../START_HERE.md)에서 확인합니다.
+
+[현재 상태](../STATUS.md) · [수정본 전환·기준 모델](OFFICIAL_UPDATE_20261007.md) · [요구사항](COMPETITION_REQUIREMENTS.md)
 
 공식 세 탭의 본문과 내장 이미지, Q&A 5개 게시글의 운영진 답변을 대조했다. 문제설명·데이터 설명 응답의 수정 시각은 `2026-10-07 14:06:07`이다. 원문·이미지·전사 자료는 `outputs/private/official_review_20261007/`에 보존했다. 실제 후속 분석은 `outputs/private/releases/20261007/`에서 수행했다.
 
-> 아래 적용 상태와 남은 작업은 10월 7일 당시 기준입니다. 보호 평가·전체 구간 산출물 등 이후 작업은 [최신 진행 상태](../history/PROJECT_STATUS.md), Q&A 633은 [공식 재검토](OFFICIAL_REVIEW_20261009.md)에서 확인합니다.
+> 아래 적용 상태와 남은 작업은 10월 7일 당시 기준입니다. 보호 평가·전체 구간 산출물 등 이후 작업은 [최신 진행 상태](../STATUS.md), Q&A 633은 [공식 재검토](OFFICIAL_REVIEW_20261009.md)에서 확인합니다.
 
 ## 근거와 우선 적용 순서
 

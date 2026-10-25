@@ -1,5 +1,20 @@
 # 실행 스크립트 안내
 
+이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
+
+## 10월 25일 결빙 전이 연구
+
+| 스크립트 | 역할 |
+| --- | --- |
+| `review_official_updates.py` | 공식 원문·질문·답변·빈 참가서약을 이전 보존본과 대조 |
+| `evaluate_icing_transition.py` | 기상 조건부 상태 전이 모델 30개를 지역 이중 제외로 학습·비교 |
+| `refine_icing_thresholds.py` | 새 학습 없이 내부 지역의 모든 서로 다른 점수에서 임계값 선택 |
+| `audit_icing_transition.py` | 저장 모델·상태 재귀·지역 분리·날짜별 지표·결빙 사건·선택 결과 검산 |
+| `summarize_icing_transition.py` | 검산된 44행 후보표와 F1·정밀도·재현율 그림 생성 |
+| `package_icing_review_candidate.py` | v4 실행 자산을 보존하고 v5 준비·실행 검증·ZIP 검산 수행 |
+
+계획은 [전이 학습 설정](../config/icing_transition_20261025.json)과 [임계값 설정](../config/icing_threshold_refinement_20261025.json), 결과·정확한 실행 명령은 [연구 보고서](../docs/research/ICING_TRANSITION_REVIEW_20261025.md)에서 확인합니다. 완료된 실험 출력은 덮어쓰지 않고 새 비공개 경로를 사용합니다.
+
 ## v3 이후 후속 연구
 
 [후속 비교·구간 탐색 기록](../docs/delivery/FOLLOWUP_UPGRADE_20261024.md)에서 실제 완료 상태를 확인합니다. `evaluate_followup_temperature.py`는 고정한 시간 이력·손실·알고리즘 대조를 기존 실행기에 연결하고, `extend_followup_capacity.py`는 사전 기준을 통과한 600회 모델만 연장합니다. `evaluate_followup_offset.py`는 평가 지역을 보정에서도 제외한 6개 적합을 수행합니다. 대응하는 `audit_followup_temperature.py`·`audit_followup_offset.py`가 저장 모델·분리·출력·보정 계산을 확인합니다.

@@ -1,0 +1,17 @@
+{
+  "purpose": "로그 간격 임계값 64개가 놓치는 일별 F1 운용점을 내부 지역에서 정확 탐색한다",
+  "registered_before_outer_transition_results_review": true,
+  "source_experiment": "outputs/private/icing_transition_20261025_v1",
+  "models": ["thermal22_row", "solar63_row", "solar63_transition"],
+  "memory_strengths": [0.0, 0.5, 1.0],
+  "tracks": ["mean_f1", "worst_winter_f1"],
+  "threshold_candidates": "내부 선택 자료의 서로 다른 모든 유한 상태 점수와 최대 점수보다 바로 큰 값. 동일 점수 묶음을 한 번에 활성화하여 >= 규칙을 지킨다.",
+  "selection": "외부 G, 내부 H 모두 학습에서 제외한 H 점수만 사용한다. 외부 평가 점수의 분포·정답으로 임계값을 바꾸지 않는다. F1 차이 1e-12 이내는 동률로 보고 FP가 적은 값, 높은 임계값, 사전 후보 이름 순.",
+  "metric": "기존과 같은 144 유효쌍 날짜→지점 평균. 전 날짜 미정의 지점은 선택 목적에서 0. 결측 예측은 평가 제외. 동률 FP는 모든 유효쌍 기준. 두 겨울 중 낮은 F1도 같은 순회에서 계산한다.",
+  "adoption": "icing_transition_20261025.json과 동일한 기존 6개 결빙 채택 기준 및 ASOS F1 초과. 기준 완화 없음. 미채택 시 v4 유지.",
+  "references": ["https://github.com/yunam-seo/road-icing-forced-threshold/blob/main/R/analysis/_trigger_rule.R"],
+  "reference_scope": "저자 구현의 고정 격자 의존성 주의만 참고한다. 저자의 POD 이분탐색을 복사하거나 F1에도 단조성이 있다고 가정하지 않는다. 모든 서로 다른 점수를 지나는 자체 증가 집계로 전역 최적 운용점을 찾는다.",
+  "protected_labels_read": false,
+  "new_independent_assessment": false,
+  "external_code_copied": false
+}

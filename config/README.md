@@ -1,5 +1,15 @@
 # 설정 파일 안내
 
+## 10월 25일 현재 확인할 설정
+
+| 파일 | 읽는 목적 |
+| --- | --- |
+| [official_requirements_20261025.json](official_requirements_20261025.json) | 최신 상세 규정·빈 참가서약 확인 및 결과물 날짜 미공표 상태 |
+| [icing_transition_20261025.json](icing_transition_20261025.json) | 학습 지점·가상 직전 상태·결측 초기화·30개 적합·채택 기준 |
+| [icing_threshold_refinement_20261025.json](icing_threshold_refinement_20261025.json) | 내부 검증에서 모든 서로 다른 임계값을 비교하는 추가 대조 |
+
+기술 용어는 [처음 읽는 안내](../docs/START_HERE.md), 실제 결과는 [현재 상태](../docs/STATUS.md)를 참고합니다. 아래 날짜별 설정은 이전 실행을 재현하기 위한 기록입니다.
+
 설정은 데이터 버전·분할·실험 조건의 재현 근거입니다. 비슷한 이름의 설정도 서로 다른 비교를 기록하므로 삭제하거나 최신 설정으로 덮어쓰지 않습니다.
 
 [프로젝트 소개](../README.md) · [실행 스크립트](../scripts/README.md) · [검증 규약](../docs/validation/VALIDATION_PROTOCOL.md)
