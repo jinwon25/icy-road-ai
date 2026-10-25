@@ -1,0 +1,16 @@
+{
+  "purpose": "기존 기상 캐시 밖에서 새 독립 검증을 준비하기 위한 입력·위치 선별. 새 노면 정답 조회는 포함하지 않음",
+  "history": "outputs/private/public_asos_history_20261025_v1/asos_history.csv",
+  "road_catalog": "outputs/private/releases/20261007/outputs/private/external/kma_rwis_reference/station_catalog.csv",
+  "candidate_scope": "기존 3개 대상 노선의 비대회 상태 관측 가능 유형. 모든 기존 조회 지점·보호 지점 제외",
+  "minimum_known_road_km": 5,
+  "maximum_asos_km": 30,
+  "minimum_selected_separation_km": 50,
+  "maximum_selected": 4,
+  "selection": "알려진 도로 관측소와의 최소거리 내림차순, ASOS거리 오름차순, 지점번호 오름차순. 선택된 후보끼리 50km 이상. 결과·날씨를 보지 않고 선택",
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "asos_location_history": "두 겨울 전체를 포함하는 단일 위치 이력만 허용. 이동·중복·좌표 결측 시 제외",
+  "interpretation": "거리 문턱은 자체 선별 가정이며 도로 기상 대표성이나 정답 존재의 보장이 아님",
+  "future_outcome_gate": "새 시험용 후보·학습 지점·전체 시각 예측·평가 기준과 해시를 먼저 고정하고 신규 정답 요청 여부 재확인. 현 단계는 입력 확보만 수행",
+  "road_outcomes_read": false
+}

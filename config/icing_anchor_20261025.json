@@ -1,0 +1,23 @@
+{
+  "purpose": "기온 기준선에서 최대 0.25~2도 범위의 판정 보정만 허용해 새 지역에서 전부 미탐하는 외삽을 제한",
+  "data": "outputs/private/synoptic_icing_inputs_20261025_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "prior_study": "outputs/private/synoptic_icing_20261025_v2",
+  "prior_audit": "outputs/private/synoptic_icing_audit_20261025_v1/receipt.json",
+  "linear_models": [{"name":"asos_logit_row","weights":"row"},{"name":"asos_logit_day","weights":"day"}],
+  "parameters": {"C":0.1,"solver":"lbfgs","max_iter":1000,"tol":0.00001,"random_state":20261025},
+  "correction_bounds": [0.25,0.5,1.0,2.0],
+  "directions": ["symmetric","reject_only"],
+  "constant_threshold_controls": [-2.0,-1.0,-0.5,-0.25,0.25,0.5,1.0,2.0],
+  "selection_tracks": ["mean_f1","worst_winter_f1","retention_guard"],
+  "retention_guard": "내부 각 지역·겨울에서 ASOS가 잡은 양성 관측의 98% 이상 보존, 각 겨울 F1이 ASOS 이상인 후보 중 평균 F1 최대. 없으면 ASOS 복귀. 유한 표본·상관·분포 이동 때문에 통계적 보장으로 주장하지 않음",
+  "model_fits": 20,
+  "cached_models": 50,
+  "candidate_rules": 64,
+  "comparison_rows": 69,
+  "validation": "G와 H의 두 겨울을 함께 제외한 동일 분할. 기존 9지점 반복 개발이며 새 독립 검증 아님",
+  "adoption": "기존 엄격 7기준 유지. 이와 별도로 ASOS 대비 두 겨울 F1 비악화·4지역 중3곳 비악화 여부도 보고. 사후 기준 완화 없음",
+  "scores": "보정량은 bound*(2*분류점수-1). reject_only는 양의 보정을0으로 제한. 노면온도 예측·보정된 위험확률로 해석하지 않음",
+  "protected_labels_read": false,
+  "external_pretrained_weights": false
+}

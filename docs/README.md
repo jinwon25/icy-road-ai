@@ -2,7 +2,7 @@
 
 이 페이지는 현재 결과와 과거 근거를 찾아가는 목차입니다. **처음 읽는다면 [프로젝트·지표·버전 설명](START_HERE.md)부터 확인하세요.** 날짜가 붙은 실험 문서는 그때의 조건과 판단을 보존하며, 현재 상태를 뜻하지 않습니다.
 
-최신 후속 연구는 [기온 기준선 대비 미탐 원인·추가 기상 50모델 비교](research/ICING_GAP_AND_SYNOPTIC_20261025.md)입니다. [제설·기상·영상 자료의 실제 접근과 라이선스 검토](research/ADDITIONAL_ICING_SOURCES_20261025.md)에서 사용한 입력과 남은 조건을 구분했습니다. 새 후보가 기온 기준선을 넘지 못해 기존 v5 모델·ZIP은 보존하며 이번 연구를 그 ZIP 안에 포함했다고 표현하지 않습니다.
+최신 후속 연구는 [기온 기준선의 제한 보정 64후보·69행 비교](research/ANCHORED_ICING_20261025.md)와 [제설·센서·추가 검증 지역 확보](research/ICING_ACQUISITION_20261025.md)입니다. 최고 고정 후보의 소폭 이득과 내부 선택 절차의 실패를 구별하고, 새 4개 지역의 기상 입력 23,048행 확보와 정답 미조회 상태를 설명합니다. 기존 v5 모델·ZIP은 보존하며 이번 연구가 그 ZIP 안에 들어 있다고 표현하지 않습니다.
 
 10월 25일 [공식 규정·제출 일정](competition/OFFICIAL_UPDATE_20261025.md)을 상세 본문과 참가서약까지 재확인했습니다. 결과물 날짜는 공식적으로 별도 공지 예정이며, 데모에 서비스 구축이 필수가 아니라는 답변을 반영했습니다. 새 연구의 [문헌·공개 구현](research/ICING_REFERENCES_20261025.md)과 [전이·임계값 비교](research/ICING_TRANSITION_REVIEW_20261025.md)를 연결합니다.
 
@@ -21,7 +21,7 @@
 1. [처음 읽는 안내](START_HERE.md): 해결할 문제, 온도와 결빙의 차이, 용어와 버전.
 2. [현재 진행 현황](STATUS.md): 완료한 일, 채택한 모델, 아직 남는 한계.
 3. [최신 공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 확정 조건과 공지 대기 항목.
-4. [결빙 미탐 원인·추가 기상 연구](research/ICING_GAP_AND_SYNOPTIC_20261025.md): 질문, 방법, 전체 결과와 미채택 근거. [추가 자료와 문헌](research/ADDITIONAL_ICING_SOURCES_20261025.md)도 연결합니다.
+4. [제한 보정 연구](research/ANCHORED_ICING_20261025.md)와 [자료 확보](research/ICING_ACQUISITION_20261025.md): 최신 방법·결과·한계. 배경은 [기준선 미탐 원인](research/ICING_GAP_AND_SYNOPTIC_20261025.md), [앞선 자료·문헌](research/ADDITIONAL_ICING_SOURCES_20261025.md)에서 확인합니다.
 5. [v5 추가 내용](research/ICING_TRANSITION_REVIEW_20261025.md), [보존한 v4 구성과 검증](delivery/FOLLOWUP_UPGRADE_20261024.md), [CSV 규약](delivery/CSV_CONTRACT.md): 결과물 읽기.
 6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [스크립트 안내](../scripts/README.md): 실행·검산. [상세 실행 이력](delivery/RUNBOOK.md)은 필요한 단계만 참고합니다.
 

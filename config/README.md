@@ -1,5 +1,7 @@
 # 설정 파일 안내
 
+최신 [제한 보정 설정](icing_anchor_20261025.json)은 보정 폭·방향·내부 선택·기존 채택 기준을 고정합니다. [추가 지역 선별 설정](expanded_icing_validation_20261025.json)은 위치만으로 새 도로 후보를 골라 기상 입력을 준비하는 범위이며 노면 정답 수집을 수행하는 계획이 아닙니다. 결과는 [모델 연구](../docs/research/ANCHORED_ICING_20261025.md)·[자료 확보](../docs/research/ICING_ACQUISITION_20261025.md)에 연결합니다.
+
 ## 10월 25일 현재 확인할 설정
 
 | 파일 | 읽는 목적 |

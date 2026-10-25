@@ -2,7 +2,34 @@
 
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
-## 10월 25일 기온 기준선 차이와 추가 기상 연구
+## 10월 25일 제한 보정·새 지역 기상 입력 확보
+
+[모델 비교와 미채택 이유](../docs/research/ANCHORED_ICING_20261025.md) · [자료 확보 수준·요청 경로](../docs/research/ICING_ACQUISITION_20261025.md). 아래 명령은 새 연구 출력만 만들며 기존 제출 v5를 교체하지 않습니다. 완료 출력 이름은 재사용할 수 없습니다.
+
+| 스크립트 | 역할 |
+| --- | --- |
+| `evaluate_anchored_icing.py` | 새 ASOS 회귀 20개·기존 HGB 점수로 제한 보정 64후보와 내부 선택 3절차 비교 |
+| `audit_anchored_icing.py` | 전처리·학습 분리·재추론·모든 내부 후보 지표·외부 판정·사건 독립 검산 |
+| `summarize_anchored_icing.py` | 69행 후보표·서로 같은 예측·겨울별 비교 그림 생성 |
+| `probe_icing_acquisition.py` | 공개 제설 연도·파일 목록과 ASOS/AWS 접근 상태 확인. 제설 파일 다운로드는 하지 않음 |
+| `prepare_expanded_weather_catalog.py` | 당시 관측소 위치 API 접근 기록. 이번에는 403이어서 아래 공개 CSV 사용 |
+| `download_public_station_history.py` | 로그인 없는 공식 종관 관측소 위치·변경 이력 CSV 수집 |
+| `screen_expanded_icing_regions.py` | 대상 3노선·미조회·기존 지점 거리·ASOS 거리·후보 간 거리로 선별 |
+| `fetch_expanded_asos_inputs.py` | 선별된 ASOS의 두 겨울 시간 입력만 수집. 노면 정답 요청 기능 없음 |
+| `audit_expanded_icing_inputs.py` | 위치·선택을 별도 구면 거리 계산으로 대조하고 원문 46필드·모든 시각 검산 |
+
+```powershell
+python scripts/download_public_station_history.py --output outputs/private/public_asos_history_20261025_v1
+python scripts/screen_expanded_icing_regions.py --output outputs/private/expanded_icing_regions_20261025_v2
+python scripts/fetch_expanded_asos_inputs.py --screen outputs/private/expanded_icing_regions_20261025_v2 --output outputs/private/expanded_asos_inputs_20261025_v1
+python scripts/audit_expanded_icing_inputs.py --screen outputs/private/expanded_icing_regions_20261025_v2 --weather outputs/private/expanded_asos_inputs_20261025_v1 --output outputs/private/expanded_icing_inputs_audit_20261025_v1
+```
+
+API 수집은 `KMA_AUTH_KEY` 환경 변수 또는 로컬 `secret.env`가 필요하며 인증값은 요청 기록·출력에 남기지 않습니다. CSV 위치 이력은 인증 없이 제공됩니다. 공개 페이지 해석에 쓰는 Beautiful Soup 4.12.3을 포함해 `python -m pip install -r requirements-research.txt`로 연구 의존성을 설치합니다. 선별 설정의 입력 경로와 원본 요청 이력도 필요하므로 원본 없는 clone에서 이 명령을 그대로 재현할 수 있는 것은 아닙니다. 코드 자체 검사는 합성 테스트로 수행합니다.
+
+기상 파일 확보는 학습 입력 검산이나 독립 성능 평가 완료와 다릅니다. 새 지역의 결측·품질·과거 연결을 확인하고 후보·전체 예측·평가 기준을 고정하기 전 노면 정답을 열지 않습니다.
+
+## 앞선 10월 25일 기온 기준선 차이와 추가 기상 연구
 
 [원인·전체 결과](../docs/research/ICING_GAP_AND_SYNOPTIC_20261025.md)에서 점수 해석과 실제 비공개 경로를 확인합니다. 아래 과정은 제출 모델을 바꾸지 않는 개발 실험입니다.
 
