@@ -2,6 +2,33 @@
 
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
+## 새 4지역: 입력 검증·예측 사전 고정·일회 평가
+
+[실험 보고서](../docs/research/BLIND_ICING_20261025.md)는 새 지역과 반복 개발 결과, 입력 품질과 센서 정답의 품질을 구별합니다. [설정](../config/blind_icing_20261025.json)은 정답 요청 전 고정한 후보·주 후보·성공 기준입니다. 기존 v5 제출 모델을 바꾸는 명령이 아닙니다.
+
+| 스크립트 | 목적과 실행 단계 |
+| --- | --- |
+| `fetch_training_asos_parity.py` | 학습 ASOS 6곳의 같은 API 입력 확보. `--recover-cached`는 정상 수집 원문에서 실제 관측 누락을 보존하며 오프라인 복구 |
+| `blind_icing_validation.py prepare` | 새/학습 기상 품질·단위·결측 비교와 엄격한 과거 연결 |
+| `blind_icing_validation.py fit` | 허용 23곳만으로 두 모델 학습, 새 4곳의 전체 138,240행 예측 |
+| `blind_icing_validation.py seal` | 후보·모델·입력·예측·평가 코드 고정. 과거 요청 이력이 있으면 중단 |
+| `audit_blind_icing.py prediction` | 정답 요청 전 시각·1,797,120입력값·모델·전처리·가중치 검산 |
+| `blind_icing_validation.py collect` | 봉인·사전 감사 통과 후 동일 960개 날짜 구간 수집 |
+| `resume_blind_icing_transport.py` | 긴 응답을 나눠 재개. 모든 요청에 공통 간격 제한, 단일 작성자로 기록 보존 |
+| `blind_icing_validation.py evaluate` | 전체 수집 완료 후 고정 4후보의 일회 평가·사건·불확실성·성공 조건 계산 |
+| `audit_blind_icing.py result` | 별도 일별 집계·사건 구현과 상태 매핑으로 검산 |
+| `audit_blind_icing_empty_adapter.py` | 원래 사후 감사의 빈 시각 열 오류를 메모리 자료형만 보완해 재개. 관측 파일·결과·원 감사 코드는 유지 |
+| `verify_blind_icing_completed.py --output <새 비공개 JSON>` | 완료 원문을 다시 파싱해 960구간·정규화·요청 범위·성공 조건·봉인·v5 ZIP을 읽기 전용 재검산 |
+| `reproduce_blind_icing_models.py` | 허용 자료만으로 모델 재적합, 봉인 예측과 전량 대조 |
+| `evaluate_asos_parity_development.py` | 기존 9개 개발 지점에서 같은 API 형식으로 네 지역 제외 진단. 새 정답 접근 없음 |
+| `diagnose_asos_anchor_development.py` | 기존 지역의 실제 탐지 변화와 일별 F1의 평가 날짜 변화 분해 |
+| `diagnose_blind_icing_result.py` | 완료된 새 지역 결과의 위치 거리·결측·평균 분모·미탐 진단. 새 학습·후보 선택 기능 없음 |
+| `report_blind_icing.py inputs` / `results` | 기상 가용률 또는 감사 완료된 결과의 집계 그림 생성 |
+
+위 표는 실행 순서를 설명하는 기록입니다. 완료된 출력은 덮어쓰지 않고, 이미 정답을 수집한 4곳을 새 블라인드 실험으로 다시 시작하지 않습니다. 재검토에는 봉인과 완료 영수증을 읽거나 `verify_blind_icing_completed.py`에 새 영수증 경로를 지정합니다. 원문·모델·예측은 `outputs/private/blind_icing_20261025_v2/`에만 있습니다. GitHub 복제본에는 해당 비공개 자료가 없으므로 합성 테스트와 실제 평가 재현을 구별합니다.
+
+960날짜 수집·일회 평가·독립 감사는 완료됐으며 주 후보의 성공 조건은 미충족입니다. `resume_blind_icing_transport.py`는 분석 전에 추가한 [충돌 격리 모듈](../src/rwis_response_quality.py)을 사용합니다. 동일 지점·시각에서 값이 다르면 모두 격리하고 원문·변환본·사유를 남깁니다. 점수가 유리한 상태를 고르는 기능은 없습니다. 결과 그림의 최종 명령은 `python scripts/report_blind_icing.py results --output outputs/private/blind_icing_report_20261025_v2`였으며, 같은 출력 이름으로 다시 실행하면 보존 검사가 중단합니다.
+
 ## 10월 25일 제한 보정·새 지역 기상 입력 확보
 
 [모델 비교와 미채택 이유](../docs/research/ANCHORED_ICING_20261025.md) · [자료 확보 수준·요청 경로](../docs/research/ICING_ACQUISITION_20261025.md). 아래 명령은 새 연구 출력만 만들며 기존 제출 v5를 교체하지 않습니다. 완료 출력 이름은 재사용할 수 없습니다.
