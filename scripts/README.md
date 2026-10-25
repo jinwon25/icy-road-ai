@@ -2,6 +2,34 @@
 
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
+## 최신: 원문 이상 진단과 경보를 보존하는 추가 탐지
+
+[결과·출처·한계](../docs/research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)와 [미발송 자료 요청·수령 조건](../docs/research/RWIS_DATA_REQUEST_20261025.md)을 먼저 읽습니다. 아래 분석은 기존 4지역의 완료 평가를 수정하지 않으며 제출 모델을 바꾸지 않습니다.
+
+| 스크립트 | 역할과 입력 |
+| --- | --- |
+| `review_rwis_anomaly_sources.py --output <새 비공개 폴더>` | 공식 지점·상태 PDF와 제설 공개 경로의 실제 응답 보존. HTTP 200이어도 PDF 서명을 별도로 확인 |
+| `reprobe_rwis_anomalies.py --output <새 비공개 폴더>` | 이미 평가한 12213·33406의 정해진 8개 요청만 진단용 재조회. `secret.env`의 KMA 키 필요, 완료 점수 변경 없음 |
+| `analyze_rwis_anomalies.py` | 앞선 원문 489개와 완료 평가를 읽어 240날짜의 누락·중복·좌표를 분해. 새 정답 복구 기능 없음 |
+| `audit_rwis_anomalies.py` | 별도 CSV 집계로 분류·좌표·CCTV 실파일·기존 봉인 보존 확인 |
+| `evaluate_additive_icing.py` | [고정 설정](../config/additive_icing_20261025.json)으로 기존 허용 23곳에서 20모델·57정책과 2선택 절차 비교 |
+| `audit_additive_icing.py` | 저장 모델·전처리·가중치·훈련 분리·내부 전체 후보 지표와 선택 검산 |
+| `report_rwis_additive.py` | 검산 완료 요약으로 원인·성능 집계 그림 생성 |
+
+완료한 실행 예시는 다음과 같습니다. 경로를 그대로 재사용하면 원문·모델·감사·그림 보존 검사에서 중단합니다. GitHub 복제본에는 비공개 연구 입력이 없으므로 이 실행을 합성 테스트와 구별합니다.
+
+```powershell
+python scripts/review_rwis_anomaly_sources.py --output outputs/private/rwis_anomaly_sources_20261025_v1
+python scripts/reprobe_rwis_anomalies.py --output outputs/private/rwis_anomaly_reprobe_20261025_v1
+python scripts/analyze_rwis_anomalies.py
+python scripts/audit_rwis_anomalies.py
+python scripts/evaluate_additive_icing.py
+python scripts/audit_additive_icing.py
+python scripts/report_rwis_additive.py
+```
+
+CCTV 실제 파일은 공공데이터포털의 파일 상세 조회 → CAPTCHA 필요 여부 확인 → 허용된 다운로드 순서로 확보했습니다. 취득 원문·메타데이터·다운로드 영수증은 `outputs/private/rwis_anomaly_additional_sources_20261025_v1/`에 있습니다. 기관 계정·키 신청·제설 자료 다운로드까지 자동 수행하는 스크립트가 아닙니다.
+
 ## 새 4지역: 입력 검증·예측 사전 고정·일회 평가
 
 [실험 보고서](../docs/research/BLIND_ICING_20261025.md)는 새 지역과 반복 개발 결과, 입력 품질과 센서 정답의 품질을 구별합니다. [설정](../config/blind_icing_20261025.json)은 정답 요청 전 고정한 후보·주 후보·성공 기준입니다. 기존 v5 제출 모델을 바꾸는 명령이 아닙니다.
