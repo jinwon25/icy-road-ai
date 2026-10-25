@@ -4,6 +4,8 @@
 
 [현재 진행 상황](../STATUS.md) · [대회 요구사항](COMPETITION_REQUIREMENTS.md) · [처음 읽는 안내](../START_HERE.md)
 
+**같은 날 14:27 KST 후속 재확인에서도 변경은 없었습니다.** `official_updates_20261025_v4`에서 응답 48개가 모두 HTTP 200이고 새 게시물·본문 변경·접근 불가 항목은 없었습니다. 앞선 `v3`의 네트워크 실패 기록은 보존하고 성공한 `v4`와 구별합니다. 빈 참가서약 해시도 아래 값과 같았습니다. 추가 ASOS 실험은 이 확인 후 기존 허용 자료 안에서 진행했습니다.
+
 ## 일정: 무엇이 확정됐는가
 
 | 항목 | 10월 25일 확인 결과 | 해석 |
@@ -44,7 +46,7 @@
 
 새 일반 게시물에는 FAQ 확인 안내·참가 신청·팀 변경·다른 과제 문의도 있었습니다. 우리 평가 규정의 변경으로 해석하지 않았습니다. 로그인·계정 승인 확인·운영진 문의 발송·대회 접수는 수행하지 않았습니다.
 
-원문과 응답 해시는 `outputs/private/official_updates_20261025_v2/`의 `fetch_receipts.json`과 `summary.json`, 적용 요약은 [공식 조건 설정](../../config/official_requirements_20261025.json)에 있습니다. 개인정보가 포함될 수 있는 다른 참가자의 질문 원문은 GitHub에 복사하지 않습니다.
+최초 확인은 `outputs/private/official_updates_20261025_v2/`, 후속 재확인은 `outputs/private/official_updates_20261025_v4/`의 `fetch_receipts.json`과 `summary.json`에 있습니다. 적용 조건은 바뀌지 않아 [공식 조건 설정](../../config/official_requirements_20261025.json)을 유지합니다. 개인정보가 포함될 수 있는 다른 참가자의 질문 원문은 GitHub에 복사하지 않습니다.
 
 ## 계속 남는 공식 확인 항목
 

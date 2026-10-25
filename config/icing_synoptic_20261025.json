@@ -1,0 +1,23 @@
+{
+  "purpose": "기온 기준선 대비 수분 문턱의 미탐·양성 집중을 진단한 뒤, 미사용 ASOS 관측·긴 수분 이력·날짜 균형·단순 형태 제한을 새 대조",
+  "data": "outputs/private/synoptic_icing_inputs_20261025_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "candidates": [
+    {"name":"base_additive_day","features":"base","weights":"day","monotone":true,"interactions":"no_interactions"},
+    {"name":"extra_additive_row","features":"extra","weights":"row","monotone":true,"interactions":"no_interactions"},
+    {"name":"extra_additive_day","features":"extra","weights":"day","monotone":true,"interactions":"no_interactions"},
+    {"name":"extra_pairwise_day","features":"extra","weights":"day","monotone":true,"interactions":"pairwise"},
+    {"name":"extra_free_pairwise_day","features":"extra","weights":"day","monotone":false,"interactions":"pairwise"}
+  ],
+  "parameters":{"learning_rate":0.05,"max_iter":250,"max_leaf_nodes":7,"min_samples_leaf":300,"l2_regularization":30.0,"early_stopping":false,"random_state":20261025},
+  "threads":2,
+  "selection_tracks":["mean_f1","worst_winter_f1"],
+  "thresholds":"현재 연구의 고정 64점. 구성까지 선택하는 절차와 각 고정 구성 모두 보고. 외부 정답을 이용한 재선택 없음",
+  "weighting":"학습 지점·겨울별 총량 균등. 날짜 균등 후 날짜 안에 실제 존재하는 두 클래스 균등, 마지막 전체 평균 1 정규화. 임의 양성 중복·정답 수정 없음",
+  "physical_memory":"과거 ASOS 기상으로만 수분 증거를 24·72시간 보존. 기온 2도 초과·관측 연속성/가용성 단절에서 초기화. 물 저장량·실제 얼음 확률로 주장하지 않음",
+  "additional_fixed_policies":"ASOS 기온 또는 ASOS 지면온도 0도 이하와 0·24·72시간 수분 증거의 6정책. 모두 사전 고정 대조, 내부 선택에 함께 포함",
+  "validation":"평가 지역 G와 내부 선택 지역 H의 두 겨울 동시 제외. 총 50개 모델 적합. 기존 9곳의 반복 개발이며 새 독립 평가 아님",
+  "adoption":"기존 F1 1% 개선·Precision/Recall·각 겨울·각 지점 비악화·기존 사건 보존 및 동일 가용 범위 ASOS F1 초과. 사후 기준 완화 없음",
+  "protected_labels_read":false,
+  "external_pretrained_weights":false
+}

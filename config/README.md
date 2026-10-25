@@ -5,6 +5,7 @@
 | 파일 | 읽는 목적 |
 | --- | --- |
 | [official_requirements_20261025.json](official_requirements_20261025.json) | 최신 상세 규정·빈 참가서약 확인 및 결과물 날짜 미공표 상태 |
+| [icing_synoptic_20261025.json](icing_synoptic_20261025.json) | 추가 ASOS 8관측·날짜 균형·제한된 상호작용·50개 모델·수분 이력 6규칙의 사전 비교 계획 |
 | [icing_transition_20261025.json](icing_transition_20261025.json) | 학습 지점·가상 직전 상태·결측 초기화·30개 적합·채택 기준 |
 | [icing_threshold_refinement_20261025.json](icing_threshold_refinement_20261025.json) | 내부 검증에서 모든 서로 다른 임계값을 비교하는 추가 대조 |
 
