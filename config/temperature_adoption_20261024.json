@@ -1,0 +1,13 @@
+{
+  "scope": "두 겨울 공간 제외 온도 모델의 개발상 채택 기준. 공식 성능 적합 기준이 아님",
+  "candidate": "동일 기상12변수·MSE300/MAE300 평균. 학습 자료만 첫 겨울에서 비보호 두 겨울로 확장",
+  "required": [
+    "동일 유효 쌍에서 두 겨울 통합 pooled MAE와 지점 균등 MAE 모두 개선",
+    "각 겨울 pooled MAE가 첫 겨울 학습 대조보다 5%를 초과하여 악화하지 않음",
+    "외부 4개 지역 중 최소 3개 지역 pooled MAE 비악화",
+    "관측 노면온도 -2~2도 구간 MAE가 5%를 초과하여 악화하지 않음"
+  ],
+  "justification": "한 지점이나 한 겨울에만 맞춘 평균 개선을 피하면서 작은 오차 교환은 허용",
+  "protected_outcomes_used": false,
+  "new_independent_assessment": false
+}

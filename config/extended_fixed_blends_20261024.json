@@ -1,0 +1,16 @@
+{
+  "purpose": "후속 비교의 고정 평균. 점수로 연속 가중치를 최적화하지 않으며 새 독립 평가로 주장하지 않는다.",
+  "pairs": {
+    "canonical_history_equal": ["canonical_history_mae600", "canonical_history_mse600"],
+    "combined_history_equal": ["combined_history_mae600", "combined_history_mse600"],
+    "history_with_thermal_lgb_equal": ["canonical_history_mae600", "thermal_lgb_mae800"],
+    "history_with_thermal_cat_equal": ["canonical_history_mae600", "thermal_cat_mae800"],
+    "history_with_local_mlp_equal": ["canonical_history_mae600", "local_mlp_thermal_mae"],
+    "history_capacity_equal": ["canonical_history_mae1200", "canonical_history_mae600_leaf63"],
+    "weather_and_thermal_history_equal": ["canonical_history_mae600", "combined_history_mae600"],
+    "solar_and_weather_history_equal": ["history_solar_mae600", "canonical_history_mae600"]
+  },
+  "mixed_training_input_versions": ["history_with_thermal_lgb_equal", "history_with_thermal_cat_equal"],
+  "mixed_training_input_note": "열 LGB·Cat 후보는 원 학습본이다. 유망한 경우 정정 학습본으로 다시 적합·대조하기 전 최종 채택하지 않는다.",
+  "protected_labels_read": false
+}

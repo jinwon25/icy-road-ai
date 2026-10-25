@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -20,6 +21,11 @@ def check_notebook(path: Path, timeout: int = 180, run_stages: list[str] | None 
     kernel_name = notebook.metadata.get("kernelspec", {}).get("name", "python3")
     manager = KernelManager(kernel_name=kernel_name)
     environment = os.environ.copy()
+    # 검증 커널의 설정·이력을 임시 폴더에 두어 사용자 프로필을 변경하지 않는다.
+    runtime = tempfile.TemporaryDirectory(prefix='icy_road_notebook_')
+    environment['IPYTHONDIR'] = str(Path(runtime.name) / 'ipython')
+    environment['JUPYTER_RUNTIME_DIR'] = runtime.name
+    manager.connection_file = str(Path(runtime.name) / 'kernel.json')
     if run_stages:
         environment["ICY_ROAD_RUN_STAGES"] = json.dumps(run_stages)
     manager.start_kernel(cwd=str(path.parent), env=environment)
@@ -55,6 +61,7 @@ def check_notebook(path: Path, timeout: int = 180, run_stages: list[str] | None 
     finally:
         client.stop_channels()
         manager.shutdown_kernel(now=True)
+        runtime.cleanup()
 
 
 if __name__ == "__main__":

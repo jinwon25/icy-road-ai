@@ -1,0 +1,37 @@
+{
+  "purpose": "Final static physical-input classification axis: distinguish identical weather using public DSM/solar features, with two-region exclusion. Temperature failure does not automatically establish classification failure.",
+  "data": "outputs/private/terrain_thermal_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "candidates": [
+    {
+      "name": "terrain61_unweighted",
+      "features": "history_terrain",
+      "positive_weight": 1.0
+    },
+    {
+      "name": "terrain61_weighted20",
+      "features": "history_terrain",
+      "positive_weight": 20.0
+    }
+  ],
+  "parameters": {
+    "learning_rate": 0.05,
+    "max_iter": 300,
+    "max_leaf_nodes": 7,
+    "min_samples_leaf": 300,
+    "l2_regularization": 20.0,
+    "early_stopping": false,
+    "random_state": 20261024
+  },
+  "threads": 2,
+  "selection_tracks": [
+    "mean_f1",
+    "worst_winter_f1"
+  ],
+  "validation": "Same four single-region and six double-region excluded contexts; two classifiers,20fits. Same original eligibility gates; no protected labels.",
+  "thresholds": "기존 src.award_ice.THRESHOLDS의 고정 64개. 평가 지역으로 조기 종료하거나 임계값을 고르지 않음",
+  "availability": "기존 v2와 같은 유효 ASOS 및 하나 이상 수분 입력 가용 범위. 결측 쌍을 음성으로 바꾸지 않음",
+  "adoption": "config/extended_adoption_20261024.json의 결빙 기준 유지. 개선된 회귀값이나 보호 정답을 새 분류 특징으로 넣지 않음",
+  "protected_labels_read": false,
+  "new_independent_assessment": false
+}

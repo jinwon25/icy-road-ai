@@ -1,0 +1,24 @@
+{
+  "status": "planned_before_final_model_selection",
+  "candidate_directory": "outputs/private/submission_candidate_20261024_v3",
+  "preserved_reference_archive": "outputs/private/submission_candidate_20261024_v2.zip",
+  "temperature_training_raw_rows": 794545,
+  "temperature_training_valid_pairs": 793149,
+  "temperature_input_available_rows": 793209,
+  "training_count_note": "기온 입력이 있는 행 수와 노면 정답까지 유효한 학습 쌍 수를 구분한다. 정정 학습본도 최종 학습 쌍은 793149행이다.",
+  "outputs": ["현재 모델·학습 계획·독립 재학습 영수증", "10분 예측·지점 및 구간 연결 인덱스", "CSV 11종·열 정의·해시", "갱신된 지도 속성·JPG", "현재 보고서 PDF", "현재 실행 노트북", "실제 CLI 출력 HTML·영상", "문헌·외부 자료·코드 이용조건 및 AI 활용 기록"],
+  "example": {
+    "station": "12207",
+    "input_start_kst": "2024-12-14T12:00:00",
+    "output_start_kst": "2024-12-15T00:00:00",
+    "end_kst_exclusive": "2024-12-16T00:00:00",
+    "input_rows": 216,
+    "output_rows": 144,
+    "purpose": "학습 범위 내 실행 예제. 12시간 이력을 먼저 구성하고 보여줄 하루만 내보냄. 독립 성능평가 아님"
+  },
+  "temperature_ice_separation": "새 분류기가 채택 기준을 통과하지 못하면 v2 결빙 모델을 보존하고, 현재 온도·결빙 기준 온도·각 모델의 차이를 CSV·UI·보고서에 구분해 표시한다.",
+  "legacy_materials": "이전 ZIP은 그대로 보존한다. 새 후보의 기본 실행 진입점에는 현재 모델·자료에 맞는 노트북과 명령만 배치한다. 과거 연구 소스와 현재 실행 지원 범위를 구분한다.",
+  "required_checks": ["실제 포함 자료로 최종 재학습과 모델 해시 대조", "실제 CLI 예측과 CSV·노트북 일치", "보호 3곳 정답 없이 추론", "전체 구간·CSV 수치 및 결측 재독해", "PDF 모든 페이지 렌더·시각 확인", "HTML·영상 실제 결과 확인", "봉인 47·549개 및 기존 ZIP 보존", "새 ZIP 구성 파일별 해시 검증"],
+  "publication_authorized": false,
+  "official_submission_authorized": false
+}

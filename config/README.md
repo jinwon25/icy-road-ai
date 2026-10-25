@@ -8,10 +8,21 @@
 
 | 파일 | 역할 |
 | --- | --- |
+| [official_requirements_20261024.json](official_requirements_20261024.json) | 10월 24일 공개 목록 확인과 10월 16일 마지막 상세 확인을 구분 |
+| [followup_temperature_20261024.json](followup_temperature_20261024.json) | 24·48시간 이력·잔차·결빙점 가중 학습과 고정 연장 기준 |
+| [followup_algorithm_20261024.json](followup_algorithm_20261024.json) | 최종 63개 입력의 LightGBM L1/L2와 세 고정 평균 |
+| [followup_offset_20261024.json](followup_offset_20261024.json) | 두 지역 동시 제외 6개 적합과 두 상수 보정 정책 |
+| [icing_state_memory_20261024.json](icing_state_memory_20261024.json) | 연속 확인·지속·해제의 새 결빙 상태 정책 14개 |
+| [extended_final_selection_20261024.json](extended_final_selection_20261024.json) | 확장 온도 후보의 용량·시드·고정 평균·복잡성 선택 기준 |
+| [solar_loss_pair_20261024.json](solar_loss_pair_20261024.json) | 유력 63개 입력에서 MAE·MSE의 고정 평균 후속 대조 |
+| [extended_adoption_20261024.json](extended_adoption_20261024.json) | 회귀·결빙의 별도 채택 기준과 실용적 포화의 범위 |
+| [two_winter_development_20261024.json](two_winter_development_20261024.json) | 비보호 두 겨울 개발 재분류·지역 제외·온도 대조 설정 |
+| [temperature_adoption_20261024.json](temperature_adoption_20261024.json) | 결과 확인 전에 고정한 온도 후보 채택 기준 |
+| [award_ice_experiment_20261024.json](award_ice_experiment_20261024.json) | 일별 F1 목적의 지역 이중 제외·임계값·평활화 비교 |
 | [data_source.json](data_source.json) | 루트 기본 20260915 ZIP의 이름·SHA256과 20261007 별도 작업 위치 |
 | [evaluation.json](evaluation.json) | 보호 지점과 평가 규칙 |
 | [notebook_workflow.json](notebook_workflow.json) | 노트북 실행 단계와 산출물 |
-| [official_requirements_20261016.json](official_requirements_20261016.json) | 오늘 공식 공개 원문과 양식을 대조한 요구사항 |
+| [official_requirements_20261016.json](official_requirements_20261016.json) | 마지막으로 상세 원문과 양식까지 대조한 요구사항 |
 | [air_road_blending_experiment.json](air_road_blending_experiment.json) | 기온·노면 72개 고정 규칙과 두 선택 경로. 미채택 연구 |
 | [asos_gap_fallback_experiment.json](asos_gap_fallback_experiment.json) | 대체 ASOS 거리·나이·648개 합성 공백·사전 품질 기준. 미채택 연구 |
 | [weather_memory_temperature_stable_experiment.json](weather_memory_temperature_stable_experiment.json) | 현재 2종 평균 후보의 실험 조건 |

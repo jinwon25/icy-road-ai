@@ -1,0 +1,18 @@
+{
+  "status": "fixed_before_solar_capacity_and_final_seed_results",
+  "temperature_model_family": "HGB absolute_error; same four-region development folds; no outside-fold target features",
+  "solar_capacity_iterations": [600, 1200, 2400],
+  "minimum_material_gain": 0.005,
+  "capacity_rule": "Among ASOS solar candidates passing all original six gates, use the smallest iteration count within 0.5% of the lowest MAE. Extend further only if doubling still yields at least 0.5% lower MAE.",
+  "seed_rule": "Repeat the 1200-iteration ASOS solar model at seeds 20261025 and 20261026; compare their range and the fixed mean of all three seeds. Never select the best individual seed. If a different capacity is adopted, disclose that the seed experiment covers 1200 only.",
+  "ensembles": [
+    "equal mean of combined ASOS solar MAE1200 at all three fixed seeds",
+    "equal mean of combined ASOS solar MAE1200 and non-solar combined history MAE1200",
+    "equal mean of combined ASOS solar MAE1200 and MAE2400"
+  ],
+  "ensemble_rule": "Require all original gates and at least 0.5% lower MAE than the chosen simpler ASOS solar model to pay the extra model inference cost. No fitted weights.",
+  "icing_rule": "Only replace v2 if the predeclared nested classification candidate passes F1 gain, precision, recall, both winters, every station and event-retention gates. Otherwise retain the separate v2 reference temperature and disclose that it differs from current regression output.",
+  "assessment_scope": "Repeated development on the same allowed 9 stations, not new independent evaluation. Practical saturation in tested directions is not proof that no improvement exists.",
+  "protected_outcomes_used": false,
+  "new_independent_assessment": false
+}

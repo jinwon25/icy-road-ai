@@ -1,0 +1,15 @@
+{
+  "purpose": "v3가 유지한 결빙 판정의 확인 지연·짧은 지속·해제 조건을 고정 대조",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "confirmation_slots": [1, 2, 3],
+  "hold_minutes": [0, 30, 90],
+  "release_c": [0.0, 1.0],
+  "deduplication": "hold=0에서는 release=0만 비교. 15개 중 confirmation=1,hold=0이 기존 기준선이므로 새 정책 14개",
+  "availability": "같은 유효 예측 범위. 결측과 10분 시각 단절은 상태를 초기화. 미래 값·노면 관측 입력 없음",
+  "adoption": "기존 config/extended_adoption_20261024.json의 F1 1% 향상·Precision/Recall·두 겨울·모든 지점 비악화·사건 보존 기준 유지",
+  "evaluation_scope": "같은 9개 외부 개발 지점의 지역 제외 저장 예측을 사용한 고정 정책 비교. 중첩 선택·새 독립 평가라고 주장하지 않음",
+  "interpretation": "RoadSurf의 저장 상태·동결/융해 구분에서 얻은 단순 지속 가설. RoadSurf 구현·얼음 저장량·마찰·제설 재현이 아님",
+  "reference": "https://gmd.copernicus.org/articles/17/4837/2024/",
+  "protected_labels_read": false,
+  "external_weights_or_data_introduced": false
+}

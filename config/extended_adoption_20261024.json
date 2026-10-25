@@ -1,0 +1,27 @@
+{
+  "purpose": "확장 연구의 회귀·분류 채택과 실용적 포화 판단을 구분",
+  "data_for_final_refit": "outputs/private/canonical_thermal_data_20261024_v1/development.parquet",
+  "development_scope": "허용 23곳·두 겨울, 같은 외부 9곳·4지역 반복 개발. 새 독립 평가 아님",
+  "reference_package": "outputs/private/submission_candidate_20261024_v2.zip",
+  "temperature_adoption": {
+    "gates": "config/extended_search_20261024.json의 기존 6개 기준 유지",
+    "required_verification": ["원천 기상 연결 검산", "학습·실행 특징 일치", "저장 모델 재추론", "날짜 블록 민감도", "유망 후보의 추가 용량·시드 대조"],
+    "additional_gain_threshold": 0.005,
+    "near_freezing_scope": "실측 -2~2도는 평가층 구분에만 사용. 실행 입력에 사용하지 않음"
+  },
+  "ice_adoption": {
+    "requirements": ["일별 지점 F1 1% 이상 개선", "Precision·Recall 비악화", "각 겨울·각 지점 F1 비악화", "기존 탐지 사건 손실 없음"],
+    "if_no_candidate_passes": "기존 결빙 추론을 유지한다. 온도 회귀가 좋아졌다는 이유로 결빙 판정을 바꾸지 않는다.",
+    "separate_outputs_allowed": "온도 추정과 결빙 판정에 서로 다른 검증 모델을 쓸 수 있다. 이 경우 결빙 판정용 온도·근거를 구분해 내보내고 설명하며, 새 온도 단독 임계 판정이라고 표시하지 않는다."
+  },
+  "saturation": {
+    "must_finish_declared_branches": true,
+    "criteria": "다른 계열·입력·손실과 유망 후보의 후속 대조에서 추가 개선이 0.5% 미만이거나 기존 기준을 통과하지 못하는지 확인. 개선이 계속되면 포화라고 보고하지 않는다.",
+    "scope_limit": "현재 데이터·실행 가능한 방법·반복 개발 범위의 실용적 포화. 모든 방법의 개선 불가능성이나 입상 보장을 뜻하지 않음"
+  },
+  "protected_stations": ["12410", "33411", "23402"],
+  "protected_labels_read": false,
+  "external_pretrained_weights_used": false,
+  "external_prediction_api_used": false,
+  "publication_or_official_submission_performed": false
+}

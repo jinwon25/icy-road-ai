@@ -1,0 +1,61 @@
+{
+  "purpose": "Solar-only ablation and physical DSM features; four fixed candidates, no site ID or target history",
+  "data": "outputs/private/terrain_thermal_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "validation": "반복 개발용 동일 4지역 제외. 평가 지역의 두 겨울 전체를 학습에서 제외. 조기 종료·외부 점수 기반 학습 제어 없음",
+  "seed": 20261024,
+  "threads": 2,
+  "temperature_gate": {
+    "pooled_improvement_min": 0.005,
+    "station_macro_improves": true,
+    "each_winter_max_harm": 0.02,
+    "each_station_max_harm": 0.05,
+    "near_freezing_max_harm": 0.0,
+    "minimum_noninferior_regions": 3
+  },
+  "saturation_assessment": "서로 다른 알고리즘·표현·이력·가중치와 후속 국소 대조에서 의미 있는 개선이 반복되지 않는지 확인. 탐색한 범위의 실용적 포화만 판단하며 모든 방법의 개선 불가능성을 주장하지 않음",
+  "protected_labels_read": false,
+  "new_independent_assessment": false,
+  "candidates": [
+    {
+      "name": "thermal_solar_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_solar"
+    },
+    {
+      "name": "thermal_terrain_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_terrain"
+    },
+    {
+      "name": "history_solar_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "history_solar"
+    },
+    {
+      "name": "history_terrain_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "history_terrain"
+    }
+  ],
+  "reference_for_incremental_gain": "outputs/private/canonical_thermal_search_20261024_v1/canonical_thermal_mae600/predictions.parquet",
+  "incremental_gate": "Compare added terrain/solar with the matching canonical thermal or thermal_history candidate; retain original v2 gates.",
+  "additional_source_sha256": {
+    "src/solar_terrain.py": "1a2d9e2b8f528d78b3e992676e66922611500620a8799f3cbb5032b227695ade",
+    "src/terrain_thermal.py": "d55dbeca936c784685d7963603515232e65f64da7e5a4e8582916637268d9283",
+    "src/thermal_extended.py": "8306ce32772b71b3d34eefba69d3f01bace4af2f8480ae164f0f03671e9a3f5c",
+    "scripts/evaluate_terrain_thermal.py": "dbbe8d73efb50c4d361fc3fd52f4f7a18af6b6584edf8cfb782a534d292c4055"
+  }
+}

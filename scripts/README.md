@@ -1,5 +1,31 @@
 # 실행 스크립트 안내
 
+## v3 이후 후속 연구
+
+[후속 비교·구간 탐색 기록](../docs/delivery/FOLLOWUP_UPGRADE_20261024.md)에서 실제 완료 상태를 확인합니다. `evaluate_followup_temperature.py`는 고정한 시간 이력·손실·알고리즘 대조를 기존 실행기에 연결하고, `extend_followup_capacity.py`는 사전 기준을 통과한 600회 모델만 연장합니다. `evaluate_followup_offset.py`는 평가 지역을 보정에서도 제외한 6개 적합을 수행합니다. 대응하는 `audit_followup_temperature.py`·`audit_followup_offset.py`가 저장 모델·분리·출력·보정 계산을 확인합니다.
+
+`evaluate_icing_state_memory.py`·`audit_icing_state_memory.py`는 결빙 시간 상태 정책과 별도 벡터 재계산, `audit_long_memory.py`는 긴 기상 이력의 정규 격자 재계산을 담당합니다. `compare_followup_results.py`는 완료·감사된 후보만 현재 v3와 같은 여섯 기준으로 비교합니다. 원 실행 보고서의 이전 v2 대비 통과 여부를 v3 개선으로 읽지 않습니다.
+
+`audit_followup_failure_diagnostics.py`는 결빙의 지점·겨울 집중, 관측 온도와의 관계, 오경보 날짜의 진단표를 별도 집계합니다. 원인을 센서 오류로 확정하거나 정답을 바꾸는 도구가 아닙니다.
+
+`build_review_dashboard.py`·`audit_review_dashboard.py`는 검증된 CSV·공간 도형으로 통신 없는 탐색 화면을 만들고 숫자·필터·다운로드·모바일 표시를 검사합니다. `package_followup_candidate.py`는 후속 비교가 기존 모델 유지로 끝난 경우에만 새 v4를 만들도록 제한합니다. 기존 v3를 덮어쓰지 않으며 `prepare`·`assets`·`verify`·`package` 순서와 완료 영수증을 따릅니다.
+
+`record_review_dashboard.py`는 실제 Chromium 조작을 WebM으로 녹화하고 다운로드·재생·전체 프레임 디코딩을 검사합니다. 별도 Playwright와 Chromium이 필요한 검수 도구이며 제출 모델 추론에는 필요하지 않습니다. 실제 영상 프레임의 시각 검토 여부는 녹화 영수증에 기록합니다.
+
+## 10월 24일 기상·열 이력 확장
+
+[확장 통합 기록](../docs/delivery/EXTENDED_UPGRADE_20261024.md)을 먼저 확인합니다. `compare_extended_completion.py`는 완료 설정과 고정 평균을 모으고, `audit_advanced_models.py`·`audit_extended_classification.py`는 저장 모델과 지역 제외·임계값 선택을 검산합니다. `seal_extended_selection.py`는 감사 영수증을 연결한 선택안만 제출 준비에 넘깁니다.
+
+`build_extended_candidate.py`가 새 폴더·포함 학습 입력·전체 공간 추론을 구성합니다. `train_extended_submission.py`·`predict_extended_submission.py`가 현재 독립 실행 코드이며 새 후보의 `code/train.py`·`code/predict.py`에 복사됩니다. `export_extended_delivery_tables.py`, `complete_extended_delivery.py`, `render_extended_review.py`, `finalize_extended_candidate.py`는 CSV·지도·실제 출력 데모·노트북·보고서와 검증 ZIP을 만듭니다. 현재 준비·완료 상태는 검증 영수증을 확인하며 기존 v2에 이 생성기를 적용하지 않습니다.
+
+## 이전 v2: 10월 24일 두 겨울 모델 고도화
+
+당시 진입점은 [실험·결과·실행 안내](../docs/delivery/AWARD_UPGRADE_20261024.md)입니다. `evaluate_award_ice.py`·`audit_award_ice.py`는 첫 겨울 중첩 분류 선택, `prepare_two_winter_development.py`·`evaluate_two_winter.py`·`audit_two_winter.py`는 비보호 두 겨울 비교, `upgrade_two_winter_candidate.py`는 최종 적합·전체 추론, `complete_two_winter_delivery.py`는 지도·실행 예제·노트북을 생성합니다. `render_award_review.py`는 이전 6쪽 보고서의 생성기입니다. 아래 이전 패키징 진입점은 당시 후보용이며 보존된 v2를 덮어쓰는 용도로 사용하지 않습니다.
+
+## 10월 24일 CSV 산출·새 후보 통합
+
+`export_delivery_tables.py`는 후보 manifest에 고정된 예측·허용 개발표만 읽고 CSV 11종과 파일별 키·자료형·결측·해시 목록을 새 폴더에 생성합니다. CSV 숫자 재독해·일별/겨울 합계·기존 24개 지표를 검산합니다. `package_delivery_tables.py`는 원 ZIP과 검증한 CSV를 새 ZIP에 통합하며 기존 모델·데이터·보고서·데모 해시를 보존합니다. [실행 명령·검증](../docs/delivery/DELIVERY_UPGRADE_20261024.md) · [CSV 규약](../docs/delivery/CSV_CONTRACT.md)
+
 모든 명령은 저장소 루트에서 실행합니다. 단계 간 import·작업 루트 계산·봉인 기록을 보존하기 위해 기존 Python 파일 위치와 명령은 유지합니다.
 
 [현재 현황](../docs/STATUS.md) · [실행 안내](../docs/delivery/RUNBOOK.md) · [설정 안내](../config/README.md)
@@ -10,16 +36,21 @@
 | --- | --- |
 | 코드·노트북 출력·인증정보 검사 | [check_repository.py](check_repository.py) |
 | GFM 렌더·링크·앵커 검사 | [check_markdown.py](check_markdown.py) |
-| 현재 후보 보고서 작성 | [build_revised_submission_report.py](build_revised_submission_report.py) |
-| 최신 보고서 후보 묶기 | [package_model_report_upgrade.py](package_model_report_upgrade.py) |
-| 현재 2모델 평균 후보의 CSV·Parquet 추론 | [submission_runtime.py](../src/submission_runtime.py) |
+| 현재 v3 보고서 작성 | [render_extended_review.py](render_extended_review.py) |
+| 현재 v3 검산·ZIP 생성 | [finalize_extended_candidate.py](finalize_extended_candidate.py) |
+| 현재 온도·별도 결빙 기준 추론 | [extended_runtime.py](../src/extended_runtime.py) |
 | 제출 ZIP 해시 검증·새 폴더 복원 | [submission_archive.py](../src/submission_archive.py) |
+| 현재 지도·화면·영상·노트북 생성 | [complete_extended_delivery.py](complete_extended_delivery.py) |
+| 10월 19일 누수·지표·노트북 감사와 새 후보 | [review_delivery_20261019.py](review_delivery_20261019.py) |
+| 새 출력 폴더에 공식 목록·본문·첨부 표시 대조 | [review_official_updates.py](review_official_updates.py) |
 | 과거 Ridge·HGB 기준선 데모 | [demo_inference.py](demo_inference.py) |
 | 데이터 버전별 작업 복사본 | [prepare_release_workspace.py](prepare_release_workspace.py) |
 
 학습·공식 사이트 수집·패키징은 출력 경로와 선행 조건을 확인한 뒤 실행합니다. 현재 후보 묶음과 이미 완료한 평가를 덮어쓰지 않습니다. 수정본 연구는 별도 작업 루트의 실행 안내를 따릅니다.
 
-현재 후보를 저장소에서 실행하려면 ZIP의 해시 목록을 확인해 새 폴더로 복원한 뒤 그 폴더의 모델을 명시합니다. 원본 저장소에는 모델이 포함되지 않습니다.
+10월 19일 후보는 [제출용 노트북](../notebooks/submission_review.ipynb)을 압축 해제 폴더에서 실행합니다. 원 연구 공간이 필요한 기존 `analysis_review.ipynb`와 구별합니다. [단계별 실행·검증 결과](../docs/delivery/DELIVERY_REVIEW_20261019.md)
+
+다음은 10월 16일 이전 후보의 실행 예입니다. 현재 v3는 압축 해제 폴더의 README와 `code/predict.py`를 따릅니다. 원본 저장소에는 모델이 포함되지 않습니다.
 
 ```powershell
 python -m src.submission_archive --archive outputs/private/submission_candidate_20261016_v1.zip --output outputs/private/candidate_work_20261016

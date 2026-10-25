@@ -1,12 +1,16 @@
 # 문서 안내
 
+현재 v4: [후속 11개 온도 대조·14개 결빙 상태 정책과 구간 탐색](delivery/FOLLOWUP_UPGRADE_20261024.md)을 완료하고 v3 모델을 유지했습니다. [기존 모델·실행 계약·검산](delivery/EXTENDED_UPGRADE_20261024.md), [확장 실험](research/EXTENDED_SEARCH_20261024.md), [최신 논문·GitHub·Hugging Face와 대회 조건 검토](research/OPEN_SOURCE_REVIEW_20261024.md)를 함께 확인합니다. 같은 개발 기준의 온도 MAE는 이전 v2보다 13.66% 낮고, 결빙 판정은 v2를 유지합니다.
+
+앞선 v2: [두 겨울 후보](delivery/AWARD_UPGRADE_20261024.md). 앞선 [CSV 정리](delivery/DELIVERY_UPGRADE_20261024.md)는 v1의 기록이며 [열·단위·집계 규약](delivery/CSV_CONTRACT.md)은 v3의 두 온도 출력을 포함합니다.
+
 현재 상태와 제출 준비를 먼저 보고, 필요할 때 데이터·검증·실험 근거를 찾아 읽습니다. 과거 기록의 수치를 현재 성능으로 해석하지 않습니다.
 
 [프로젝트 소개](../README.md) · [진행 현황](STATUS.md) · [폴더 구조](STRUCTURE.md) · [스크립트 안내](../scripts/README.md)
 
 ## 처음 읽는 순서
 
-1. [10월 16일 기준선 비교·재현성 수정](delivery/REVIEW_RESPONSE_20261016.md)과 [공식 사이트 재확인](competition/OFFICIAL_UPDATE_20261016.md)
+1. [10월 19일 누수·지표·제출 노트북 검토](delivery/DELIVERY_REVIEW_20261019.md)와 [공식 변경·미확인 범위](competition/OFFICIAL_UPDATE_20261019.md)
 2. [현재 진행 현황](STATUS.md)
 3. [10월 14일 모델·보고서 판단](delivery/MODEL_REPORT_UPGRADE_20261014.md)
 4. [입력 공백 검토](delivery/COMPETITION_STATUS_20261014.md)
@@ -15,6 +19,7 @@
 
 ## 대회
 
+- [공식 새 게시물과 미확인 범위 — 2026-10-19](competition/OFFICIAL_UPDATE_20261019.md)
 - [공식 사이트 전체 재확인 — 2026-10-16](competition/OFFICIAL_UPDATE_20261016.md)
 - [대회 요구사항과 적용 범위 — 2026-10-14](competition/COMPETITION_REQUIREMENTS.md)
 - [공식 Q&A633 답변과 일별 평가 후속 검증 — 2026-10-13](competition/OFFICIAL_QNA_20261013.md)

@@ -1,0 +1,20 @@
+{
+  "purpose": "v3의 양의 방향성 오차를 평가 지역 정답 없이 보정할 수 있는지 확인",
+  "data": "outputs/private/solar_memory_data_20261024_v1/development.parquet",
+  "reference": "outputs/private/solar_history_curve_20261024_v1/combined_asos_solar_mae1200",
+  "feature_kind": "combined_asos_solar",
+  "seed": 20261024,
+  "threads": 2,
+  "iterations": 1200,
+  "loss": "absolute_error",
+  "maximum_absolute_offset_c": 0.5,
+  "policies": ["pooled_median", "station_median"],
+  "calibration": "외부 평가 G의 보정은 H별로 G,H 모두를 학습에서 제외한 모델의 H 오차로 계산. 두 지역 제외 6개 모델을 양방향 재사용. pooled_median은 잔차 중앙값, station_median은 지점별 잔차 중앙값의 중앙값. 정답-예측의 상수를 ±0.5°C로 제한",
+  "final_calibration": "최종 전체 학습 모델용 상수는 기존 4지역 제외 예측의 허용 9곳 잔차로 계산. 외부 평가에는 이 전체 상수를 사용하지 않음",
+  "adoption": "v3 대비 기존 여섯 온도 기준 모두 통과. 두 고정 보정 정책의 반복 개발 비교이며 공식 점수나 새 독립 평가 아님",
+  "early_stopping": false,
+  "protected_labels_read": false,
+  "external_model_or_data_imported": false,
+  "reference_rationale": "FMI의 2026년 예측 오차 보정 연구를 참고한 자체 단순 보정 대조. 원 XGBoost 보정 모델·자료·점수를 재현하지 않음",
+  "reference_url": "https://journals.ametsoc.org/view/journals/apme/65/6/JAMC-D-25-0189.1.xml"
+}

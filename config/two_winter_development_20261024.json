@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "purpose": "같은 두 겨울의 미관측 지점 추정을 위한 비보호 자료 학습 확장 실험",
+  "official_basis": "2026-10-16 보존 문제 설명은 두 겨울을 대상 기간으로 하고 12410/33411/23402를 학습 제외 지점으로 지정. 최신 본문 재접근 실패이며 별도 시간 예보 과제로 해석하지 않음",
+  "protocol_change": "기존 비보호 23곳의 둘째 겨울을 과거 시간 독립 평가에서 개발 자료로 재분류. 과거 평가 결과와 봉인 파일을 보존하지만 새 모델에 대한 독립 성능 근거로 재사용하지 않음",
+  "protected_stations": ["12410", "33411", "23402"],
+  "allowed_stations": ["12103", "12209", "12210", "12211", "12409", "23202", "23203", "23204", "23403", "33103", "33206", "33409", "33410", "33412", "12207", "12408", "23205", "23404", "33205", "33408", "33207", "33413", "33414"],
+  "validation": "외부 4개 지역의 모든 지점을 두 겨울 모두 학습에서 제외. 첫 겨울 학습 대 두 겨울 학습을 같은 고정 입력·모델로 비교. 임계값은 학습 지역 내부 공간 제외 점수에서만 선택",
+  "temperature_models": ["mse300", "mae300"],
+  "temperature_parameters": {"learning_rate": 0.05, "max_iter": 300, "max_leaf_nodes": 15, "min_samples_leaf": 100, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20260923},
+  "classification": "6/24시간 기상 이력의 HGB 200회·잎7·최소잎300·L2 20. 무가중 및 고정 Ice 가중치20. 내부 일별 지점 평균 F1 선택과 ASOS<=0 기준선 비교",
+  "new_independent_assessment": false,
+  "protected_label_access": false,
+  "read_previous_prediction_columns": false,
+  "source_files_immutable": true
+}

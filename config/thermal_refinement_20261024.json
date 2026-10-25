@@ -1,0 +1,134 @@
+{
+  "purpose": "Thermal local refinement and input ablations; frozen before evaluation",
+  "data": "outputs/private/extended_thermal_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "validation": "반복 개발용 동일 4지역 제외. 평가 지역의 두 겨울 전체를 학습에서 제외. 조기 종료·외부 점수 기반 학습 제어 없음",
+  "seed": 20261024,
+  "threads": 2,
+  "temperature_gate": {
+    "pooled_improvement_min": 0.005,
+    "station_macro_improves": true,
+    "each_winter_max_harm": 0.02,
+    "each_station_max_harm": 0.05,
+    "near_freezing_max_harm": 0.0,
+    "minimum_noninferior_regions": 3
+  },
+  "saturation_assessment": "서로 다른 알고리즘·표현·이력·가중치와 후속 국소 대조에서 의미 있는 개선이 반복되지 않는지 확인. 탐색한 범위의 실용적 포화만 판단하며 모든 방법의 개선 불가능성을 주장하지 않음",
+  "protected_labels_read": false,
+  "new_independent_assessment": false,
+  "candidates": [
+    {
+      "name": "thermal_mae1200",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 1200,
+      "leaves": 31,
+      "features": "thermal"
+    },
+    {
+      "name": "thermal_mse1200",
+      "family": "hgb",
+      "loss": "squared_error",
+      "iterations": 1200,
+      "leaves": 31,
+      "features": "thermal"
+    },
+    {
+      "name": "thermal_mae600_leaf63",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 63,
+      "features": "thermal"
+    },
+    {
+      "name": "thermal_mae600_leaf15",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 15,
+      "features": "thermal"
+    },
+    {
+      "name": "thermal_mae600_min300",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal",
+      "overrides": {
+        "min_samples_leaf": 300
+      }
+    },
+    {
+      "name": "thermal_mae600_l250",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal",
+      "overrides": {
+        "l2_regularization": 50.0
+      }
+    },
+    {
+      "name": "thermal_mse600_min300",
+      "family": "hgb",
+      "loss": "squared_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal",
+      "overrides": {
+        "min_samples_leaf": 300
+      }
+    },
+    {
+      "name": "thermal_mae600_balanced",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal",
+      "group_balance": true
+    },
+    {
+      "name": "thermal_no_ground_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_no_ground"
+    },
+    {
+      "name": "thermal_ground_only_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_ground_only"
+    },
+    {
+      "name": "thermal_memory_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_memory"
+    },
+    {
+      "name": "thermal_memory_mse600",
+      "family": "hgb",
+      "loss": "squared_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "thermal_memory"
+    }
+  ],
+  "reference_for_incremental_gain": "outputs/private/extended_thermal_search_20261024_v1/thermal_mae600/predictions.parquet",
+  "incremental_gate": "Report >=0.5% additional MAE improvement relative to thermal_mae600 separately; retain original v2 eligibility gate without relaxation.",
+  "additional_source_sha256": {
+    "src/thermal_extended.py": "8306ce32772b71b3d34eefba69d3f01bace4af2f8480ae164f0f03671e9a3f5c",
+    "src/thermal_refinement.py": "05fcbf3e94b330f694ffb6503fd94d91f239c0880aac31d7614ad567a6449960",
+    "scripts/evaluate_thermal_refinement.py": "948e083070bedb9f5432f2abf62f5949d75316af534dd805c5f269696a43d43a"
+  }
+}

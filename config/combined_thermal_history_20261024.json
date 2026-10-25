@@ -1,0 +1,44 @@
+{
+  "purpose": "Combine 52 weather/thermal/history predictors with nine strictly-past thermal state means; frozen before evaluation",
+  "data": "outputs/private/canonical_thermal_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "validation": "반복 개발용 동일 4지역 제외. 평가 지역의 두 겨울 전체를 학습에서 제외. 조기 종료·외부 점수 기반 학습 제어 없음",
+  "seed": 20261024,
+  "threads": 2,
+  "temperature_gate": {
+    "pooled_improvement_min": 0.005,
+    "station_macro_improves": true,
+    "each_winter_max_harm": 0.02,
+    "each_station_max_harm": 0.05,
+    "near_freezing_max_harm": 0.0,
+    "minimum_noninferior_regions": 3
+  },
+  "saturation_assessment": "서로 다른 알고리즘·표현·이력·가중치와 후속 국소 대조에서 의미 있는 개선이 반복되지 않는지 확인. 탐색한 범위의 실용적 포화만 판단하며 모든 방법의 개선 불가능성을 주장하지 않음",
+  "protected_labels_read": false,
+  "new_independent_assessment": false,
+  "candidates": [
+    {
+      "name": "combined_history_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "combined_thermal_history"
+    },
+    {
+      "name": "combined_history_mse600",
+      "family": "hgb",
+      "loss": "squared_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "combined_thermal_history"
+    }
+  ],
+  "reference_for_incremental_gain": "outputs/private/canonical_history_search_20261024_v1/canonical_history_mae600/predictions.parquet",
+  "incremental_gate": "Require 0.5% added MAE improvement relative to canonical_history_mae600, separately from original v2 eligibility.",
+  "additional_source_sha256": {
+    "src/combined_thermal_history.py": "3cccfaeb4fb147192326405207d59fdc9a004cbc16d829e66a8908f156e3b1cf",
+    "src/thermal_extended.py": "8306ce32772b71b3d34eefba69d3f01bace4af2f8480ae164f0f03671e9a3f5c",
+    "scripts/evaluate_combined_thermal_history.py": "d155bb58141c79a1e9ad41e7312d7fb6047c008092f7f0ffaaaba341b520d90f"
+  }
+}

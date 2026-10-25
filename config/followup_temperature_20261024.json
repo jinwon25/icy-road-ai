@@ -1,0 +1,98 @@
+{
+  "purpose": "Post-v3 fixed 600-tree contrasts: 24/48h weather memory, air residual, near-freezing weighted objective. Two-stage screening is development selection, not independent evaluation.",
+  "data": "outputs/private/solar_memory_data_20261024_v1/development.parquet",
+  "baseline": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "validation": "반복 개발용 동일 4지역 제외. 평가 지역의 두 겨울 전체를 학습에서 제외. 조기 종료·외부 점수 기반 학습 제어 없음",
+  "seed": 20261024,
+  "threads": 2,
+  "temperature_gate": {
+    "pooled_improvement_min": 0.005,
+    "station_macro_improves": true,
+    "each_winter_max_harm": 0.02,
+    "each_station_max_harm": 0.05,
+    "near_freezing_max_harm": 0.0,
+    "minimum_noninferior_regions": 3
+  },
+  "saturation_assessment": "서로 다른 알고리즘·표현·이력·가중치와 후속 국소 대조에서 의미 있는 개선이 반복되지 않는지 확인. 탐색한 범위의 실용적 포화만 판단하며 모든 방법의 개선 불가능성을 주장하지 않음",
+  "protected_labels_read": false,
+  "new_independent_assessment": false,
+  "candidates": [
+    {
+      "name": "solar_long24_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "solar_long24"
+    },
+    {
+      "name": "solar_long48_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "solar_long48"
+    },
+    {
+      "name": "solar_residual_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "combined_asos_solar",
+      "residual": true
+    },
+    {
+      "name": "solar_cold_weight_mae600",
+      "family": "hgb",
+      "loss": "absolute_error",
+      "iterations": 600,
+      "leaves": 31,
+      "features": "combined_asos_solar",
+      "cold_weight": "exp_sigma3_floor01"
+    }
+  ],
+  "additional_source_sha256": {
+    "src/solar_memory_search.py": "78120125abbdf2a896f9f92d5a3cf66805f773b3daaa8e5640b4f38346fd3ada",
+    "src/solar_terrain.py": "1a2d9e2b8f528d78b3e992676e66922611500620a8799f3cbb5032b227695ade",
+    "src/combined_thermal_history.py": "3cccfaeb4fb147192326405207d59fdc9a004cbc16d829e66a8908f156e3b1cf",
+    "src/thermal_extended.py": "8306ce32772b71b3d34eefba69d3f01bace4af2f8480ae164f0f03671e9a3f5c",
+    "scripts/evaluate_solar_memory.py": "78ef321ebef40291a1fcc723ca120b9696e687e4d38bf9778162a86dcbd01cfa",
+    "src/followup_temperature.py": "cb0b386dad7bb55a4eeeac7c7aa6a8b6a73ef1e6ca04411654bb66dbb2170d23",
+    "scripts/evaluate_followup_temperature.py": "a5f0a7e93a58cb58adb20b2bd7413e430189caba0813c3f02eb2858f1dd263ca",
+    "scripts/evaluate_extended_search.py": "635c2fb434d3fa511e6e737e3b564f5e5263f20d887d1bb9722b0385b3ca2dd8"
+  },
+  "reference_sha256": {
+    "outputs/private/solar_memory_search_20261024_v1/combined_asos_solar_mae600/predictions.parquet": "49513aeb29cd792886109dc0eb05b68db424721d8259441086e28e0c768346ef",
+    "outputs/private/solar_history_curve_20261024_v1/combined_asos_solar_mae1200/predictions.parquet": "43a72bfb8edeb66e1ffe2aeaeadac8917487ab7c5f9afee63ce1290a929b8f29",
+    "outputs/private/submission_candidate_20261024_v3.zip": "e0c14018feb46642cdb9bf62aad8d8c605dd9726315e32019e96335f21a65de5"
+  },
+  "fixed_followup": {
+    "screen_reference": "outputs/private/solar_memory_search_20261024_v1/combined_asos_solar_mae600/predictions.parquet",
+    "final_reference": "outputs/private/solar_history_curve_20261024_v1/combined_asos_solar_mae1200/predictions.parquet",
+    "capacity": {
+      "initial": 600,
+      "extension": 1200,
+      "maximum_general_candidates": 2,
+      "general_screen": "Pass all six same-capacity gates against v3 600, then lowest pooled MAE. No best individual seed."
+    },
+    "cold_specialist_screen": {
+      "maximum_additional_candidates": 1,
+      "near_freezing_relative_improvement_min": 0.01,
+      "pooled_relative_harm_max": 0.03
+    },
+    "fixed_blends": [
+      "0.5 * v3_1200 + 0.5 * each_completed_new1200",
+      "v3_1200 + 0.5*exp(-(v3_1200/3)^2)*(cold1200-v3_1200) if cold specialist completed"
+    ],
+    "final_adoption": "All original six temperature gates versus v3 1200; no relaxation. Existing v3 icing remains until separate icing gates pass.",
+    "protected_labels_read": false,
+    "selection_bias": "Same development sites are reused. No claim of unbiased fresh evaluation."
+  },
+  "references": [
+    "https://journals.ametsoc.org/view/journals/apme/65/6/JAMC-D-25-0189.1.xml",
+    "https://gmd.copernicus.org/articles/19/9035/2026/",
+    "https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html"
+  ],
+  "created_at_utc": "2026-10-24T13:16:58.200002+00:00"
+}

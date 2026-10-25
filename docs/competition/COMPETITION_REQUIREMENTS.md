@@ -1,5 +1,7 @@
 # 대회 요구사항과 적용 범위 — 2026-10-14
 
+**10월 19일 추가 확인:** [새 Q&A 목록 4건·접근 한계](OFFICIAL_UPDATE_20261019.md)를 기록했습니다. 최신 상세 답변·문제 탭·첨부 바이트는 미확인이며 아래 내용은 마지막 전체 확인 당시 요구사항입니다. [부분 확인 설정](../../config/official_requirements_20261019.json)과 [제출 노트북 보완](../delivery/DELIVERY_REVIEW_20261019.md)을 함께 확인합니다.
+
 문제별6건 모두 답변 완료이며633에10월13일 미탐일 지표 처리 답변이 추가됐습니다. 나머지5건과 문제·데이터·신청서·공지 본문은 같고 결과물 제출 날짜는 별도 공지 대기입니다. [최신 답변·검산](OFFICIAL_QNA_20261013.md), 새 사실·미정 항목은 `config/official_requirements_20261013_v2.json`에 반영했습니다. 이전 설정은 당시 기록으로 보존합니다.
 
 [문서 목록](../README.md) · [현재 상태](../history/PROJECT_STATUS.md) · [평가·제출 준비](../validation/EVALUATION_STATUS.md)

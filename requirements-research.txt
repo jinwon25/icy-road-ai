@@ -1,0 +1,4 @@
+-r requirements-dev.txt
+lightgbm==4.6.0
+xgboost==3.0.1
+# PyTorch 2.7.1 CPU installation is pinned separately in README.md and CI.

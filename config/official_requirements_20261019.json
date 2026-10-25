@@ -1,0 +1,70 @@
+{
+  "snapshot_version": 5,
+  "checked_date_kst": "2026-10-19",
+  "timezone": "Asia/Seoul",
+  "problem_id": "PROB_000000000004604",
+  "review_status": "partial_public_listing_verified_details_unverified",
+  "last_full_review": "config/official_requirements_20261016.json",
+  "evidence_directory": "outputs/private/official_updates_20261019_v1",
+  "application_deadline_date": "2026-11-06",
+  "application_deadline_is_result_deadline": false,
+  "result_submission": {
+    "opening_date": null,
+    "deadline_date": null,
+    "method_currently_verified": false,
+    "authenticated_submission_form_verified": false,
+    "latest_notice_title_posted_date": "2026-09-30",
+    "latest_notice_body_reverified": false,
+    "last_confirmed_policy": "10월16일 보존 본문: 결과물 일정·방법 별도 공지, 발표된 마감일의 23:59 KST",
+    "csv_schema_status": "CSV 산출 항목은 문제 설명에 명시. 고정 열·순서·파일명·결측 템플릿의 존재 또는 추후 공지 예정은 미확인. 현재 요구에 맞게 준비하고 형식을 문서화",
+    "csv_template_announced": null,
+    "csv_template_is_preparation_blocker": false,
+    "new_schedule_or_csv_schema_observed_on_20261019": false
+  },
+  "listing_changes": [
+    {"title": "[필독] 문의 전 자주 묻는 질문(FAQ)을 확인해 주세요", "posted_date": "2026-10-19", "answer_display": "-", "body_verified": false},
+    {"title": "안녕하세요 참가 팀 변경 관련해서 문의드립니다.", "posted_date": "2026-10-19", "answer_display": "완료", "body_verified": false},
+    {"title": "제출 데모영상관련 문의", "posted_date": "2026-10-19", "answer_display": "완료", "body_verified": false},
+    {"title": "참가신청문의", "posted_date": "2026-10-17", "answer_display": "완료", "body_verified": false}
+  ],
+  "visible_attachments": [
+    {"name": "2026_참가신청서.hwp", "displayed_kbytes": 217.5, "current_bytes_verified": false},
+    {"name": "DATA AI 분석 경진대회 데이터샘플.zip", "displayed_kbytes": 475725.2, "current_bytes_verified": false},
+    {"name": "DATA AI 경진대회 데이터(20261007).zip", "displayed_kbytes": 516852.6, "current_bytes_verified": false}
+  ],
+  "evaluation": {
+    "last_confirmed_date": "2026-10-16",
+    "current_problem_tabs_verified": false,
+    "current_problem_qna_verified": false,
+    "protected_stations_used_in_implementation": ["12410", "33411", "23402"],
+    "label_policy_used_in_implementation": "04 Ice positive; defined other states negative; 0/-999 and undefined states excluded",
+    "aggregation_used_in_implementation": "daily per metric, then station mean; no pooled confusion-matrix official score",
+    "missed_ice_day_precision": null,
+    "missed_ice_day_recall": 0,
+    "missed_ice_day_f1": 0,
+    "incomplete_day_min_slots_officially_confirmed": false,
+    "false_alarm_only_day_recall_explicitly_confirmed": false,
+    "fully_undefined_station_average_explicitly_confirmed": false,
+    "official_outcomes_used_for_new_tuning": false
+  },
+  "unverified": [
+    "new general Q&A bodies and replies including demo-video requirements",
+    "existing notice bodies and FAQ modifications",
+    "problem description and evaluation tab changes",
+    "problem-specific Q&A list and reply changes",
+    "current attachment bytes, application pledge revisions, and same-name ZIP replacement",
+    "authenticated account approval and submission state",
+    "complete current general Q&A count: paginated web responses were cached on different dates"
+  ],
+  "sources": {
+    "general_qna": "https://aida.kisti.re.kr/competition/main/qna.do",
+    "notices": "https://aida.kisti.re.kr/competition/main/notice.do",
+    "problem": "https://aida.kisti.re.kr/competition/main/problem/PROB_000000000004604/detail.do",
+    "overview": "https://aida.kisti.re.kr/competition/main/overview.do",
+    "submission_notice_last_confirmed": "https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=564",
+    "qa633_last_confirmed": "https://aida.kisti.re.kr/competition/problem/PROB_000000000004604/detail/commuDetail.do?bbsId=BBSMSTR_000000000319&nttId=633"
+  },
+  "external_publication_made": false,
+  "competition_submission_made": false,
+  "external_messages_sent": false
+}

@@ -1,2 +1,3 @@
 -r requirements.txt
 cmarkgfm==2025.10.22
+pytest==9.0.3
