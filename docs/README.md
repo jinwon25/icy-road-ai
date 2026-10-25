@@ -1,35 +1,21 @@
 # 문서 안내
 
-이 페이지는 현재 결과와 과거 근거를 찾아가는 목차입니다. **처음 읽는다면 [프로젝트·지표·버전 설명](START_HERE.md)부터 확인하세요.** 날짜가 붙은 실험 문서는 그때의 조건과 판단을 보존하며, 현재 상태를 뜻하지 않습니다.
+처음 읽는다면 현재 보고서와 검토 안내를 먼저 확인합니다. 날짜가 붙은 실험 문서는 당시 조건·결과를 보존한 기록이며 현재 상태를 대신하지 않습니다.
 
-현재 확인할 문서는 [기온 시작값 30모델·관측 지연·입력 정보량 진단](research/RESIDUAL_AND_INFORMATION_20261025.md)과 [v6 검토 묶음](delivery/REVIEW_BUNDLE_V6_20261025.md)입니다. 안정적 성능 개선을 확인하지 못해 모델은 유지하며, 2쪽 요약과 파일·예측·노트북 검사 명령으로 결과물의 검토 경로를 보완했습니다. 아래 v5와 이전 연구는 각 시점의 기록입니다.
+## 먼저 읽을 문서
 
-앞선 후속 연구는 [성암교·진천터널외부 원문 진단과 추가 탐지 20모델](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)입니다. CCTV 목록은 실제 확보했고 센서·제설 자료는 [미발송 요청 초안](research/RWIS_DATA_REQUEST_20261025.md)으로 구체화했습니다. 추가 모델은 안정적 개선 조건을 통과하지 못해 기존 제출 모델을 유지합니다.
+1. [처음 읽는 안내](START_HERE.md): 프로젝트·자료·지표·버전.
+2. [현재 분석 보고서](delivery/ANALYSIS_REPORT.md): 온도 개선·결빙 기준선·새 지역 평가·활용과 한계.
+3. [심사자 검토 안내](delivery/REVIEWER_GUIDE.md): 읽는 순서·실행·주요 질문과 답.
+4. [v7 구성과 검증](delivery/REVIEW_BUNDLE_V7_20261026.md), [유사 대회 비교](delivery/BENCHMARK_REVIEW_20261025.md): 산출물 개편과 근거.
+5. [현재 상태](STATUS.md), [공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 완료 범위와 남은 과제.
+6. [CSV 규약](delivery/CSV_CONTRACT.md), [스크립트 안내](../scripts/README.md): 수치 해석과 재현.
 
-앞선 후속 연구는 [새 4지역의 기상 품질·예측 봉인·일회 평가 완료](research/BLIND_ICING_20261025.md)입니다. 주 후보의 평균 F1은 높아졌지만 재현율·사건 손실과 자료 품질 조건에 실패해 미채택했습니다. 입력 가용률과 센서 정답 품질, 새 지역 평가와 반복 개발 점수, F1 증가와 실제 사건 탐지 개선을 구별합니다. 현재 상태는 [현황](STATUS.md)에서 확인합니다. 기존 v5 모델·ZIP은 보존하며 후속 연구가 그 ZIP 안에 들어 있다고 표현하지 않습니다.
+## 최근 성능 연구
 
-앞선 [기온 기준선의 제한 보정 64후보·69행 비교](research/ANCHORED_ICING_20261025.md)와 [제설·센서·추가 지역 확보](research/ICING_ACQUISITION_20261025.md)는 이번 후보·지역을 정한 근거입니다. 당시의 ‘정답 미조회’ 표기는 해당 단계의 기록입니다.
+[기온 잔차·관측 지연·입력 정보량](research/RESIDUAL_AND_INFORMATION_20261025.md)은 기존 개발 지역의 후속 실험입니다. [새 4지역 일회 평가](research/BLIND_ICING_20261025.md)는 사전 고정 후 처음 평가한 공간 검증으로, 이후 재학습·선택에 사용하지 않았습니다. [원문 품질 진단](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)과 [미발송 자료 요청](research/RWIS_DATA_REQUEST_20261025.md)은 미해결 근거를 구체화합니다.
 
-10월 25일 [공식 규정·제출 일정](competition/OFFICIAL_UPDATE_20261025.md)을 상세 본문과 참가서약까지 재확인했습니다. 결과물 날짜는 공식적으로 별도 공지 예정이며, 데모에 서비스 구축이 필수가 아니라는 답변을 반영했습니다. 새 연구의 [문헌·공개 구현](research/ICING_REFERENCES_20261025.md)과 [전이·임계값 비교](research/ICING_TRANSITION_REVIEW_20261025.md)를 연결합니다.
-
-앞선 v5는 [결빙 전이 연구·최신 규정·문서 정리](research/ICING_TRANSITION_REVIEW_20261025.md)를 추가한 당시 묶음입니다. 최신 v6는 이후 연구·품질 진단을 추가하며 아래 모델과 결과물을 보존합니다.
-
-앞선 v4: [후속 11개 온도 대조·14개 결빙 상태 정책과 구간 탐색](delivery/FOLLOWUP_UPGRADE_20261024.md)을 완료하고 v3 모델을 유지했습니다. [기존 모델·실행 계약·검산](delivery/EXTENDED_UPGRADE_20261024.md), [확장 실험](research/EXTENDED_SEARCH_20261024.md), [최신 논문·GitHub·Hugging Face와 대회 조건 검토](research/OPEN_SOURCE_REVIEW_20261024.md)를 함께 확인합니다. 같은 개발 기준의 온도 MAE는 이전 v2보다 13.66% 낮고, 결빙 판정은 v2를 유지합니다.
-
-앞선 v2: [두 겨울 후보](delivery/AWARD_UPGRADE_20261024.md). 앞선 [CSV 정리](delivery/DELIVERY_UPGRADE_20261024.md)는 v1의 기록이며 [열·단위·집계 규약](delivery/CSV_CONTRACT.md)은 v3의 두 온도 출력을 포함합니다.
-
-현재 상태와 제출 준비를 먼저 보고, 필요할 때 데이터·검증·실험 근거를 찾아 읽습니다. 과거 기록의 수치를 현재 성능으로 해석하지 않습니다.
-
-[프로젝트 소개](../README.md) · [진행 현황](STATUS.md) · [폴더 구조](STRUCTURE.md) · [스크립트 안내](../scripts/README.md)
-
-## 처음 읽는 순서
-
-1. [처음 읽는 안내](START_HERE.md): 해결할 문제, 온도와 결빙의 차이, 용어와 버전.
-2. [현재 진행 현황](STATUS.md): 완료한 일, 채택한 모델, 아직 남는 한계.
-3. [최신 공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 확정 조건과 공지 대기 항목.
-4. [원문 진단·추가 탐지 연구](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md), [자료 요청·수령 조건](research/RWIS_DATA_REQUEST_20261025.md). 앞선 [새 4지역 평가](research/BLIND_ICING_20261025.md): 사전 고정과 일회 평가 근거. 배경은 [제한 보정 연구](research/ANCHORED_ICING_20261025.md), [자료 확보](research/ICING_ACQUISITION_20261025.md), [기준선 미탐 원인](research/ICING_GAP_AND_SYNOPTIC_20261025.md)에서 확인합니다.
-5. [v6 구성과 실행 검사](delivery/REVIEW_BUNDLE_V6_20261025.md), [보존한 v4 구성과 검증](delivery/FOLLOWUP_UPGRADE_20261024.md), [CSV 규약](delivery/CSV_CONTRACT.md): 결과물 읽기.
-6. [검증 규약](validation/VALIDATION_PROTOCOL.md)와 [스크립트 안내](../scripts/README.md): 실행·검산. [상세 실행 이력](delivery/RUNBOOK.md)은 필요한 단계만 참고합니다.
+온도 모델 v3·결빙 판정 v2를 유지합니다. 아래 v6·v5 및 이전 문서는 각 시점의 구성과 실험 기록입니다. [프로젝트 소개](../README.md) · [폴더 구조](STRUCTURE.md)
 
 ## 대회
 

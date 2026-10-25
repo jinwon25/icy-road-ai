@@ -2,7 +2,20 @@
 
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
-## 최신: 기온 시작값·시간 보정·정보량 진단과 v6 검토
+## 최신: 보고서 원고·PDF와 v7 검토 묶음
+
+[현재 보고서](../docs/delivery/ANALYSIS_REPORT.md)와 [개편 근거](../docs/delivery/BENCHMARK_REVIEW_20261025.md)를 먼저 읽습니다. 모델링을 다시 실행하지 않고 기존 집계와 봉인된 예측을 사용합니다.
+
+| 스크립트 | 역할 |
+| --- | --- |
+| `build_editorial_report.py --output <새 폴더>` | Markdown 원고·기존 집계에서 그림과 10쪽 PDF 작성, 핵심 수치·페이지·문자 경계 검사 |
+| `package_review_v7.py --stage prepare` | 기존 v6 자산과 Git 인덱스 문서, 검수한 보고서를 새 v7에 복사 |
+| `package_review_v7.py --stage verify` | 기존 자산 보존·문서 링크·예제 예측·노트북 실행 검사 |
+| `package_review_v7.py --stage package` | 전체 파일·인증정보 검사 후 ZIP 생성 및 모든 구성원 대조 |
+
+보고서 생성에는 연구 환경의 reportlab·PyMuPDF·matplotlib·markdown-it-py와 Windows 맑은 고딕이 필요합니다. PDF는 생성 후 전체 페이지를 렌더링하여 시각 검수해야 합니다. 패키징은 원 비공개 작업 공간과 완료한 검수 영수증이 필요하며 기존 출력 폴더·ZIP을 덮어쓰지 않습니다.
+
+## 앞선 기온 시작값·시간 보정·정보량 진단과 v6 검토
 
 [연구 결과](../docs/research/RESIDUAL_AND_INFORMATION_20261025.md)와 [v6 실행 안내](../docs/delivery/REVIEW_BUNDLE_V6_20261025.md)를 먼저 읽습니다. 기존 허용 개발 자료만 쓰며 보호 정답과 개봉한 새 4지역은 추가 학습·선택에서 제외합니다. 완료한 출력 경로는 재사용하지 않습니다.
 
