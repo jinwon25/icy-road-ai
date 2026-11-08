@@ -1,0 +1,22 @@
+{
+  "checked_date_kst": "2026-10-31",
+  "status": "public_listing_checked_and_user_supplied_notice_and_submission_form",
+  "public_notice_list": "https://aida.kisti.re.kr/competition/main/notice.do",
+  "result_submission_open": true,
+  "result_submission_open_since": "2026-10-27",
+  "submission_open_evidence": "사용자가 제공한 10월 27일 결과 제출 안내 본문. 공식 목록에서 제목·게시일 독립 확인",
+  "submission_channels": ["문서자료 ZIP", "모델자료 ZIP"],
+  "submission_channel_evidence": "사용자가 제공한 결과제출 화면 텍스트",
+  "archive_layout": "각 자료를 한 개 폴더로 압축",
+  "result_submission_deadline": null,
+  "result_submission_deadline_status": "제공받은 공지·제출 화면에 날짜 없음. 미공표라고 단정하지 않음",
+  "application_deadline": "2026-11-06",
+  "last_independent_detail_and_pledge_check": "2026-10-25T23:50:00+09:00",
+  "pledge_current_bytes_verified": false,
+  "latest_problem_text": "2026-10-31 사용자 제공 문제 개요·설명·목표·평가·제출 형식과 기존 요구사항 대조",
+  "full_data_zip_downloaded": false,
+  "account_approval_verified": false,
+  "competition_submitted": false,
+  "external_messages_sent": false,
+  "remaining": ["마감 날짜·업로드 용량 제한 확인", "참가자 직접 검토·최종 판단 기록", "위험도 기준표의 정성 근거와 현장 검증 한계", "결빙 기준선 미달", "센서·제설 원자료 확보"]
+}

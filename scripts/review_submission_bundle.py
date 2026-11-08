@@ -25,17 +25,44 @@ def verify_directory(root):
     return dict(status='all_manifest_files_verified',files=len(records),bytes=sum(r['bytes'] for r in records.values()),package_label=manifest.get('package_label'))
 
 
+def select_notebook(root, requested=None):
+    """검사할 노트북을 명세에서 선택하고 묶음 안의 등록 파일인지 확인한다."""
+    root = Path(root).resolve()
+    manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
+    # 봉인된 v7에는 current_notebook 필드가 없으므로 알려진 진입점을 사용한다.
+    legacy = {'v7': 'notebooks/submission_review_v7.ipynb'}
+    name = requested if requested is not None else manifest.get(
+        'current_notebook', legacy.get(manifest.get('package_label'),
+                                       'notebooks/extended_submission_review.ipynb'))
+    if not isinstance(name, str):
+        raise ValueError('Notebook path must be a string')
+    posix = PurePosixPath(name)
+    if (not posix.parts or posix.is_absolute() or '..' in posix.parts
+            or ':' in name or '\\' in name or name != posix.as_posix()
+            or posix.suffix != '.ipynb' or name not in manifest['files']):
+        raise ValueError('Notebook must be a declared relative .ipynb file: ' + name)
+    path = root / name
+    if (not path.is_file() or not path.resolve().is_relative_to(root)
+            or path.is_symlink()
+            or any(p.is_symlink() for p in path.parents if p != root and p.is_relative_to(root))):
+        raise ValueError('Missing or linked notebook: ' + name)
+    return name
+
+
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--root',type=Path,default=Path('.'));parser.add_argument('--smoke',action='store_true');parser.add_argument('--output',type=Path,default=Path('local_review/verification.json'));args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--root',type=Path,default=Path('.'));parser.add_argument('--smoke',action='store_true');parser.add_argument('--notebook',help='묶음 manifest에 등록된 노트북 상대 경로. 생략하면 현재 버전의 진입점');parser.add_argument('--output',type=Path,default=Path('local_review/verification.json'));args=parser.parse_args()
+    if args.notebook and not args.smoke:parser.error('--notebook requires --smoke')
     root=args.root.resolve();output=(root/args.output).resolve()
     if not output.is_relative_to(root/'local_review') or output.exists():raise ValueError('New output inside local_review is required')
     result=verify_directory(root);output.parent.mkdir(parents=True,exist_ok=True)
     result.update(at_utc=datetime.now(timezone.utc).isoformat(),checks=[],model_or_prediction_changed=False)
     if args.smoke:
+        notebook=select_notebook(root,args.notebook)
+        result['notebook']=notebook
         prediction=output.with_name(output.stem+'_predictions.csv')
         if prediction.exists():raise FileExistsError(prediction)
         commands=[('prediction',[sys.executable,'-X','utf8','code/predict.py','--input','data/weather_example.csv','--output',str(prediction),'--output-start','2024-12-15','--output-end','2024-12-16']),
-                  ('notebook',[sys.executable,'-X','utf8','scripts/check_notebook.py','notebooks/extended_submission_review.ipynb'])]
+                  ('notebook',[sys.executable,'-X','utf8','scripts/check_notebook.py',notebook])]
         environment=os.environ.copy();environment.update(OMP_NUM_THREADS='2',OPENBLAS_NUM_THREADS='2',LOKY_MAX_CPU_COUNT='2')
         for name,command in commands:
             log=output.with_name(output.stem+'_'+name+'.log')

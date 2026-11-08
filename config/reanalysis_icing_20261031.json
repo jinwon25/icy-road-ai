@@ -1,0 +1,20 @@
+{
+  "purpose": "동일 ASOS 분류기와 지역 이중 제외 조건에서 ERA5-Land 지표면 상태의 결빙 추가 가치 검증",
+  "asos_source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "reanalysis_source": "outputs/private/reanalysis_development_20261031_v1/development.parquet",
+  "input_audit": "outputs/private/reanalysis_development_20261031_v1/independent_verification.json",
+  "output": "outputs/private/reanalysis_icing_20261031_v1",
+  "candidates": ["asos15", "era5_raw", "era5_memory"],
+  "primary_track": "selected_mean_f1",
+  "model": {"learning_rate":0.05,"max_iter":250,"max_leaf_nodes":7,"min_samples_leaf":300,"l2_regularization":30.0,"early_stopping":false,"random_state":20261031,"interaction_cst":"pairwise"},
+  "weighting": "학습 지점·겨울·날짜·존재 클래스 균형. 세 후보에 동일 가중치",
+  "features": "ASOS 원문13+이슬점 차이2=15. ERA5 raw는8개 추가=23. memory는20개 추가=35. 지점 ID·목표 관측·미래 시각 입력 없음",
+  "validation": "4개 지역 단일 제외와 6개 지역 쌍 제외, 총30적합. 외부 지역 G와 내부 선택 지역 H를 동시에 제외. 모든 서로 다른 내부 점수를 탐색해 일별 F1 또는 최악 겨울 F1 임계값 선택",
+  "selection": "각 모델별 내부 임계값과 전체 후보 선택을 모두 보고. 전체 선택은 ASOS0도·matched ASOS15 분류기·추가 raw/memory 중 내부 점수 최대, 1e-12 동률은 단순 후보·적은 오경보·높은 문턱 우선. baseline_mean_f1은 ASOS0도와 matched 분류기만 선택",
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "threads": 2,
+  "seed": 20261031,
+  "gates": "주 선택은 ASOS0도 및 matched baseline 선택보다 F1 상대1% 개선, 정밀도·재현율·두 겨울·각 지역·각 지점 비악화, 기존 사건손실0, 기준선 날짜 고정 F1 비악화. 미충족 시 자동 모델교체 금지. F1·사건 tradeoff는 수치로 보존",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "scope": "사후 재분석 전용. 이미 반복한 9개 개발지점 결과이며 새 독립 검증 아님. 새 노면 정답 요청·과거 기준 수정 없음"
+}

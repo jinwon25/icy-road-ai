@@ -39,3 +39,9 @@ __pycache__/
 .env.*
 !.env.example
 secret.env
+*.log
+*.curl
+*.secret.*
+.coverage
+.coverage.*
+htmlcov/

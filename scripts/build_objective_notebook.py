@@ -1,0 +1,115 @@
+"""완료한 목적함수 비교를 재검토하는 연구 노트북을 만든다. 기존 제출 노트북은 보존."""
+from pathlib import Path
+import nbformat as nb
+
+ROOT=Path(__file__).resolve().parents[1]
+
+
+def main():
+    path=ROOT/'notebooks/objective_icing_review_20261031.ipynb'
+    if path.exists():raise FileExistsError('Preserve notebook')
+    cells=[nb.v4.new_markdown_cell('''# 결빙 학습 목표 비교 · 2026-10-31
+
+같은 입력·모델 용량에서 BCE, Focal, 지점별 soft F1, 일별 soft F1을 비교합니다.
+기존 개발 9지점·4지역의 반복 실험이며 새 독립 성능 평가가 아닙니다.
+보호 3지점과 이미 평가한 별도 4지점의 정답은 이 노트북에 읽지 않습니다.
+
+완료한 40모델·선택·예측과 독립 검산 기록이 있는 로컬 연구 환경에서 위에서 아래로 실행합니다.
+최종 제출 모델과 두 ZIP을 수정하지 않습니다. 새 연구의 주 결과는 지역 내부에서 선택한 `mean_f1`입니다.
+개별 고정 후보의 사후 최고 성능을 주 결과로 바꾸지 않습니다.'''),
+    nb.v4.new_code_cell('''from pathlib import Path
+import sys, json
+import numpy as np
+import pandas as pd
+import torch
+import matplotlib.pyplot as plt
+ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p/'src/objective_icing.py').exists())
+sys.path.insert(0, str(ROOT))
+from src.data_source import sha256_file as sha
+from src.objective_icing import fit, correction
+from src.offline_runtime import deny_network
+read = lambda p: json.loads(p.read_text(encoding='utf8'))
+study = ROOT/'outputs/private/objective_icing_20261031_v2'
+plan = read(study/'plan.json')['settings']
+summary = read(study/'summary.json')
+audit = read(study/'independent_verification.json')
+assert audit['status'] == 'passed' and audit['summary_sha256'] == sha(study/'summary.json')
+assert audit['predictions_sha256'] == sha(study/'predictions.parquet')
+torch.set_num_threads(2)
+torch.use_deterministic_algorithms(True)
+print(len(summary['fits']), '모델, 독립 검산 통과')'''),
+    nb.v4.new_markdown_cell('''## 데이터·전처리·학습과 저장 모델 재실행
+
+원본 연구 입력은 허용된 23지점뿐입니다. 한 지역 전체를 제외한 첫 BCE 모델을 재실행합니다.
+중앙값·표준화는 학습 지역으로만 적합했습니다. 동일 기상 입력은 계산을 공유하지만
+손실은 각 원래 행의 정답·가중치로 계산합니다. 지점 ID와 겨울은 가중치·분할에만 씁니다.
+
+`RUN_REFIT=True`로 바꾸면 같은 160단계 학습을 다시 하고 저장 계수와 정확히 대조합니다.
+기본 실행은 저장 모델의 전체 해당 지역 추론입니다. 모든 40모델 추론과 대표 4모델의
+재학습은 `scripts/audit_objective_icing.py`에서 검산했습니다.'''),
+    nb.v4.new_code_cell('''source = pd.read_parquet(ROOT/plan['source']).sort_values(['station','time']).reset_index(drop=True)
+assert not set(source.station) & set(plan['blocked_stations'])
+receipt = summary['fits'][0]
+held = source.group.isin(receipt['excluded'])
+train = source.loc[~held & source.available & source.ice.isin([0,1])]
+query = source.loc[held]
+assert not set(train.station) & set(query.station)
+assert sha(study/receipt['model']) == receipt['sha256']
+with np.load(study/receipt['model'], allow_pickle=False) as archive:
+    model = dict(archive)
+RUN_REFIT = False
+with deny_network() as attempts:
+    if RUN_REFIT:
+        repeated = fit(train, receipt['kind'], plan)
+        for key in model:
+            np.testing.assert_array_equal(repeated[key], model[key])
+    delta = correction(query, model)
+assert not attempts
+scores = pd.read_parquet(study/('__'.join(receipt['excluded'])+'__scores.parquet'))
+np.testing.assert_array_equal(delta, scores[receipt['kind']])
+print('제외 지역:', receipt['excluded'], '추론 일치:', len(delta), '행')
+source.loc[source.available & source.ice.isin([0,1])].groupby(['station','winter']).ice.agg(['size','sum'])'''),
+    nb.v4.new_markdown_cell('''## 일별 평가와 내부 선택
+
+10분 혼동행렬을 완전한 144슬롯 날짜별로 집계한 후 지점별 평균을 사용합니다.
+미정의 날짜는 원래 규칙대로 유지하고, F1이 정의되지 않은 지점은 고정 지점 평균에서 0입니다.
+기준선의 날짜를 고정한 보조 F1은 오경보 날짜가 분모에서 빠지는 효과를 점검합니다.
+학습용 soft F1은 실제 평가식과 같은 식이 아닙니다.'''),
+    nb.v4.new_code_cell('''names = ['asos_zero','mean_f1','recall_guard','loss_bce_day','loss_focal_day','loss_soft_station','loss_soft_day']
+rows = []
+for name in names:
+    r = summary['reports'][name]
+    rows.append(dict(method=name, F1=r['all']['f1_fixed_population'],
+        precision=r['all']['precision_available_station_mean'], recall=r['all']['recall_available_station_mean'],
+        F1_2024=r['winters']['2024']['f1_fixed_population'], F1_2025=r['winters']['2025']['f1_fixed_population'],
+        fixed_calendar_F1=r['baseline_calendar_f1'], lost_events=r['events']['lost_events'], gained_events=r['events']['gained_events']))
+comparison = pd.DataFrame(rows).set_index('method')
+display(comparison)
+display(pd.DataFrame({r['held']:r['selected'] for r in summary['decisions']}))
+print('사전 고정 채택 조건:', summary['primary_gates'])'''),
+    nb.v4.new_code_cell('''fig, axes = plt.subplots(1, 2, figsize=(12,4), constrained_layout=True)
+comparison[['F1','fixed_calendar_F1']].plot.bar(ax=axes[0], rot=30)
+axes[0].set_title('Daily station mean and baseline calendar')
+comparison[['lost_events','gained_events']].plot.bar(ax=axes[1], rot=30)
+axes[1].set_title('Observed ice events relative to ASOS')
+plt.show()
+display(pd.DataFrame(summary['sensitivity']).T)
+print('7일 블록 2,000회 재표집은 고정 개발 예측의 날짜 민감도입니다. 새 지점 모집단 신뢰구간이 아닙니다.')'''),
+    nb.v4.new_markdown_cell('''## 해석과 문헌
+
+채택 여부와 한계는 `docs/research/OBJECTIVE_ICING_20261031.md`에서 확인합니다.
+평균 F1 상승만으로 재현율·사건 보존·두 겨울·각 지역의 개선을 대신하지 않습니다.
+
+- [ILES, 2026](https://gmd.copernicus.org/articles/19/9035/2026/): 시간 이력·물리 특성 검토. 대상 지점의 과거 노면온도 입력은 미관측 지점 조건과 다릅니다.
+- [sigmoidF1, 2022](https://arxiv.org/abs/2108.10566): 지표에 가까운 학습 손실의 근거. 본 코드는 해당 다중 라벨 알고리즘의 재현이 아닙니다.
+- [Focal loss, 2017](https://arxiv.org/abs/1708.02002): 쉬운 예제의 손실 비중 조절. 본 실험은 기존 지점·겨울·날짜 가중치와 함께 적용합니다.
+- [임계값 선택 공식 문서](https://scikit-learn.org/stable/modules/classification_threshold.html): 학습·선택·평가 분리.
+
+외부 코드·가중치·영상은 복사하지 않았으며 현재 설치된 PyTorch 2.7.1 CPU 환경을 사용합니다.''')]
+    document=nb.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
+        'language_info':{'name':'python','version':'3.11.2'}})
+    path.write_text(nb.writes(document),encoding='utf8')
+    print(path.relative_to(ROOT))
+
+
+if __name__=='__main__':main()

@@ -16,7 +16,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts import review_official_updates_20261013 as public
 from scripts.compare_official_answers_20261013 import fields, normalized
-from scripts.inspect_official_updates_20261013 import hwp_text
 
 
 def write(path, value):
@@ -33,6 +32,21 @@ def attachments(path):
         if 'fn_egov_downFile' in href or 'FileDown.do' in href:
             result.append({'text': link.get_text(' ', strip=True), 'href': href})
     return result
+
+
+def review_issues(summary):
+    """수집 실패·비어 있는 목록·본문 누락을 성공한 최신 확인과 구별한다."""
+    issues = list(summary['unavailable'])
+    for kind in ('notice', 'problem_qa', 'general_qa'):
+        if not summary['inventories'].get(kind):
+            issues.append(kind + '_inventory_empty')
+    for name in summary['previous_details_not_seen']:
+        issues.append(name + '_not_seen')
+    if not summary['application'].get('verified'):
+        issues.append('application_unverified')
+    if len(summary['tabs']) < 2 or any(tab.get('removed') for tab in summary['tabs']):
+        issues.append('problem_tabs_incomplete')
+    return list(dict.fromkeys(issues))
 
 
 def main():
@@ -115,7 +129,7 @@ def main():
             current = fields(path)
             previous_path = old / (name+'.html')
             prior = fields(previous_path) if previous_path.exists() else {}
-            if not current:
+            if not current.get('nttCn', '').strip():
                 unavailable.append(name+'_body')
             equal = bool(current) and set(current) == set(prior) and all(normalized(current[k]) == normalized(prior[k]) for k in current)
             comparisons[name] = {'listing': cells, 'url': urljoin(public.BASE, url),
@@ -147,12 +161,16 @@ def main():
     application = {'verified': False}
     if app:
         try:
+            # 기존 HWP 추출기는 로컬 비공개 도구에 의존하므로 필요할 때만 읽는다.
+            from scripts.inspect_official_updates_20261013 import hwp_text
             body, _, _ = hwp_text(app)
+            if not body.strip():
+                raise ValueError('Blank application body')
             (out / 'current_blank_application_body.txt').write_text(body, 'utf-8')
             previous = old / 'current_blank_application.hwp'
             application = {'verified': True, 'sha256': hashlib.sha256(app.read_bytes()).hexdigest(),
                 'bytes': app.stat().st_size, 'unchanged': previous.exists() and app.read_bytes() == previous.read_bytes()}
-        except (ValueError, OSError) as exc:
+        except (ValueError, OSError, ImportError) as exc:
             unavailable.append('application_body_'+type(exc).__name__)
     surfaces = {}
     for name in ['evaluate', 'finalsubmit', 'submitAnswer', 'leaderboard']:
@@ -174,10 +192,13 @@ def main():
         'full_data_zip_downloaded': False, 'full_zip_byte_identity_verified': False,
         'account_login': False, 'account_approval_verified': False, 'competition_submitted': False,
         'external_messages_sent': False}
+    summary['unavailable'] = review_issues(summary)
+    summary['status'] = 'partial_unverified' if summary['unavailable'] else 'public_review_complete'
     write(out / 'summary.json', summary)
-    print(json.dumps({'responses': len(receipts), 'changed_or_new': [k for k, v in comparisons.items() if not v['normalized_fields_unchanged']],
-        'tabs': tab_comparisons, 'application': application, 'unavailable': unavailable}, ensure_ascii=False))
+    print(json.dumps({'status': summary['status'], 'responses': len(receipts), 'changed_or_new': [k for k, v in comparisons.items() if not v['normalized_fields_unchanged']],
+        'tabs': tab_comparisons, 'application': application, 'unavailable': summary['unavailable']}, ensure_ascii=False))
+    return 2 if summary['unavailable'] else 0
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())

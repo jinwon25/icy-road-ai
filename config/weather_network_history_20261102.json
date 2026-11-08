@@ -1,0 +1,19 @@
+{
+  "purpose": "현재 주변 AWS 관측망에 기상·공간 이력을 추가하는 단일 풍속 후보의 고정 통제 비교",
+  "output": "outputs/private/weather_network_history_20261102_v1",
+  "input": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "input_sha256": "84efc7d7a8f38b65d47d5d5212a15f1b61eda6c780409e4cfcebb24501d9a0f1",
+  "reference": "outputs/private/weather_network_20261101_v1",
+  "target": "wind_speed",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "candidate": "network_history_residual",
+  "features": "현재 기상34+관측망35에 기존 기상 이력48+관측망5변수 IDW의 3h·24h 평균·현재차·가용률30=147. 도로 과거 정답·ID·연도·풍향 가정·고도 보정 없음",
+  "model": {"loss": "absolute_error", "learning_rate": 0.05, "max_iter": 300, "max_leaf_nodes": 15, "min_samples_leaf": 200, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20261031},
+  "validation": "기존과 같은 유효행의 지역 제외4회, 지역·겨울 동시 제외8회, 총12적합. 현 69특성 관측망 모형을 기준으로 고정하며 결과 확인 후 후보·창·설정을 바꾸지 않음",
+  "gates": {"minimum_mae_reduction": 0.02, "maximum_winter_mae_ratio": 1.0, "maximum_region_mae_ratio": 1.1, "maximum_cold_mae_ratio": 1.0},
+  "bootstrap": {"block_days": 7, "repetitions": 2000, "seed": 20261102},
+  "adoption": "두 검증의 모든 기준과 별도 검산·문맥 불변·독립 위치 실행을 통과해야 채택. 미통과 시 현 모형 유지",
+  "new_independent_assessment": false,
+  "protected_outcomes_read": false,
+  "references": ["https://arxiv.org/html/2207.14679v2", "https://doc.openamundsen.org/des/meteo", "https://scikit-learn.org/1.6/modules/generated/sklearn.model_selection.LeaveOneGroupOut.html"]
+}

@@ -1,0 +1,20 @@
+{
+  "purpose": "기온의 공간 추정 개선이 고정 0°C 결빙 기준에도 도움이 되는지 확인하는 후속 반증 검사",
+  "output": "outputs/private/transferred_air_icing_20261031_v1",
+  "weather_study": "outputs/private/road_weather_transfer_20261031_v1",
+  "weather_inputs": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "labels": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "model": "air_temperature/residual_hgb_{held}.joblib",
+  "policy": "estimated_air_temperature <= 0.0",
+  "threshold_c": 0.0,
+  "baseline": "same-row ASOS air temperature <= 0.0",
+  "validation": "기온 학습에서 해당 개발 지역 전체를 두 겨울 모두 제외한 모형을 그 지역의 모든 관측소에 적용. 결빙 정답으로 학습·임계값 선택·보정하지 않음",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "calendar_end": "exclusive: 3월 1일 직전까지 240일",
+  "seed": 20261031,
+  "primary_gates": {"minimum_relative_f1_gain": 0.05, "precision_noninferior": true, "each_winter_noninferior": true, "each_region_noninferior": true, "lost_events_maximum": 0, "date_block_lower_delta_f1": 0.0},
+  "new_independent_assessment": false,
+  "production_model_change": false,
+  "decision": "기온 MAE 통과를 결빙 분류 개선으로 대신하지 않는다. 이 고정 정책이 실패하면 그대로 기록하고 새 임계값 탐색을 하지 않는다."
+}

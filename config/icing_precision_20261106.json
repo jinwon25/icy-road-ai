@@ -1,0 +1,70 @@
+{
+  "purpose": "결빙 오경보 감소를 위한 과거 기상 과정 분류. 기존 보호 평가를 재사용하지 않는 반복 개발 연구",
+  "source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "reference": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "output": "outputs/private/icing_precision_20261106",
+  "blocked_stations": [
+    "12410",
+    "33411",
+    "23402",
+    "33402",
+    "33406",
+    "12213",
+    "23411"
+  ],
+  "models": [
+    {
+      "name": "snapshot_station",
+      "features": "snapshot",
+      "weights": "station"
+    },
+    {
+      "name": "snapshot_day",
+      "features": "snapshot",
+      "weights": "day"
+    },
+    {
+      "name": "process_station",
+      "features": "process",
+      "weights": "station"
+    },
+    {
+      "name": "process_day",
+      "features": "process",
+      "weights": "day"
+    }
+  ],
+  "parameters": {
+    "learning_rate": 0.05,
+    "max_iter": 220,
+    "max_leaf_nodes": 7,
+    "min_samples_leaf": 300,
+    "l2_regularization": 30,
+    "early_stopping": false,
+    "random_state": 20261106,
+    "interaction_cst": "pairwise"
+  },
+  "history": "현재 ASOS 관측 13개+차이2개+시간/계절4개. process는 [t-window,t)의 1/6/24h 기온·지면온도 평균, 냉각/해빙 degree-hour, 수분/건조/일사 이력과 1h/6h 변화량. 원 기상 시각은 목표보다 엄격히 과거. 80% 이상 유효 이력일 때만 값 산출. 실제 노면 관측·다른 지점의 상태·지점 ID·지역 ID 입력 제외",
+  "threshold": "기상 점수>=임계값 AND ASOS<=2도. 내부 OOF의 모든 서로 다른 양의 점수를 정확 순회. 날짜→지점 공식 F1 최대, Recall>=0.70. 동률 FP 적음·높은 문턱 우선. ASOS<=0도 대조도 같은 내부 선택에 포함. 보조 precision_track은 내부 F1이 ASOS 이상이며 Recall>=0.70인 정책 중 정밀도 최대. 보조로 주 실패를 대체하지 않음",
+  "validation": "외부4개 개발지역 단일제외4회+내부선택용 지역쌍제외6회. 4모델×10=40적합. 두 겨울 동시 제외. 외부 지역 정답은 임계값/모델선택에 사용하지 않음",
+  "selection_before_outer_metrics": true,
+  "promotion_gate": {
+    "precision_relative_gain": 0.1,
+    "f1_relative_gain_over_both_baselines": 0.05,
+    "strict144_f1_not_worse": true,
+    "recall_relative_to_production": 0.95,
+    "maximum_lost_fraction_of_production_events": 0.05,
+    "each_winter_f1_not_worse": true,
+    "each_region_f1_relative_to_production": 0.9,
+    "seven_day_block_lower_f1_delta_over_production": 0
+  },
+  "references": [
+    "https://gmd.copernicus.org/articles/17/4837/2024/",
+    "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+  ],
+  "reference_scope": "도로 수분·해빙·증발 과정과 sklearn 자체 학습기 사용법만 참고. RoadSurf 물리 모형 구현·원 코드 복사·얼음 확률 보정 주장 없음",
+  "new_independent_assessment": false,
+  "protected_labels_used": false,
+  "production_model_changed": false,
+  "seed": 20261106
+}

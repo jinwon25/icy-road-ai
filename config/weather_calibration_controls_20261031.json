@@ -1,0 +1,15 @@
+{
+  "purpose": "풍속의 큰 MAE 감소와 작은 상관 증가를 확인한 후 추가한 단순 학습 기준선 검증. 원 실험의 성공 기준·결과를 바꾸지 않는다",
+  "output": "outputs/private/weather_calibration_controls_20261031_v1",
+  "study": "outputs/private/road_weather_transfer_20261031_v1",
+  "input": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "controls": ["weighted_training_median", "weighted_residual_offset"],
+  "weight": "원 실험과 같은 지점·겨울 역빈도, 평균 1",
+  "median": "정렬한 값의 누적 가중치가 전체의 절반 이상이 되는 첫 값",
+  "candidate": "사전 고정 residual_hgb, 새 모형·변수·임계값 탐색 없음",
+  "test": "동일 외부 지역의 목표별 공통 행에서 학습 상수와 AWS 우선+학습 잔차 상수 보정의 MAE·RMSE·BIAS·상관·R²를 비교",
+  "review_gate": "두 단순 기준선 각각보다 전체·두 겨울 MAE가 낮고, 후보-기준선 MAE 차이의 날짜 블록 97.5백분위가 0 미만인 목표만 추가 모형 묶음에 채택",
+  "bootstrap": {"block_days": 7, "repetitions": 2000, "seed": 20261031},
+  "new_independent_assessment": false,
+  "observed_before_plan": "원 24모델 요약의 세 목표 지표. 추가 단순 기준선의 제외 지역 지표는 아직 계산하지 않음"
+}

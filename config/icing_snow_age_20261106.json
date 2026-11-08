@@ -1,0 +1,45 @@
+{
+  "purpose": "주변 ASOS 잔존 적설로 생기는 결빙 오경보를 적설 증가 이력으로 구별하는 고정 대조",
+  "weather_source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "training_source": "outputs/private/two_winter_development_20261024_v1/development.parquet",
+  "reference": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "temperature_models": "outputs/private/two_winter_models_20261024_v1",
+  "output": "outputs/private/icing_snow_age_20261106_checked",
+  "blocked_stations": [
+    "12410",
+    "33411",
+    "23402",
+    "33402",
+    "33406",
+    "12213",
+    "23411"
+  ],
+  "candidates": [
+    "baseline",
+    "snow_growth_6h",
+    "snow_growth_24h",
+    "snow_growth_72h"
+  ],
+  "rule": "기존 Tref<=0 AND [이슬점>=Tref OR 최근3h강수>0 OR 적설>0]에서 적설만 근거인 행에 한해, 최근6/24/72h 적설 증가 근거를 요구. 증가=같은 지점 정확히1h전 ASOS 적설량보다 >=0.1cm 증가 OR 새3h신적설>0. 이력은 현재보다 엄격한 과거이고 80% 미만 알려진 경우 기존 경보 보존. 지역ASOS 적설은 실제 도로 적설이 아님",
+  "new_snow_missing_policy": "ASOS 3h신적설 가용률0.18%로 대부분 결측. 이를0으로 확정하지 않음. 증가 판정은 양쪽 유효한 적설 관측이 있을 때 0/1, 증가 근거가 있으면1, 판단불가능은NaN. 그 뒤 이력80%미달은 기존판정보존",
+  "selection": "두 지역 동시 제외 내부 OOF에서 기존모델 대비 Precision>=1.10, F1>=1.05,Recall>=0.95,각겨울F1비악화,기존탐지사건손실0인 정책만 F1 최대. 없으면baseline. 주선택외외부고정3정책모두표시,최고값으로선택실패대체금지",
+  "temperature_training": "4개 단일제외 원본 8개 모델 재사용해 실제 runtime 검산. 6개 이중제외마다 원본과 같은 기상12·HGB MSE/MAE300회 재학습 총12적합. 학습은 원 허용23곳·두겨울,예측에서 관측노면변수미사용. 외부지역은 내부 모델 학습에도제외",
+  "temperature_parameters": {
+    "learning_rate": 0.05,
+    "max_iter": 300,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 100,
+    "l2_regularization": 10,
+    "early_stopping": false,
+    "random_state": 20260923
+  },
+  "promotion": "주 지역중첩 선택이 현재production보다P10%이상,F1 5%이상 개선하며 ASOS F1도 초과.Recall95%이상,기존사건손실0,두겨울각F1비악화,각지역F1최소90%,strict144 F1비악화,7일블록deltaF1하한>=0. 충족못하면교체하지않음",
+  "references": [
+    "https://gmd.copernicus.org/articles/17/4837/2024/"
+  ],
+  "new_independent_assessment": false,
+  "production_model_changed": false,
+  "seed": 20261106,
+  "context_source": "outputs/private/solar_memory_data_20261024_v1/development.parquet",
+  "setup_correction": "최초 실행은 추가 기상 수분 열 연결 누락으로 적합·평가 이전 중단. 원 설정/코드/계획을 outputs/private/icing_snow_age_20261106에 보존. 원 학습 데이터는 그대로 두고 수분 proxy를 기존 기상 문맥 데이터에서 키로 결합한다."
+}

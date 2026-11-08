@@ -1,0 +1,23 @@
+{
+  "purpose": "기존 23개 개발 도로의 ERA5-Land 열·수분·적설 공간 정보 확보. 새 노면 정답·보호 지점 요청 없음",
+  "output": "outputs/private/era5_land_inputs_20261031_v1",
+  "coordinates": "outputs/private/weather_network_review_20261010_v1/metadata_analysis/development_points.csv",
+  "allowed_station_source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "endpoint": "https://archive-api.open-meteo.com/v1/archive",
+  "model": "era5_land",
+  "hourly": ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "soil_temperature_0_to_7cm", "soil_temperature_7_to_28cm", "soil_moisture_0_to_7cm", "soil_moisture_7_to_28cm", "snow_depth"],
+  "periods": [["2024-10-25", "2025-02-28"], ["2025-10-25", "2026-02-28"]],
+  "timezone": "Asia/Seoul",
+  "cell_selection": "nearest",
+  "elevation": "nan",
+  "minimum_request_interval_seconds": 1.2,
+  "maximum_grid_distance_km": 20,
+  "minimum_valid_fraction": 0.95,
+  "usage": "개인 대회 연구용 무료 비상업 API. 신규 구독·결제 없음. 데이터 출처와 CC BY 4.0 표시. 상업 배포는 별도 서비스 조건 확인 필요",
+  "attribution": "ERA5-Land data from Copernicus Climate Change Service / ECMWF, processed and provided by Open-Meteo. CC BY 4.0.",
+  "references": ["https://open-meteo.com/en/docs/historical-weather-api", "https://open-meteo.com/en/terms", "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries?tab=overview", "https://essd.copernicus.org/articles/13/4349/2021/"],
+  "scope": "사후 재분석 전용. 일별 약 5일 지연 자료로 실제 당시 이용 가능성을 주장하지 않음. 0.1도 격자를 500m 관측으로 표현하지 않음. 토양 온도·수분과 격자 적설은 실제 도로 표면·수막·제설 상태가 아님",
+  "temporal_alignment": "엄격히 과거인 60분 이내 완료 시각만 연결. 이는 실시간 발표 가용성의 보증이 아님",
+  "preservation": "기존 입력·정답·모델·ZIP을 변경하지 않고 원문·요청 파라미터·응답 격자·단위·해시를 새 폴더에 보존"
+}

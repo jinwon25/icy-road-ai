@@ -1,0 +1,21 @@
+{
+  "purpose": "현재 기상 추정의 물리적 결합이 결빙 기준선에 실제 이득을 주는지 반증",
+  "output": "outputs/private/frost_icing_20261101_v1",
+  "weather_inputs": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "labels": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "humidity_study": "outputs/private/weather_humidity_stable_20261101_v1",
+  "air_study": "outputs/private/road_weather_transfer_20261031_v1",
+  "temperature_selection": "outputs/private/extended_completion_20261024_v1/selection.json",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "primary_candidate": "union_frost_estimates",
+  "primary_rule": "ASOS<=0 OR (지역제외 예측 노면온도<=0 AND 노면온도<=추정 서리점). 기준선 경보는 모두 보존",
+  "secondary": ["frost_estimates", "frost_nearest", "union_frost_nearest", "wet_or_frost"],
+  "selection": "주 규칙과 문턱 고정. 보조 최고를 주 후보로 바꾸지 않고 실패 뒤 추가 문턱 탐색 없음",
+  "primary_gates": {"minimum_relative_f1_gain": 0.05, "lost_events_maximum": 0, "date_block_lower_delta_f1": 0.0},
+  "seed": 20261101,
+  "input_scope": "정답지역 두 겨울을 제외한 기존 OOF 노면온도·기온·습도만 사용. 최종 전체 적합 모형으로 개발 점수를 계산하지 않음",
+  "references": ["https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.relative_humidity_from_dewpoint.html", "https://www.mdpi.com/2076-3417/16/19/9487", "https://arxiv.org/html/2212.04487v2"],
+  "production_model_changed": false,
+  "new_independent_assessment": false
+}

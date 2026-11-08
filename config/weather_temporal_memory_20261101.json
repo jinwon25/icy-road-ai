@@ -1,0 +1,57 @@
+{
+  "purpose": "채택 기상 모형의 지역·겨울 동시 제외 검증과 과거 기상 이력의 통제 비교",
+  "output": "outputs/private/weather_temporal_20261101_v2",
+  "input": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "input_sha256": "84efc7d7a8f38b65d47d5d5212a15f1b61eda6c780409e4cfcebb24501d9a0f1",
+  "blocked_stations": [
+    "12410",
+    "33411",
+    "23402",
+    "33402",
+    "33406",
+    "12213",
+    "23411"
+  ],
+  "targets": [
+    "air_temperature",
+    "relative_humidity",
+    "wind_speed"
+  ],
+  "candidates": [
+    "instant_residual",
+    "history_residual"
+  ],
+  "primary_candidate": "history_residual",
+  "reference_candidate": "instant_residual",
+  "model": {
+    "loss": "absolute_error",
+    "learning_rate": 0.05,
+    "max_iter": 300,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 200,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "random_state": 20261031
+  },
+  "directions": {
+    "2025": "forward_2024_to_2025",
+    "2024": "reverse_hindcast_2025_to_2024"
+  },
+  "gates": {
+    "minimum_mae_reduction_vs_instant": 0.02,
+    "maximum_direction_mae_ratio": 1.0,
+    "maximum_region_mae_ratio": 1.1,
+    "maximum_cold_air_mae_ratio": 1.0
+  },
+  "cold_slice": "같은 입력 ASOS 기온 절댓값 <=3°C. 목표 기온으로 행을 선택하지 않음",
+  "bootstrap": {
+    "block_days": 7,
+    "repetitions": 2000,
+    "seed": 20261101
+  },
+  "adoption_policy": "외부 결과로 설정을 조정하지 않는다. 통과하더라도 기존 제출 모델 교체는 별도 지역 제외 검증·재학습·묶음 검증 이후에만 가능",
+  "scope": "이미 사용한 개발 지역·겨울의 더 엄격한 재검증. 신규 독립 표본이 아니며 역방향은 미래 예측 검증이 아님",
+  "production_model_changed": false,
+  "checkpoint_source": "outputs/private/weather_temporal_20261101_v1",
+  "implementation_change": "Model settings and data unchanged; load features one candidate at a time, release full source features before fitting, reuse hash-verified completed fits"
+}

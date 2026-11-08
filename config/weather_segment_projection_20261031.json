@@ -1,0 +1,20 @@
+{
+  "output": "outputs/private/weather_segment_projection_20261031_v1",
+  "supplement": "outputs/private/weather_observation_supplement_20261031_v1",
+  "supplement_verification": "outputs/private/weather_supplement_validation_20261031_v1/receipt.json",
+  "input_preparation": "outputs/private/weather_mapping_inputs_20261031_v1",
+  "point_geometry": "outputs/private/segment_exposure_20261009_v1/segment_exposure_500m.csv",
+  "geometry": "outputs/private/segment_exposure_20261009_v1/segments_500m.gpkg",
+  "archived_segment_estimates": "outputs/private/submission_candidate_20261031_v8/exports/segment_estimates.csv",
+  "weather_sources": "outputs/private/releases/20261007/outputs/private/point_sources",
+  "winters": [["2024-11-01", "2025-03-01"], ["2025-11-01", "2026-03-01"]],
+  "sampling": "기존 전북 경계로 자른 방향별 500m 843구간의 호 길이 중점. 양방향을 별도 행으로 유지",
+  "outputs": "구간별 두 겨울의 10분 기온·습도·풍속 추정 캐시, 일별 평균·결측 수, 겨울 평균·분위수·기상변수 간 기술 상관 CSV와 GIS",
+  "interpretation": "500m는 결과 보고 단위이며 독립 관측 해상도가 아니다. 같은 기상 출처를 공유하는 구간을 독립 증거로 세지 않음",
+  "unsupported_source_flag": "ASOS 172는 세 모형 학습에 사용된 ASOS 6곳에 없는 기상 출처로 별도 표시. 관측망 밖 지점의 정확도 보장이 아님",
+  "range_flag": "학습 입력 28열의 유한값 최소·최대 범위를 하나라도 벗어난 시각 비율. 정답 오차나 예측구간이 아닌 외삽 점검",
+  "classification_change": false,
+  "risk_threshold_change": false,
+  "new_independent_assessment": false,
+  "protected_outcomes_read": false
+}

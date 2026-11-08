@@ -1,8 +1,77 @@
 # 실행 스크립트 안내
 
+## 최종 결과와 제출본
+
+[현재 결과](../docs/STATUS.md)와 [최종 보고서 원고](../docs/delivery/FINAL_ANALYSIS_REPORT.md)를 먼저 읽는다. 전체 실행은 대회 원자료와 로컬 연구 자산이 필요하며 GitHub 복제만으로 제출본이 생성되지는 않는다.
+
+- `evaluate_short_forcing_icing_20261106.py`, `evaluate_aws_short_forcing_20261106.py`: ASOS·AWS 단기 이력 후보의 지역 제외 학습과 내부 문턱 선택. 두 후보 모두 미채택했다.
+- `audit_short_forcing_20261106.py`, `audit_aws_short_forcing_20261106.py`: 감쇠식·시간 경계·지점 분리·미래 입력 교란과 저장 모형 점수 재현.
+- `verify_late_report_and_sources_20261106.py`, `final_requirements_delivery_review_20261106.py`: 보고서 수치·책갈피·링크와 규정·평가 입력 대조.
+- `package_late_submission_20261106.py`: 문서자료·모델자료 ZIP 생성과 압축 해제본의 추론·지표 재현.
+- `install_late_submission_20261106.py`: 검증한 제출본을 로컬 제출 경로로 반영하고 이전 제출본 보관.
+
+편집·패키징 스크립트는 작업 단계별 완료 파일과 검수 영수증을 입력으로 사용한다. 기존 완료 폴더를 덮어쓰는 일반 배포 도구로 소개하지 않는다. 제출본 내부의 `code/check_full_validation.py`와 두 `code/analyze_*short_forcing_review.py`는 포함 자료로 추론·저장 예측의 지표를 재현하는 별도 진입점이다.
+
+
+## 11월 2일 후속 점검·공간 이력·채택 풍속의 구간 적용
+
+- [현재 묶음 점검](review_project_state_20261102.py): 기존 v12 폴더와 문서·모델 ZIP의 실제 구성원·바이트·해시를 읽기 전용으로 대조합니다.
+- [공간·기상 이력 12적합](evaluate_weather_network_history_20261102.py) → [별도 검산](audit_weather_network_history_20261102.py) → [CSV·그림](summarize_weather_network_history_20261102.py): 147특성 후보는 두 검증 모두 악화해 미채택했습니다.
+- [현재 69특성 풍속의 843구간 적용](project_wind_network_segments_20261102.py) → [전량 집계·보존·19구간 API 검산](audit_wind_network_segments_20261102.py) → [이전·현재·변화 지도](render_wind_network_segments_20261102.py): 기존 기온·습도·노면온도·결빙 결과를 보존하는 별도 출력입니다. 실제 완료 여부는 출력 폴더의 영수증을 확인합니다.
+
+[후속 점검·결과·실행 위치](../docs/delivery/FOLLOWUP_REVIEW_20261102.md) · [입력 정의와 참고자료](../docs/research/NETWORK_HISTORY_PLAN_20261102.md) · [풍속 CSV 규약](../docs/delivery/CSV_CONTRACT.md#관측망-풍속-구간-적용--2026-11-02). 기존 완료 폴더를 덮어쓰지 않으며 연구 재실행에는 원 비공개 입력이 필요합니다.
+
+## 앞선 기록: 주변 관측망과 풍속 개선을 통합한 v12
+
+- [공간 관측망36적합](evaluate_weather_network_20261101.py)·[독립 검산](audit_weather_network_20261101.py): 고정계획과 허용23곳의 기상 정답만 사용합니다.
+- [새 풍속 묶음 생성](build_wind_network_supplement_20261101.py)·[별도 위치 전체재학습 검증](verify_wind_network_supplement_20261101.py)·[CLI](predict_wind_network.py)·[재학습](retrain_wind_network.py).
+- [입력 점검 화면](build_weather_network_viewer_20261101.py)·[1840조합 검증](audit_weather_network_viewer_20261101.py)·[후속 보고서](build_network_followup_20261101.py)·[v12 포장](package_review_v12.py).
+
+연구 전체 재실행은 원 비공개 작업공간이 필요합니다. 기본 제출 실행과 독립 풍속 실행은 포함 자료로 재현하며 [입력 계약](../docs/delivery/WIND_NETWORK_20261101.md)을 따릅니다.
+
+## 앞선 기록: 추가 검증·실행 프로필·기상 탐색 v11
+
+`evaluate_weather_thermodynamics_20261101.py`·`audit_weather_thermodynamics_20261101.py`는 물리124입력·24적합·4재학습 검산, `evaluate_weather_catboost_20261101.py`·`audit_weather_catboost_20261101.py`는82입력·12적합·고정평균·2재학습 검산입니다. 모두 현재 습도 교체 조건을 넘지 못했습니다. `evaluate_frost_icing_20261101.py`·`audit_frost_icing_20261101.py`는 고정 서리 규칙의 봉인 후 반증입니다.
+
+`predict_competition_profile.py --icing-profile ...`는 알려진 기온 기준선을 F1 우선 후보로 명시하거나 기존 v2를 그대로 실행합니다. `build_competition_profile_review_20261101.py`가 같은 개발 비교·실제 CLI·보호 예측의 온도/18NA 보존을 검증합니다. 기본 온도·기상 모형은 바꾸지 않습니다.
+
+`build_weather_explorer_20261101.py`는 로컬 HTML의 지도·두 겨울 시계열·품질·CSV를 만들고 `audit_weather_explorer_20261101.py`는 수치·실제 브라우저·다운로드·모바일을 검증합니다. 브라우저 테스트 환경의 Node 경로는 원 작업 환경에 따라 지정합니다. 화면 자체는 Python·인증·외부 요청 없이 실행됩니다.
+
+`build_followup_review_20261101.py`, `prepare_analysis_manuscript_v11.py`, `build_analysis_report_v11.py`, `package_review_v11.py`가 후속 지표·노트북·22쪽 보고서·실행 검토·두 ZIP을 연결합니다. [현재 결과와 실제 파일](../docs/delivery/REVIEW_BUNDLE_V11_20261101.md)
+
+## 앞선 기록: 11월 1일 습도 이력·안정화·v10
+
+`evaluate_weather_space_time_memory.py`는 순간/과거 입력의 지역·겨울 동시 제외 비교, `evaluate_weather_history_spatial_20261101.py --config ...`는 동일 두 겨울 공간 비교입니다. 초기 구현의 문맥 의존을 수정한 최종 실험은 `evaluate_weather_history_stable_20261101.py`와 `audit_weather_history_stable_20261101.py`이며 완료 결과의 소스 원본·집계 수정은 별도 finalizer 기록에 남습니다. 실패·수정 전 결과를 최종 수치로 사용하지 않습니다.
+
+`predict_weather_history.py`·`retrain_weather_history.py`는 채택 습도의 24시간 문맥 추론·전체 학습 진입점입니다. `build_weather_history_supplement.py`가 별도 실행 자료를 만들고 `verify_weather_history_supplement.py`가 위치 이동·CLI·실제 Jupyter 전체 재학습을 검증합니다. 완료 출력 폴더는 덮어쓰지 않습니다.
+
+`project_weather_history_segments_20261101.py`·`audit_weather_history_segments_20261101.py`는 843구간 기상 적용·전량 집계·대표 재추론, `render_weather_history_projection_20261101.py`는 새 지도입니다. `build_stable_weather_review_20261101.py`는 최종 지표·그림·연구 노트북을 만듭니다. `prepare_analysis_manuscript_v10.py`·`build_analysis_report_v10.py`·`package_review_v10.py`가 새 원고·19쪽 PDF·검토 폴더·두 ZIP을 준비합니다. [결과·실제 검증](../docs/delivery/REVIEW_BUNDLE_V10_20261101.md)
+
 이 문서는 실행 목적에 맞는 스크립트를 찾는 입구입니다. `evaluate_*`는 비교 실험, `audit_*`는 저장 결과의 별도 검산, `check_*`는 코드·문서 검사를 뜻합니다. 학습·검산에는 `outputs/private/`의 허용 자료가 필요하며 GitHub만 내려받으면 해당 자료가 생기지 않습니다. [용어와 버전](../docs/START_HERE.md)
 
-## 최신: 보고서 원고·PDF와 v7 검토 묶음
+## 앞선 기록: 10월 31일 학습 목표 비교와 지표면 자료 확보
+
+`prepare_analysis_manuscript_v8.py`·`build_analysis_report_v8.py`는 13쪽 통합 원고·수치 대조·PDF 렌더링을 수행합니다. 실제 시각 검토 영수증이 있어야 `package_review_v8.py --stage prepare`, `--stage verify`, `--stage package`를 순서대로 실행할 수 있습니다. v8 기본 실행 노트북과 포함 집계 노트북을 구별하고 기존 자산 506개를 보존합니다. `record_inventory_review_v8.py`는 복사된 화면의 실제 조작 영상과 상대 다운로드 경로를 검증합니다. [구성과 실제 검사](../docs/delivery/REVIEW_BUNDLE_V8_20261031.md)
+
+`evaluate_antecedent_forcing.py`는 순간·누적 기상 입력을 같은 BCE 조건에서 20회 적합합니다. `audit_antecedent_forcing.py`는 별도 격자 필터의 입력 계산부터 모델·선택·평가까지 대조합니다. `build_antecedent_notebook.py`는 학습 예제·재추론·지표의 검토 노트북을 만듭니다. 완료 결과를 덮어쓰지 않으며 [실행 조건·수치·변경 기록](../docs/research/ANTECEDENT_FORCING_20261031.md)을 먼저 읽습니다.
+
+`prepare_reanalysis_inputs.py`·`audit_reanalysis_inputs.py`는 원문·엄격한 과거 시간 연결을 검증합니다. `evaluate_reanalysis_temperature.py`·`evaluate_reanalysis_icing.py`와 각각의 `audit_*`는 추가 입력의 온도 8모델·분류 30모델을 비교·검산합니다. [완료 결과·실행 순서](../docs/research/REANALYSIS_INPUTS_20261031.md)
+
+`fetch_public_vulnerable_sections.py`·`fetch_public_road_context.py`는 개인정보 없는 공식 파일 다운로드를 사용합니다. `analyze_vulnerability_inventory.py`는 두 목록의 시점 차이를, `prepare_official_culvert_anchors.py`는 CSV·DBF·SHP 원문 일치를 검사합니다. `align_official_culvert_chainage.py` → `build_vulnerability_comparison.py` → `audit_official_chainage_alignment.py`는 이정 보간·목록 비교·독립 계산 대조입니다. `build_chainage_review_viewer.py`·`audit_chainage_review_viewer.py`는 인터넷 없는 탐색 화면과 실제 브라우저 검사를 제공합니다. [조건·오차·검산](../docs/research/OFFICIAL_CHAINAGE_COMPARISON_20261031.md)
+
+`evaluate_objective_icing.py`는 사전 고정한 네 손실을 지역 이중 제외 40모델로 비교합니다. `audit_objective_icing.py`는 전처리·추론·선택·지표·사건·블록 재표집을 별도 계산으로 대조합니다. [결과와 실행 순서](../docs/research/OBJECTIVE_ICING_20261031.md) · [연구 노트북](../notebooks/objective_icing_review_20261031.ipynb)
+
+`fetch_reanalysis_inputs.py`는 기존 개발 지점만 대상으로 ERA5-Land 공개 입력을 수집합니다. `--limit 1`로 첫 원문·단위를 확인할 수 있고 같은 설정으로 재개합니다. 새 정답·보호 지점은 요청하지 않으며 완료 시 원문 해시·반환 격자·시간별 품질을 남깁니다. 결과는 사후 재분석 전용입니다.
+
+## 앞선 10월 31일 두 ZIP 제출 준비와 재현 검사
+
+`python scripts/package_submission_channels.py --output outputs/private/submission_channels_20261031`은 보존된 v7을 기반으로 문서자료·모델자료를 별도 폴더·ZIP으로 만듭니다. 기존 출력이 있으면 중단합니다. 모델·예측 해시 보존, 현재 노트북·144행 예제 실행, 문서 링크·인증정보 검사, 두 ZIP 전 구성원 검증을 수행합니다. 실제 업로드는 하지 않습니다. [요구사항 대조](../docs/delivery/FOLLOWUP_READINESS_20261031.md)
+
+`review_submission_bundle.py --smoke`는 `current_notebook` 명세를 우선하고 과거 v7은 알려진 v7 노트북을 사용합니다. `--notebook <묶음 내부 경로>`로 명시할 수 있지만 manifest 밖의 파일은 거부합니다. 출력에 선택 경로를 남깁니다.
+
+`review_official_updates.py --previous <완료 폴더> --output <새 폴더>`는 확인 불완전 시 원문·요약을 보존하고 종료코드 2를 반환합니다. 최신 규정의 해석은 수집 성공 여부와 별도로 확인합니다.
+
+## 앞선 보고서 원고·PDF와 v7 검토 묶음
 
 [현재 보고서](../docs/delivery/ANALYSIS_REPORT.md)와 [개편 근거](../docs/delivery/BENCHMARK_REVIEW_20261025.md)를 먼저 읽습니다. 모델링을 다시 실행하지 않고 기존 집계와 봉인된 예측을 사용합니다.
 

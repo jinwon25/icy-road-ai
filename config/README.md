@@ -1,5 +1,27 @@
 # 설정 파일 안내
 
+## 11월 2일 공간·기상 이력의 반증 계획
+
+[weather_network_history_20261102.json](weather_network_history_20261102.json)은 현재 69특성 풍속에 과거 이력을 더한 147특성 단일 후보, 지역 4회·지역/겨울 8회, 같은 HGB와 두 검증의 채택 조건을 고정합니다. 실제 실행 전 `plan.json`에 설정·입력·코드 해시를 보존했고, 두 검증 모두 악화해 미채택했습니다. [설계·참고자료](../docs/research/NETWORK_HISTORY_PLAN_20261102.md) · [완료 수치·검산](../docs/delivery/FOLLOWUP_REVIEW_20261102.md)
+
+채택된 69특성 풍속의 구간 적용은 기존 [공간 적용 설정](weather_segment_projection_20261031.json)의 좌표·기상·두 겨울 달력을 재사용합니다. 새 스크립트는 기존 출력 경로를 사용하지 않고 별도 `wind_network_segment_projection_20261102_v1`에 저장하며 적용 모형·기존 자료의 해시를 고정합니다.
+
+## 최신: 주변 관측망과 풍속 개선을 통합한 v12
+
+[weather_network_20261101.json](weather_network_20261101.json)은 최대4AWS·50km·엄격한과거15분·35추가특성과36적합, 두 검증의 채택 기준을 실행 전에 고정했습니다. 풍속만 통과했고 기온·습도는 유지합니다. [수치·검산·출처](../docs/research/WEATHER_NETWORK_20261101.md)
+
+[물리 입력](weather_thermodynamics_20261101.json)·[CatBoost와 고정 평균](weather_catboost_20261101.json)·[고정 서리 규칙](frost_icing_20261101.json)은 v10 이후의 반증 계획입니다. 결과 확인 뒤 문턱·가중치·채택 조건을 바꾸지 않았고 모두 미채택입니다. 현재 습도는 기존 안정화 이력 계획을 유지합니다. [결과·소스·이용조건](../docs/research/FOLLOWUP_METHODS_20261101.md)
+
+최신 습도는 [weather_humidity_stable_20261101.json](weather_humidity_stable_20261101.json)의 고정 3h/24h·82입력·동일 HGB·5개 채택 기준을 사용합니다. [시간/공간 비교](weather_temporal_memory_20261101.json), [기온 공간 비교](weather_air_history_spatial_20261101.json), [초기 습도 공간 비교](weather_humidity_history_spatial_20261101.json)는 연구 이력입니다. 초기 rolling 결과를 최종 안정화 수치로 대체하지 않습니다. [수치·실패·현재 모델](../docs/research/WEATHER_SPACE_TIME_20261101.md)
+
+[누적 기상 조건 비교](antecedent_forcing_20261031.json)는 40개 순간 입력·64개 이력 입력의 같은 학습 조건과 20적합·지역 이중 제외·선택 절차를 고정합니다. 외부 지표 계산 전 발견한 보고서 순서 오류의 수정과 v1 보존도 기록합니다. [완료 결과·검산](../docs/research/ANTECEDENT_FORCING_20261031.md)
+
+[목적함수 비교](objective_icing_20261031.json)는 네 손실·40적합·지역 이중 제외·채택 조건을 고정합니다. [ERA5-Land 입력 확보](reanalysis_inputs_20261031.json)는 기존 23지점·두 겨울의 사후 열·수분·적설 자료만 요청합니다. [결과·문헌·검산](../docs/research/OBJECTIVE_ICING_20261031.md)
+
+[재분석 온도 비교](reanalysis_temperature_20261031.json)는 v3 설정의 입력 추가 8모델, [재분석 결빙 비교](reanalysis_icing_20261031.json)는 동일 분류기·가중치의 30모델·내부 임계값 선택을 고정합니다. 두 실험 모두 [완료 검산과 미채택 근거](../docs/research/REANALYSIS_INPUTS_20261031.md)를 남겼습니다.
+
+[10월 31일 공식 확인 설정](official_requirements_20261031.json)은 접수 개시·문서자료/모델자료 ZIP 형식과 근거의 확인 방법을 구분합니다. 마감 날짜는 미확인이며 과거 설정의 ‘별도 공지 예정’을 현재 사실로 사용하지 않습니다.
+
 최신 [잔차 학습 설정](residual_icing_20261025.json)은 기온 시작값·가중치·30모델·49정책·지역 내부 선택을, [관측 지연 설정](causal_trend_20261025.json)은 과거 두 시간 관측만 사용하는 10정책을 고정합니다. 기존 개발 지역의 반복 비교이며 보호 지점·이미 개봉한 새 4곳은 사용하지 않습니다. 안정적 개선이 없어 모델을 유지했습니다. [설계·결과·입력 정보량 진단](../docs/research/RESIDUAL_AND_INFORMATION_20261025.md)
 
 앞선 [추가 탐지 설정](additive_icing_20261025.json)은 기존 기온 경보를 보존하는 57정책·20모델과 지역 내부 선택 절차를 고정합니다. 새 4지역 정답을 사용하지 않는 반복 개발 실험이며, 기준선을 안정적으로 넘지 못해 제출 모델은 유지합니다. [방법·결과·원문 진단](../docs/research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)

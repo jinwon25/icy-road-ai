@@ -1,0 +1,36 @@
+{
+  "purpose": "새 공식 Q&A의 지점 제외·날짜 분모를 반영한 단일 목적함수 후보와 중첩 선택 재검토",
+  "source": "outputs/private/blind_icing_20261025_v2/training.parquet",
+  "cached_models": "outputs/private/objective_icing_20261031_v2",
+  "output": "outputs/private/official_icing_upgrade_20261106_v1",
+  "blocked_stations": [
+    "12410",
+    "33411",
+    "23402",
+    "33402",
+    "33406",
+    "12213",
+    "23411"
+  ],
+  "new_model": "official_day_ratio",
+  "steps": 160,
+  "learning_rate": 0.03,
+  "l2": 0.001,
+  "cap_c": 2.0,
+  "seed": 20261106,
+  "new_loss": "0.25 날짜·클래스 균형 BCE + 0.75 지점균등 [1-양성일 softF1합/(양성일수+음성일 최대 sigmoid 합)]. 실제 Ice 없는 학습 지점은 F1항에서 제외하며 BCE에는 포함. 확률 모형으로 해석하지 않음",
+  "fixed_candidates": "기존 4손실×3offset(-0.5/0/0.5), 기존 상수(-1/-0.5/0/0.5/1), 새 손실×같은3offset. 20개. 외부 결과 후 추가 탐색 금지",
+  "validation": "같은 4개 개발지역 제외 4회와 내부 선택용 두지역 제외 6회. 학습·선택에서 보호3+기개봉4 정답 미사용. 새 10적합",
+  "primary_selection": "학습지역 내부 OOF의 최신 공식 방식 F1 최대; 동률 단순성 우선. 부분날짜 최소1을 주표기,144를 민감도. 기존 점수를 새 성능향상으로 혼합하지 않음",
+  "promotion_gate": {
+    "minimum_relative_f1_gain": 0.05,
+    "strict144_not_worse": true,
+    "minimum_relative_recall": 0.95,
+    "region_worsening_limit": 0.1,
+    "report_each_winter": true,
+    "report_lost_events": true
+  },
+  "final_selection": "승격 조건 통과 시 전체 개발4지역의 내부단일제외 OOF로 같은 선택규칙을 적용해 고정사양 결정, 허용23지점 전체재학습. 보호 정답 결과로 선택 변경 금지",
+  "new_independent_assessment": false,
+  "created_at_utc": "2026-11-06T03:04:43.734039+00:00"
+}

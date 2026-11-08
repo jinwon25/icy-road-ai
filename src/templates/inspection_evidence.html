@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>구간 선정 근거와 기준 민감도</title><link rel="stylesheet" href="../assets/site.css">
+<style>
+.criteria{border-top:2px solid var(--blue);border-bottom:1px solid var(--line);padding:17px 0;margin:0 0 14px}.criteria summary{font-size:15px;font-weight:700}.criterion-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:17px}.criteria p{margin:12px 0 0}.scenario-line{display:flex;justify-content:space-between;align-items:baseline;gap:15px;flex-wrap:wrap;margin:19px 0}.scenario-line strong{font-size:24px;letter-spacing:-.5px;color:var(--blue)}.scenario-line button{padding:8px 12px}.criterion-status{display:inline-block;font-size:11px;padding:1px 7px;margin-right:5px;border:1px solid #a7bdc9;border-radius:2px;white-space:nowrap}.criterion-status.fail{border-color:#c4cbd0;color:#71808a}.fact-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:17px}.fact-row span{font-size:11px;color:var(--muted);display:block}.fact-row strong{font-size:20px;font-weight:600;color:var(--blue)}.scenario-toolbar{grid-template-columns:1.25fr .75fr .8fr 1.1fr}.criteria-table td:first-child{width:100px}.criteria-table td{padding:9px 5px;font-size:12px}.terrain-table th,.terrain-table td{font-size:12px;padding:7px}.table-action{border:0;background:transparent;padding:0;text-decoration:underline;text-underline-offset:3px;color:var(--blue);font:inherit}.stability-bar{height:4px;background:#e0e7eb;margin-top:6px;width:100%}.stability-bar span{display:block;height:100%;background:#29546d}.methods{display:grid;grid-template-columns:1fr 1fr;gap:28px}.methods h3{font-size:15px}.map-title-note{min-height:20px}.criteria-foot{max-width:1000px}.matrix-hint{max-width:920px}.scenario-warning{color:#6b4b2c}.terrain-note{font-size:11px;line-height:1.7;color:var(--muted)}.table-scroll table{font-variant-numeric:tabular-nums}.inset-title{font-size:14px;color:var(--muted)}.legend-key span{white-space:nowrap}
+@media(max-width:720px){.criterion-controls{grid-template-columns:1fr;gap:10px}.scenario-toolbar{grid-template-columns:1fr 1fr}.fact-row{gap:10px}.fact-row strong{font-size:18px}.methods{grid-template-columns:1fr}.scenario-line strong{font-size:21px}.criteria-table td:first-child{width:92px}.topnav{gap:12px}}
+.matrix-head{display:flex;gap:24px;align-items:end;flex-wrap:wrap}.matrix-head label{width:190px}.matrix-head p{font-size:12px;color:var(--muted);margin:0 0 8px}.scenario-matrix{max-width:700px;table-layout:fixed;margin:22px 0;font-variant-numeric:tabular-nums}.scenario-matrix th{text-align:center;font-size:12px;padding:7px 2px}.scenario-matrix td{padding:3px;border:0}.scenario-matrix button{display:block;width:100%;font-size:20px;padding:16px 2px;border:2px solid transparent;border-radius:0;font-variant-numeric:tabular-nums}.scenario-matrix button[aria-pressed=true]{border:2px solid #ad7837;outline:1px solid #ad7837;outline-offset:2px}.matrix-heading{font-size:12px;color:var(--muted);margin-top:18px}.scenario-matrix thead th:first-child{width:65px}
+@media(max-width:720px){.scenario-matrix button{font-size:17px;padding:13px 1px}.scenario-matrix th{font-size:11px}.scenario-matrix thead th:first-child{width:48px}.matrix-head{gap:12px}.matrix-head label{width:150px}}
+</style>
+<header><nav class="topnav" aria-label="분석 탐색"><a class="team-brand" href="../index.html">로드투인사이트</a><a href="../index.html">기상 지도</a><a href="../index.html#temperature">노면온도 평가</a><a class="active" href="sections.html">구간 검토</a><a href="../report/analysis_report.pdf">분석 보고서</a><a href="../demo/index.html">실행 영상</a></nav>
+<h1>어느 구간을 먼저 확인할 것인가</h1><p>두 겨울의 기상 노출, 도로환경과 공개 취약구간 목록을 대조했습니다. 기준을 직접 바꾸며 현장 확인 범위와 그 근거를 살펴볼 수 있습니다.</p></header>
+<main>
+<details class="criteria" id="criteria"><summary>구간 선정 기준 조정</summary><div class="criterion-controls">
+<label>겨울별 높은 기상 노출 기준<select id="weatherQ" aria-describedby="criterionScope"></select></label>
+<label>중심선 방향 변화 기준<select id="curveQ" aria-describedby="criterionScope"></select></label>
+<label>공개 목록 경계의 위치 여유<select id="margin"><option value="100">±100m</option><option value="250" selected>±250m · 기준</option><option value="500">±500m</option></select></label></div>
+<p class="caption" id="criterionScope">결빙 조건에 쓰는 14열의 전체 입력 시계열이 같으면 한 번 집계합니다. 첫 겨울 22개·둘째 겨울 24개의 고유 시계열로 문턱을 계산합니다. 두 겨울 모두 높은 노출과 교량·선형 조건을 충족하고, 가용률 95%와 이정 추정 가능 조건을 만족해야 선택됩니다.</p></details>
+<div class="scenario-line"><strong id="scenarioCount" aria-live="polite"></strong><span class="caption" id="scenarioThresholds"></span><button id="restore">기준 조합으로 복원</button></div>
+<p class="caption criteria-foot">기준 조합은 3구간·서해안의 2개 범위입니다. 75개 조합에서는 0~86구간으로 달라졌습니다. 선택 유지율은 이 조합들을 통과한 비율이며 결빙확률이 아닙니다.</p>
+<div class="toolbar scenario-toolbar"><label>지도 내용<select id="view"><option value="selection">현재 기준에 맞는 구간</option><option value="stability">75개 기준의 선택 유지율</option><option value="shade">지형에 가려질 수 있는 낮 시간</option><option value="exposure">저온·수분 조건 비율</option><option value="inventory">공개 목록과의 관계</option></select></label>
+<label>표시 겨울<select id="year"><option value="0">2024/25</option><option value="1">2025/26</option></select></label>
+<label>노선<select id="route"><option value="all">모든 노선</option></select></label>
+<label>기준 조합의 확인 범위<select id="area"><option value="">범위 선택</option></select></label></div>
+<div class="grid">
+<section class="panel"><div class="maphead"><h2 id="mapTitle">현재 기준에 맞는 구간</h2><div><button id="reset">전체 보기</button> <button id="focus">선택 확대</button></div></div>
+<svg id="map" class="map" role="img" aria-label="도로 구간별 선정 근거와 지형 맥락 지도"></svg>
+<div class="legend-key" id="legend"></div><p class="caption map-title-note" id="mapNote"></p>
+<label>도로 구간 선택<select id="segment"></select></label></section>
+<section class="panel" id="detail"><div class="case-head"><h2 id="roadTitle"></h2><p id="direction" class="muted"></p><p id="chainage" class="chainage"></p></div>
+<p id="selection"></p><div class="fact-row"><div><span>2024/25 조건 비율</span><strong id="exposure24"></strong></div><div><span>2025/26 조건 비율</span><strong id="exposure25"></strong></div><div><span>75개 기준의 선택 유지율</span><strong id="stability"></strong></div></div>
+<table class="criteria-table"><thead><tr><th>현재 기준</th><th>이 구간의 근거</th></tr></thead><tbody>
+<tr><td>두 겨울 기상</td><td id="weatherEvidence"></td></tr><tr><td>도로환경</td><td id="environmentEvidence"></td></tr>
+<tr><td>판정 가용률</td><td id="availabilityEvidence"></td></tr><tr><td>공개 목록</td><td id="inventoryEvidence"></td></tr><tr><td>이정 연결</td><td id="alignmentEvidence"></td></tr></tbody></table>
+<details open><summary>현장에서 확인할 지형·일사 맥락</summary>
+<table class="terrain-table"><tbody><tr><th>주변 DSM 표고</th><td id="elevation"></td></tr><tr><th>하늘 개방도 대용지표</th><td id="skyview"></td></tr><tr><th>지형에 가려질 수 있는 낮</th><td id="shade"></td></tr><tr><th>1km / 3km 탐색 비교</th><td id="horizonSensitivity"></td></tr></tbody></table>
+<p class="terrain-note" id="structureNote"></p></details>
+<div class="actions"><button id="download">선택 구간 근거 CSV</button><a href="../results/sections/sensitivity/scenario_summary.csv" download>75개 기준 결과</a><a href="../results/sections/terrain/segment_terrain.csv" download>지형 원표</a><a href="../results/sections/inspection_locations.gpkg" download>검토 범위 GIS</a></div>
+</section></div>
+<section class="analysis"><h2>기준값에 따라 달라지는 확인 범위</h2><p class="matrix-hint">기상 빈도 기준의 영향이 큽니다. 두 겨울 모두 높은 빈도를 요구하면 상위 10% 기준에서 남는 구간은 없습니다. 아래 숫자는 현장 확인 대상의 개수이며 안전 구간을 판정한 수가 아닙니다.</p>
+<div class="matrix-head"><label>비교할 목록 경계 여유<select id="matrixMargin"><option value="100">±100m</option><option value="250" selected>±250m</option><option value="500">±500m</option></select></label><p>숫자를 누르면 해당 기준을 지도에 반영합니다. <a href="#map">선택 기준의 지도 보기</a></p></div>
+<p class="matrix-heading">세로: 기상 노출 상위 (%) / 가로: 선형 변화 상위 (%)</p><table class="scenario-matrix" id="matrix"><caption>칸 안의 숫자는 선택 구간 수입니다. 갈색 테두리는 현재 조합입니다.</caption><thead><tr><th scope="col">기상 / 선형</th><th scope="col">40%</th><th scope="col">30%</th><th scope="col">25%</th><th scope="col">20%</th><th scope="col">10%</th></tr></thead><tbody></tbody></table>
+<details><summary>75개 기준을 같은 색 범위에서 한눈에 보기</summary><a href="../report/figures/selection_sensitivity.png" target="_blank" rel="noopener"><img src="../report/figures/selection_sensitivity.png" alt="세 가지 목록 경계 여유와 기상·선형의 다섯 기준을 조합한 75개 시나리오의 선택 구간 수. 누르면 원본 크기로 확대"></a></details>
+<div class="table-scroll"><table id="areas"><caption>기준 조합의 2개 범위. 유지율은 포함된 500m 구간들의 최솟값~최댓값입니다.</caption><thead><tr><th>범위</th><th>노선·방향</th><th>추정 이정</th><th>길이</th><th>선택 유지율</th><th>지형 차폐 낮 시간</th></tr></thead><tbody></tbody></table></div>
+<p class="caption">S01은 75개 조합 중 60개에서 두 구간 모두 유지됐습니다. S02의 한 구간은 48개 조합에서 유지됐습니다. 세 구간은 겨울마다 같은 하나의 결빙 조건 입력을 공유하므로 독립적인 위험 발견 세 건으로 해석하지 않습니다.</p></section>
+<section class="analysis"><h2>지도에서 현장 확인으로</h2><div class="methods"><div><h3>현장에서 먼저 맞출 정보</h3><p>이정과 방향을 확인한 뒤 교량의 실제 범위, 배수·노면수분, 제설·제빙 시각을 기록합니다. 같은 기상 입력을 공유하더라도 도로 위 수분과 시설 조건은 다를 수 있습니다.</p><p class="caption">공개 목록과의 위치 여유는 이정 보간의 민감도 조건입니다. 측량 오차의 확률구간으로 해석하지 않습니다.</p></div><div><h3>낮의 그늘과 밤의 복사를 구분</h3><p>낮의 직달 일사 차폐와 밤의 복사냉각은 역할이 다릅니다. 구름·터널·시설물의 세부 형상과 실제 노면 관측을 함께 확인해야 합니다. DSM 지표를 임의 위험 가중치로 더하지 않았습니다.</p><p class="caption">Copernicus GLO-30 DSM, 구간 중점, 16방향·3km 지평선과 태양위치 근사식. 1km 탐색 결과를 함께 제공합니다. 실제 일조·일사량 관측이 아닙니다.</p></div></div>
+<p class="terrain-note">__DSM_NOTICE__</p><div class="actions"><a href="../results/sections/section_review.csv" download>전체 구간 조건</a><a href="../results/sections/sensitivity/segment_stability.csv" download>구간별 선택 유지율</a><a href="../results/conditions/segment_daily_associations.csv" download>기상·조건 연관성 CSV</a><a href="../report/analysis_report.pdf">분석 보고서</a></div></section>
+</main><footer>두 겨울의 과거 자료에 대한 현장 검토 자료입니다. 기준 조합과 기준 민감도를 함께 확인해 사용합니다.</footer>
+<script>
+const DATA=__DATA__,el=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const lookup=Object.fromEntries(DATA.rows.map(r=>[r.id,r]));let chosen=null,active=null;
+const labels={selection:'현재 기준에 맞는 구간',stability:'75개 기준의 선택 유지율',shade:'지형에 가려질 수 있는 낮 시간',exposure:'저온·수분 조건 비율',inventory:'공개 목록과의 관계'};
+const relationLabels={inside_inventory_for_margin:'목록 안',boundary_uncertain:'경계 여유에 따라 중첩 가능',outside_inventory_for_margin:'경계 여유까지 목록과 비중첩',alignment_unavailable:'이정 미산정'};
+function option(id,v,t){let o=document.createElement('option');o.value=v;o.textContent=t;el(id).appendChild(o)}
+function node(tag,attrs,text){let n=document.createElementNS(NS,tag);for(let[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n}
+function fmt(v,d=1){return v===null||!Number.isFinite(v)?'미산정':v.toFixed(d)}
+function pct(v,d=1){return v===null||!Number.isFinite(v)?'미산정':(100*v).toFixed(d)+'%'}
+function selected(r){return r.membership[active.scenario-1]==='1'}
+function relation(r){return r.inventory[String(el('margin').value)]}
+function part(){return DATA.rows.filter(r=>el('route').value==='all'||r.route===el('route').value)}
+function ramp(v,max,c0,c1){if(v===null||!Number.isFinite(v))return '#8e9ca5';let t=Math.max(0,Math.min(1,v/max));return 'rgb('+c0.map((c,i)=>Math.round(c+(c1[i]-c)*t)).join(',')+')'}
+function contrastText(rgb){let v=rgb.match(/[0-9]+/g).map(Number).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}),l=.2126*v[0]+.7152*v[1]+.0722*v[2];return l>.179?'#000000':'#ffffff'}
+function color(r){let mode=el('view').value,w=+el('year').value;
+ if(mode==='selection')return selected(r)?'#b6534d':'#c7d3da';
+ if(mode==='stability')return ramp(r.stability,1,[224,234,239],[41,84,109]);
+ if(mode==='shade')return ramp(r.solar[w].shade,.6,[235,234,243],[85,68,119]);
+ if(mode==='exposure')return ramp(r.w[w].index,DATA.maxExposure,[247,238,210],[157,76,28]);
+ return {inside_inventory_for_margin:'#29546d',boundary_uncertain:'#bc914f',outside_inventory_for_margin:'#c7d3da',alignment_unavailable:'#6b7379'}[relation(r)]}
+function scenario(){active=DATA.scenarios.find(s=>s.weather_quantile===+el('weatherQ').value&&s.curve_quantile===+el('curveQ').value&&s.margin_m===+el('margin').value);if(!active)throw Error('기준 조합을 찾지 못했습니다.');draw()}
+function matrix(){let body=el('matrix').querySelector('tbody');body.replaceChildren();el('matrixMargin').value=String(active.margin_m);for(let w of [.6,.7,.75,.8,.9]){let tr=document.createElement('tr'),head=document.createElement('th');head.scope='row';head.textContent=Math.round((1-w)*100)+'%';tr.appendChild(head);for(let c of [.6,.7,.75,.8,.9]){let s=DATA.scenarios.find(s=>s.weather_quantile===w&&s.curve_quantile===c&&s.margin_m===active.margin_m),td=document.createElement('td'),b=document.createElement('button');b.textContent=s.selected_segments;b.dataset.scenario=s.scenario;b.setAttribute('aria-pressed',String(s.scenario===active.scenario));b.setAttribute('aria-label','기상 상위 '+Math.round((1-w)*100)+'%, 선형 상위 '+Math.round((1-c)*100)+'%, 목록 경계 '+s.margin_m+'m: '+s.selected_segments+'구간');b.style.background=ramp(s.selected_segments,86,[240,245,248],[41,84,109]);b.style.color=contrastText(b.style.background);b.onclick=()=>{el('weatherQ').value=String(w);el('curveQ').value=String(c);scenario();el('matrix').querySelector('button[data-scenario="'+s.scenario+'"]').focus({preventScroll:true})};td.appendChild(b);tr.appendChild(td)}body.appendChild(tr)}}
+function draw(){let svg=el('map'),visible=part(),w=+el('year').value,mode=el('view').value;svg.replaceChildren();svg.setAttribute('viewBox',DATA.box.join(' '));svg.appendChild(node('path',{d:DATA.boundary,class:'boundary'}));
+ for(let r of visible){svg.appendChild(node('path',{d:r.path,class:'road','data-id':r.id,stroke:color(r)}));let hit=node('path',{d:r.path,class:'hit','data-id':r.id});hit.addEventListener('click',()=>select(r.id));svg.appendChild(hit)}
+ let total=DATA.rows.filter(selected),shown=visible.filter(selected),km=total.reduce((n,r)=>n+r.length,0)/1000;
+ el('scenarioCount').textContent='현재 기준 '+total.length+'구간 · '+fmt(km)+'km';el('scenarioCount').dataset.count=total.length;
+ el('scenarioThresholds').textContent='노출 문턱 '+fmt(active.weather_threshold_2024,3)+'% / '+fmt(active.weather_threshold_2025,3)+'% · 선형 '+fmt(active.curve_threshold,2)+'°/100m';
+ el('mapTitle').textContent=labels[mode];el('year').disabled=['selection','stability','inventory'].includes(mode);
+ let items=mode==='selection'?[['#b6534d','현재 기준 충족'],['#c7d3da','그 외 분석 구간']]:mode==='stability'?[['#e0eaef','0%'],['#29546d','100%']]:mode==='shade'?[['#ebeaf3','0%'],['#554477','60%']]:mode==='exposure'?[['#f7eed2','0%'],['#9d4c1c',fmt(DATA.maxExposure,1)+'%']]:[['#29546d','목록 안'],['#bc914f','경계 민감'],['#c7d3da','목록 밖'],['#6b7379','이정 미산정']];
+ el('legend').replaceChildren();for(let[col,label]of items){let s=document.createElement('span'),i=document.createElement('i');i.style.background=col;s.appendChild(i);s.appendChild(document.createTextNode(label));el('legend').appendChild(s)}
+ el('mapNote').textContent=mode==='shade'?'두 겨울에 같은 0~60% 척도입니다. 주변 지형에 따른 기하 계산이며 실제 일조시간이 아닙니다.':mode==='stability'?'75개 자체 기준 중 선택된 비율입니다. 결빙확률·통계적 신뢰도와 다릅니다.':'현재 노선에서 '+shown.length+'구간 선택 · 전체 '+visible.length+'구간 표시';
+ el('segment').replaceChildren();for(let r of visible)option('segment',r.id,r.route.replace('고속국도','')+' / '+r.flow+' / '+(r.km[0]===null?'이정 미산정':fmt(r.km[0],2)+'-'+fmt(r.km[1],2)+'km'));
+ let id=visible.some(r=>r.id===chosen)?chosen:(visible[0]?.id);if(id)select(id);matrix();window.ACTIVE_SCENARIO=active.scenario;
+}
+function evidence(id,pass,text){el(id).replaceChildren();let s=document.createElement('span');s.className='criterion-status'+(pass?'':' fail');s.textContent=pass?'충족':'미충족';el(id).appendChild(s);el(id).appendChild(document.createTextNode(text))}
+function select(id){chosen=id;let r=lookup[id],w=+el('year').value;el('segment').value=id;for(let p of document.querySelectorAll('.road'))p.classList.toggle('chosen',p.dataset.id===id);
+ el('roadTitle').textContent=r.route.replace('고속국도','고속도로');el('direction').textContent=r.flow;el('chainage').textContent=r.km[0]===null?'이정 미산정':'추정 이정 '+fmt(r.km[0],2)+'-'+fmt(r.km[1],2)+'km';
+ el('exposure24').textContent=fmt(r.w[0].index,2)+'%';el('exposure25').textContent=fmt(r.w[1].index,2)+'%';el('stability').textContent=pct(r.stability,0);
+ el('selection').textContent=(selected(r)?'현재 기준을 모두 충족합니다. ':'현재 기준의 모든 조건을 충족하지는 않습니다. ')+(r.area?'기준 조합의 '+r.area+' 범위입니다.':'');
+ let wx=r.w[0].index>=active.weather_threshold_2024&&r.w[1].index>=active.weather_threshold_2025;
+ evidence('weatherEvidence',wx,'두 겨울의 조건 비율을 각각 문턱과 비교');
+ evidence('environmentEvidence',r.bridge>0||r.curve>active.curve_threshold,(r.bridge>0?'교량 코드 있음 / ':'교량 코드 없음 / ')+'방향 변화 '+fmt(r.curve,2)+'°/100m');
+ evidence('availabilityEvidence',r.w.every(x=>x.availability>=.95),pct(r.w[0].availability,2)+' / '+pct(r.w[1].availability,2));
+ evidence('inventoryEvidence',relation(r)==='outside_inventory_for_margin','±'+el('margin').value+'m · '+relationLabels[relation(r)]);
+ evidence('alignmentEvidence',r.km[0]!==null,r.km[0]!==null?'기준점 사이에서 추정한 이정':'기준점 연결 범위를 확인해야 함');
+ el('elevation').textContent=fmt(r.terrain.elevation)+'m · 주변 지표면 기준';el('skyview').textContent=fmt(r.terrain.skyview,3)+' / 1';
+ el('shade').textContent=pct(r.solar[w].shade)+' · '+(w===0?'2024/25':'2025/26');
+ el('horizonSensitivity').textContent=pct(r.solar[w].shade1)+' / '+pct(r.solar[w].shade)+' (차폐 낮 시간 비율)';
+ el('structureNote').textContent=(r.tunnel>0?'터널 코드가 포함됩니다. 지표면 DSM을 터널 내부 노면의 그늘·고도로 해석할 수 없습니다. ':r.bridge>0?'교량 코드가 포함됩니다. DSM 표고를 교량 상판 높이로 해석할 수 없습니다. ':'30m DSM은 나무·시설물을 포함하는 지표면 자료입니다. ')+'구간 중점의 16방향 지평선·태양위치 기하 계산이며 측량·일사 관측값이 아닙니다.';
+ el('area').value=r.area||'';window.CHOSEN_SECTION=id;
+}
+function areaSelect(){let r=DATA.rows.find(r=>r.area===el('area').value);if(r){el('route').value='all';draw();select(r.id)}}
+function download(){if(!chosen)return;let r=lookup[chosen],header=['seg_id','winter','estimated_km_start','estimated_km_end','cold_wet_exposure_pct','weather_threshold_pct','curve_deg_per_100m','curve_threshold','margin_m','selected','scenario_selection_fraction','dsm_surface_elevation_m','sky_view_proxy','potential_shade_daylight_fraction','potential_shade_daylight_fraction_1km'],lines=[header.join(',')];
+ for(let w=0;w<2;w++)lines.push([r.id,2024+w,...r.km,r.w[w].index,active['weather_threshold_'+(2024+w)],r.curve,active.curve_threshold,+el('margin').value,selected(r),r.stability,r.terrain.elevation,r.terrain.skyview,r.solar[w].shade,r.solar[w].shade1].join(','));
+ let blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='section_evidence_'+r.id+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+for(let q of [.6,.7,.75,.8,.9])for(let id of ['weatherQ','curveQ'])option(id,q,'상위 '+Math.round((1-q)*100)+'%'+(q===.75?' · 기준':''));
+for(let id of ['weatherQ','curveQ'])el(id).value='0.75';
+for(let r of [...new Set(DATA.rows.map(r=>r.route))])option('route',r,r.replace('고속국도','고속도로'));
+for(let a of DATA.areas){option('area',a.area_id,a.area_id+' '+a.route.replace('고속국도','')+' '+fmt(a.estimated_km_start)+'-'+fmt(a.estimated_km_end)+'km');let tr=document.createElement('tr');
+ for(let [i,v]of [a.area_id,a.route.replace('고속국도','')+' / '+a.direction,fmt(a.estimated_km_start)+'-'+fmt(a.estimated_km_end)+'km',fmt(a.directional_length_km)+'km',pct(a.minimum_selection_fraction,0)+(a.minimum_selection_fraction!==a.maximum_selection_fraction?'~'+pct(a.maximum_selection_fraction,0):''),pct(a.shade_min)+'~'+pct(a.shade_max)].entries()){let td=document.createElement('td');if(i===0){let b=document.createElement('button');b.className='table-action';b.textContent=v;b.onclick=()=>{el('area').value=a.area_id;areaSelect();el('detail').scrollIntoView({behavior:'smooth',block:'start'})};td.appendChild(b)}else td.textContent=v;tr.appendChild(td)}el('areas').querySelector('tbody').appendChild(tr)}
+for(let id of ['weatherQ','curveQ','margin'])el(id).onchange=scenario;for(let id of ['view','year','route'])el(id).onchange=draw;el('area').onchange=areaSelect;el('segment').onchange=()=>select(el('segment').value);el('download').onclick=download;
+el('restore').onclick=()=>{el('weatherQ').value='0.75';el('curveQ').value='0.75';el('margin').value='250';scenario()};
+el('matrixMargin').onchange=()=>{el('margin').value=el('matrixMargin').value;scenario()};
+el('reset').onclick=()=>el('map').setAttribute('viewBox',DATA.box.join(' '));el('focus').onclick=()=>{if(chosen){let r=lookup[chosen];el('map').setAttribute('viewBox',[r.cx-3,r.cy-3,6,6].join(' '))}};
+el('criteria').open=innerWidth>720;scenario();let initial=DATA.rows.find(r=>r.area==='S01');if(initial)select(initial.id);window.SECTION_READY=true;
+</script></html>

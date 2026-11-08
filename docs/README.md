@@ -1,108 +1,23 @@
 # 문서 안내
 
-처음 읽는다면 현재 보고서와 검토 안내를 먼저 확인합니다. 날짜가 붙은 실험 문서는 당시 조건·결과를 보존한 기록이며 현재 상태를 대신하지 않습니다.
+최종 결과는 [보고서 원고와 도표](delivery/FINAL_ANALYSIS_REPORT.md)를 기준으로 읽는다. PDF·데모·제출 ZIP은 대회 자료가 포함된 로컬 제출본에 있고 GitHub에는 넣지 않았다. [로컬 열람 안내](START_HERE.md)에서 위치와 읽는 순서를 확인할 수 있다.
 
-## 먼저 읽을 문서
+## 처음 읽는 순서
 
-1. [처음 읽는 안내](START_HERE.md): 프로젝트·자료·지표·버전.
-2. [현재 분석 보고서](delivery/ANALYSIS_REPORT.md): 온도 개선·결빙 기준선·새 지역 평가·활용과 한계.
-3. [심사자 검토 안내](delivery/REVIEWER_GUIDE.md): 읽는 순서·실행·주요 질문과 답.
-4. [v7 구성과 검증](delivery/REVIEW_BUNDLE_V7_20261026.md), [유사 대회 비교](delivery/BENCHMARK_REVIEW_20261025.md): 산출물 개편과 근거.
-5. [현재 상태](STATUS.md), [공식 규정·일정](competition/OFFICIAL_UPDATE_20261025.md): 완료 범위와 남은 과제.
-6. [CSV 규약](delivery/CSV_CONTRACT.md), [스크립트 안내](../scripts/README.md): 수치 해석과 재현.
+1. [결과와 지표 설명](START_HERE.md)
+2. [최종 분석 보고서](delivery/FINAL_ANALYSIS_REPORT.md)
+3. [검증 상태와 남은 한계](STATUS.md)
+4. [공식 규정·평가 기준](competition/OFFICIAL_RULES_AND_RUBRIC_20261106.md)
+5. [코드 실행 안내](../scripts/README.md)와 [폴더 구조](STRUCTURE.md)
 
-## 최근 성능 연구
+## 자료와 검증
 
-[기온 잔차·관측 지연·입력 정보량](research/RESIDUAL_AND_INFORMATION_20261025.md)은 기존 개발 지역의 후속 실험입니다. [새 4지역 일회 평가](research/BLIND_ICING_20261025.md)는 사전 고정 후 처음 평가한 공간 검증으로, 이후 재학습·선택에 사용하지 않았습니다. [원문 품질 진단](research/RWIS_CAUSE_AND_ADDITIVE_20261025.md)과 [미발송 자료 요청](research/RWIS_DATA_REQUEST_20261025.md)은 미해결 근거를 구체화합니다.
+- [변수 사전](data/VARIABLE_DICTIONARY.md)
+- [검증 설계](validation/VALIDATION_PROTOCOL.md)
+- [CSV 열·단위·결측 규약](delivery/CSV_CONTRACT.md)
+- [AI 활용 내역](../AI_USAGE.md)
+- [저장소 공유 범위](../.github/PUBLICATION.md)
 
-온도 모델 v3·결빙 판정 v2를 유지합니다. 아래 v6·v5 및 이전 문서는 각 시점의 구성과 실험 기록입니다. [프로젝트 소개](../README.md) · [폴더 구조](STRUCTURE.md)
+## 상세 연구와 과거 기록
 
-## 대회
-
-- [공식 상세·참가서약 재확인과 데모 답변 — 2026-10-25](competition/OFFICIAL_UPDATE_20261025.md)
-- [공식 새 게시물과 미확인 범위 — 2026-10-19](competition/OFFICIAL_UPDATE_20261019.md)
-- [공식 사이트 전체 재확인 — 2026-10-16](competition/OFFICIAL_UPDATE_20261016.md)
-- [대회 요구사항과 적용 범위 — 2026-10-25](competition/COMPETITION_REQUIREMENTS.md)
-- [공식 Q&A633 답변과 일별 평가 후속 검증 — 2026-10-13](competition/OFFICIAL_QNA_20261013.md)
-- [공식 정보 재검토와 저장소 검증 — 2026-10-09](competition/OFFICIAL_REVIEW_20261009.md)
-- [문제설명·데이터 설명·Q&A 통합 검토 — 2026-10-07](competition/OFFICIAL_TABS_REVIEW_20261007.md)
-- [공식 정보 변경·확인 기록 — 2026-10-02](competition/OFFICIAL_UPDATE_20261002.md)
-- [Q&A 반영과 수정 데이터 검증 — 2026-10-07](competition/OFFICIAL_UPDATE_20261007.md)
-- [공식 사이트 추가 정보와 오프라인 재현 — 2026-10-13](competition/OFFICIAL_UPDATE_20261013.md)
-- [운영진 확인 질문 — 2026-10-13](competition/QUESTIONS_FOR_ORGANIZER.md)
-
-## 데이터
-
-- [자료 품질 점검 — 2026-09-23](data/DATA_AUDIT.md)
-- [개발 자료 탐색 — 2026-09-23](data/EDA_REPORT.md)
-- [변수 사전과 품질 요약](data/VARIABLE_DICTIONARY.md)
-
-## 검증
-
-- [평가·제출 준비 현황 — 2026-10-14](validation/EVALUATION_STATUS.md)
-- [학습·평가 분리와 지표 계산 규칙 — 2026-10-02](validation/VALIDATION_PROTOCOL.md)
-
-## 연구
-
-- [새 4지역의 기상 품질·사전 예측 봉인·독립 평가 — 2026-10-25](research/BLIND_ICING_20261025.md)
-
-- [결빙 전이와 임계값 정확 탐색 — 2026-10-25](research/ICING_TRANSITION_REVIEW_20261025.md)
-- [새 논문·공개 구현과 이용조건 — 2026-10-25](research/ICING_REFERENCES_20261025.md)
-- [온도 확장 연구 — 2026-10-24](research/EXTENDED_SEARCH_20261024.md)
-- [논문·GitHub·Hugging Face 자료 검토 — 2026-10-24](research/OPEN_SOURCE_REVIEW_20261024.md)
-- [기온·노면 72개 결합과 관측 공백·미사용 지점 검토 — 2026-10-16](research/AIR_ROAD_AND_INPUT_GAPS_20261016.md)
-- [심사 관점 후속 연구·새 지점 평가 — 2026-10-10](research/AWARD_READINESS_REVIEW_20261010.md)
-- [단순 기온 기준과 보정 결과](research/BASELINE_REPORT.md)
-- [실행·실험 기록](research/EXPERIMENT_LOG.md)
-- [시설 거리·과거 기상 입력 비교](research/FACILITY_HISTORY_REPORT.md)
-- [후속 실험을 선택한 근거](research/FOLLOWUP_EVIDENCE.md)
-- [미사용 8개 지점 사전 고정 평가 — 2026-10-09](research/FRESH_STATION_REVIEW_20261009.md)
-- [첫 결빙 분류 모델과 실패 분석 — 2026-09-23](research/ICE_BASELINE_REPORT.md)
-- [결빙 탐지 병목 진단과 후속 실행안 — 2026-10-09](research/ICE_BOTTLENECK_REVIEW_20261009.md)
-- [결빙 학습 가중치·선택 기준 후속 검토 — 2026-10-09](research/ICE_GROUP_BALANCED_REVIEW_20261009.md)
-- [결빙 방법론 여섯 가지의 공간 비교 — 2026-10-10](research/ICE_METHODOLOGY_REVIEW_20261010.md)
-- [비선형 결빙 모델과 오경보 분석 — 2026-10-02](research/ICE_NONLINEAR_REPORT.md)
-- [온도 교차 추정·노면상태 분류와 점수 이전 진단 — 2026-10-09](research/JOINT_SURFACE_REVIEW_20261009.md)
-- [방법론 블렌딩의 검증과 후속 판단](research/METHOD_BLENDING_REVIEW_20261010.md)
-- [주변 도로 관측을 추가한 노면온도 비교](research/NEIGHBOR_RWIS_REPORT.md)
-- [다음 겨울·미관측 지점의 노면온도 검증 — 2026-10-02](research/NEIGHBOR_TRANSFER_REPORT.md)
-- [정정 자료 배포 전 점검·구간 생성 — 2026-10-02](research/PRE_CORRECTION_WORK_REPORT.md)
-- [공식 자료·선행연구 목록](research/REFERENCES.md)
-- [점수 보정·노면상태와 온도 진단 — 2026-10-09](research/SCORE_CALIBRATION_REVIEW_20261009.md)
-- [전북 두 겨울 구간 기상 노출·환경 근거 — 2026-10-09](research/SEGMENT_EXPOSURE_REVIEW_20261009.md)
-- [고정 평균 온도 후보와 새 호남 지점 검증 — 2026-10-10](research/TEMPERATURE_MEAN_AND_BLIND_REVIEW_20261010.md)
-- [추정 온도·수분 결빙 가안과 완료된 다음 겨울 검증 — 2026-10-09](research/THERMAL_ICE_AND_RESERVED_REVIEW_20261009.md)
-- [미해결 사항의 위치와 평가 분모 및 입력 범위 검토](research/UNRESOLVED_EVIDENCE_REVIEW_20261010.md)
-- [거리 변수 제거·기상망 확장 후속 검토 — 2026-10-10](research/WEATHER_DISTANCE_AND_NETWORK_REVIEW_20261010.md)
-- [기상 단독 온도 모델 개선과 관측소 대표성 후속 검토 — 2026-10-09](research/WEATHER_FALLBACK_REVIEW_20261009.md)
-- [기상 자료를 결합한 노면온도 모델 — 2026-09-23](research/WEATHER_FUSION_REPORT.md)
-- [기상 이력 대조군과 온도·결빙 균형 후보 — 2026-10-13](research/WEATHER_MEMORY_REVIEW_20261013.md)
-
-## 제출
-
-- [단순 기준선·모델 카드·CSV·ZIP 복원 수정 — 2026-10-16](delivery/REVIEW_RESPONSE_20261016.md)
-- [10월14일 대회 현황과 제출 후보 후속 검토](delivery/COMPETITION_STATUS_20261014.md)
-- [결빙점 가중 모델 검증과 보고서 개편](delivery/MODEL_REPORT_UPGRADE_20261014.md)
-- [연구 결과물 인계·마감 판단 — 2026-10-09](delivery/RESEARCH_DELIVERY_REVIEW_20261009.md)
-- [단계별 실행 안내](delivery/RUNBOOK.md)
-- [제출 후보 패키지와 추가 판정 검증](delivery/SUBMISSION_CANDIDATE_20261013.md)
-
-## 과거 기록
-
-- [누적 진행 이력 — 당시 상태 보존](history/PROJECT_STATUS.md)
-- [이전 README 전체 결과·소개](history/PROJECT_OVERVIEW_20261014.md)
-
-## 용어와 해석
-
-| 용어 | 뜻 |
-| --- | --- |
-| MAE | 온도 예측 절대 오차 평균. 전체 행 평균과 지점 균등 평균을 구별 |
-| FP / FN | 실제 비결빙의 오경보 / 실제 결빙의 미탐 |
-| OOF | 해당 지점을 학습하지 않은 모델의 예측 |
-| 봉인 | 평가 전에 모델·입력·예측을 고정하고 해시를 기록하는 절차 |
-| 보호 지점 | 학습·선택·주변 참조에서 제외한 최종 평가용 지점 |
-| 사건 | 연속된 10분 결빙을 묶은 사례. 단일 시점 사건도 별도 확인 |
-
-공식 점수·반복 개발 점수·개봉한 새 공간 평가를 구별합니다. 전체 용어 풀이는 [이전 문서 안내](history/DOCUMENT_INDEX_20261014.md)에 보존했습니다.
-
-[AI 지원 기록](../AI_USAGE.md) · [공유 조건](../.github/PUBLICATION.md)
+`research/`에는 연구별 입력·분할·비교·미채택 이유를, `competition/`에는 시점별 공식 원문 대조를 보관한다. `delivery/`의 날짜·버전이 붙은 문서는 당시 제출 후보의 재현 근거다. 현재 결과는 위 최종 보고서를 따른다. 과거 점수의 분모·입력 범위·평가 규칙을 현재 점수와 혼용하지 않는다.

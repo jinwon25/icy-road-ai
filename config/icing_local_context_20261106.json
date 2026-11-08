@@ -1,0 +1,74 @@
+{
+  "purpose": "동일 ASOS 입력에 붙는 도로별 다른 상태를 구분하기 위해 AWS 관측과 실제 DSM/태양 위치를 단계적으로 추가하는 입력 대조",
+  "source": "outputs/private/icing_local_context_inputs_20261106/training.parquet",
+  "reference": "outputs/private/two_winter_models_20261024_v1/runtime_predictions.parquet",
+  "output": "outputs/private/icing_local_context_20261106",
+  "blocked_stations": [
+    "12410",
+    "33411",
+    "23402",
+    "33402",
+    "33406",
+    "12213",
+    "23411"
+  ],
+  "models": [
+    {
+      "name": "process_day",
+      "features": "process",
+      "weights": "day",
+      "reused": true
+    },
+    {
+      "name": "local_day",
+      "features": "local",
+      "weights": "day",
+      "reused": false
+    },
+    {
+      "name": "terrain_day",
+      "features": "terrain",
+      "weights": "day",
+      "reused": false
+    }
+  ],
+  "parameters": {
+    "learning_rate": 0.05,
+    "max_iter": 220,
+    "max_leaf_nodes": 7,
+    "min_samples_leaf": 300,
+    "l2_regularization": 30,
+    "early_stopping": false,
+    "random_state": 20261106,
+    "interaction_cst": "pairwise"
+  },
+  "history": "현재 ASOS 관측 13개+차이2개+시간/계절4개. process는 [t-window,t)의 1/6/24h 기온·지면온도 평균, 냉각/해빙 degree-hour, 수분/건조/일사 이력과 1h/6h 변화량. 원 기상 시각은 목표보다 엄격히 과거. 80% 이상 유효 이력일 때만 값 산출. 실제 노면 관측·다른 지점의 상태·지점 ID·지역 ID 입력 제외",
+  "threshold": "기상 점수>=임계값 AND ASOS<=2도. 내부 OOF의 모든 서로 다른 양의 점수를 정확 순회. 날짜→지점 공식 F1 최대, Recall>=0.70. 동률 FP 적음·높은 문턱 우선. ASOS<=0도 대조도 같은 내부 선택에 포함. 보조 precision_track은 내부 F1이 ASOS 이상이며 Recall>=0.70인 정책 중 정밀도 최대. 보조로 주 실패를 대체하지 않음",
+  "validation": "4개 단일+6개 이중 지역제외. ASOS53 day모델10개재사용, AWS추가59/DSM·태양추가68 day모델각10개 신규. 총20신규적합. 학습·선택·평가의지역분리를유지하고 양성은Ice만.",
+  "selection_before_outer_metrics": true,
+  "promotion_gate": {
+    "precision_relative_gain": 0.1,
+    "f1_relative_gain_over_both_baselines": 0.05,
+    "strict144_f1_not_worse": true,
+    "recall_relative_to_production": 0.95,
+    "maximum_lost_fraction_of_production_events": 0.05,
+    "each_winter_f1_not_worse": true,
+    "each_region_f1_relative_to_production": 0.9,
+    "seven_day_block_lower_f1_delta_over_production": 0,
+    "matched_asos_relative_f1_gain": 0.01
+  },
+  "references": [
+    "https://gmd.copernicus.org/articles/17/4837/2024/",
+    "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+  ],
+  "reference_scope": "도로 수분·해빙·증발 과정과 sklearn 자체 학습기 사용법만 참고. RoadSurf 물리 모형 구현·원 코드 복사·얼음 확률 보정 주장 없음",
+  "new_independent_assessment": false,
+  "protected_labels_used": false,
+  "production_model_changed": false,
+  "seed": 20261106,
+  "source_receipt": "outputs/private/icing_local_context_inputs_20261106/receipt.json",
+  "cached_binary": "outputs/private/icing_precision_20261106",
+  "selection": "기존과동일 Recall>=.70 중 공식F1 최대. primary는ASOS53/AWS59/지형68/ASOS0도 중 내부선택. matched_asos는ASOS53/0도만,local_only/terrain_only는각확장입력과0도만선택해입력추가가치구분. 보조가주실패를대체하지않음.",
+  "input_policy": "AWS<=60분만현재입력. 상태·노면온도는입력에없음. 실제DSM(m)과일사위치만사용, 대회정규화DEM을미터로해석하지않음. 제공교량선자료는외부9지점과1~18km 떨어져억지로매칭하지않고본학습에서제외.",
+  "final_selection": "사전 승격 모든조건통과 때만 4단일지역 OOF의같은Recall/F1규칙으로명세고정후허용23곳전체재학습. 보호3+기개봉4정답선택금지. 실패시기존제출물유지."
+}

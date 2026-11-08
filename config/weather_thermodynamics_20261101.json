@@ -1,0 +1,18 @@
+{
+  "purpose": "v10 습도를 기준으로 물리 입력과 제한 출력의 추가 가치 비교",
+  "output": "outputs/private/weather_thermodynamics_20261101_v1",
+  "input": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "input_sha256": "84efc7d7a8f38b65d47d5d5212a15f1b61eda6c780409e4cfcebb24501d9a0f1",
+  "baseline": "outputs/private/weather_humidity_stable_20261101_v1",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "candidates": ["thermo_residual", "thermo_logit"],
+  "selection": "각 후보가 두 검증의 모든 기준을 넘을 때만 채택 가능. 둘 다 통과하면 목표 변환이 없는 thermo_residual 우선. 어느 것도 실패 뒤 재조정하지 않음",
+  "features": "기존 안정화82 + IFS 물/얼음 포화·수증기압·서리점 등18 + 수증기압/부족량의 3h/24h 이력24 =124",
+  "model": {"loss": "absolute_error", "learning_rate": 0.05, "max_iter": 300, "max_leaf_nodes": 15, "min_samples_leaf": 200, "l2_regularization": 10.0, "early_stopping": false, "random_state": 20261031},
+  "gates": {"minimum_mae_reduction": 0.02, "maximum_winter_mae_ratio": 1.0, "maximum_region_mae_ratio": 1.1, "maximum_cold_mae_ratio": 1.0},
+  "bootstrap": {"block_days": 7, "repetitions": 2000, "seed": 20261101},
+  "logit": {"continuity_correction_percent": 0.5, "weight": "목표 p(1-p) 야코비안으로 물리 단위 L1을 국소 근사. 정확한 동치 목적함수가 아님"},
+  "references": ["https://arxiv.org/html/2212.04487v2", "https://rmets.onlinelibrary.wiley.com/doi/10.1002/met.70237", "https://earthkit-meteo.readthedocs.io/en/stable/autoapi/earthkit/meteo/thermo/saturation_vapour_pressure.html"],
+  "scope": "반복 개발 지역. 보호 정답·기존 개봉4지역·현장 과거습도·실측노면 입력 없음. 대회 성적이나 미래 예보와 구별",
+  "production_model_changed": false
+}

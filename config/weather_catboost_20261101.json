@@ -1,0 +1,17 @@
+{
+  "purpose": "현재82개 기상 이력 입력에서 대칭 나무와 HGB의 고정 평균을 비교",
+  "output": "outputs/private/weather_catboost_20261101_v1",
+  "input": "outputs/private/road_weather_targets_20261031_v3/development.parquet",
+  "input_sha256": "84efc7d7a8f38b65d47d5d5212a15f1b61eda6c780409e4cfcebb24501d9a0f1",
+  "baseline": "outputs/private/weather_humidity_stable_20261101_v1",
+  "blocked_stations": ["12410", "33411", "23402", "33402", "33406", "12213", "23411"],
+  "candidates": ["catboost_history", "half_hgb_catboost"],
+  "selection": "두 제외 검증의 모든 사전 조건을 통과한 후보만 허용. 둘 다 통과하면 단일 CatBoost 우선. 고정평균은 0.5/0.5이며 재조정하지 않음",
+  "model": {"loss_function": "MAE", "iterations": 600, "depth": 6, "learning_rate": 0.05, "l2_leaf_reg": 10.0, "border_count": 128, "random_seed": 20261101, "random_strength": 0.0, "bootstrap_type": "No", "boosting_type": "Plain", "grow_policy": "SymmetricTree", "nan_mode": "Min", "thread_count": 2, "verbose": false, "allow_writing_files": false},
+  "gates": {"minimum_mae_reduction": 0.02, "maximum_winter_mae_ratio": 1.0, "maximum_region_mae_ratio": 1.1, "maximum_cold_mae_ratio": 1.0},
+  "bootstrap": {"block_days": 7, "repetitions": 2000, "seed": 20261101},
+  "rationale": "새 물리 입력 실험의 전체 점수 열람 전 설계. 기상82입력과 목표·가중치는 그대로 두고 대칭 나무의 규제 구조를 비교. 외부 코드·모델·자료 반입 없음",
+  "references": ["https://catboost.ai/docs/en/concepts/algorithm-main-stages", "https://catboost.ai/docs/en/concepts/algorithm-missing-values-processing", "https://catboost.ai/docs/en/concepts/loss-functions-regression"],
+  "production_model_changed": false,
+  "new_independent_assessment": false
+}
