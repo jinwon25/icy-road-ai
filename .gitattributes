@@ -1,0 +1,2 @@
+# 최종 실행 소스의 줄바꿈을 포함한 원본 바이트를 보존한다.
+submission/source/** -text

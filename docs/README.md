@@ -12,6 +12,8 @@
 
 ## 자료와 검증
 
+- [최종 실행 소스·Notebook](../submission/README.md)
+
 - [변수 사전](data/VARIABLE_DICTIONARY.md)
 - [검증 설계](validation/VALIDATION_PROTOCOL.md)
 - [CSV 열·단위·결측 규약](delivery/CSV_CONTRACT.md)

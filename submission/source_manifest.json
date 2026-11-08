@@ -1,0 +1,324 @@
+{
+  "scope": "final_submission_code_notebooks_and_requirements_only",
+  "model_archive_sha256": "ff9eb7ed67393a31cfa7a14a49f015a0df99d6c5b83aae171561a33386d1403e",
+  "source_file_count": 77,
+  "source_total_bytes": 231770,
+  "files": {
+    "requirements-geospatial.txt": {
+      "bytes": 104,
+      "sha256": "e83ae3950d589892c4759a58cae0684a67037d6bcdf7769e2490251afdbfd02c"
+    },
+    "requirements-notebook.txt": {
+      "bytes": 92,
+      "sha256": "558cc2106ef93cb562f9ea105c9131beeedaa16d2c4a7f4c8de759e391594d47"
+    },
+    "requirements.txt": {
+      "bytes": 268,
+      "sha256": "2d4430c3a66f6df8dec78305a5d834663e4ff9b8fca8b2895709bca1ffd079b4"
+    },
+    "code/analyze_aws_short_forcing_review.py": {
+      "bytes": 1875,
+      "sha256": "3b46e197f2b3db9c74c42a370f9d26b87e29fef124b1702235aa17403358032d"
+    },
+    "code/analyze_icing_errors.py": {
+      "bytes": 4135,
+      "sha256": "db79e2540cc5502dd75eddefcbb3cfb6862ec3ef0916f9a6d018e17fba6e81bc"
+    },
+    "code/analyze_inspection_sensitivity.py": {
+      "bytes": 2401,
+      "sha256": "022c238777d268e827fb38ba9f68e90402990e35896a0189d903a4d6e0f2d268"
+    },
+    "code/analyze_inventory_agreement.py": {
+      "bytes": 5408,
+      "sha256": "91de11d62ad9dc659201ca1ad68eb6418132f8b48a240207f1ea597d1e9d806c"
+    },
+    "code/analyze_segment_conditions.py": {
+      "bytes": 6540,
+      "sha256": "1c96c8bbaa5bc6adbc6f4e283b6d0ea36570e0a8cbda24e0a46629c2d0bc8529"
+    },
+    "code/analyze_short_forcing_review.py": {
+      "bytes": 1847,
+      "sha256": "484935b612b17acd743ac7108b1bbac4cc249c8969333753f37b261963152c3b"
+    },
+    "code/analyze_temperature_benchmarks.py": {
+      "bytes": 1579,
+      "sha256": "07a84a14ab466e1044ff07ddb352afb4bbdfb173d821eb5ac408b91371029396"
+    },
+    "code/build_field_plan.py": {
+      "bytes": 10038,
+      "sha256": "5804d05c658cfe05510fd5c5ed5abb0fb2935e8547d5b4e0db217bca238e4f7f"
+    },
+    "code/build_section_explorer.py": {
+      "bytes": 4507,
+      "sha256": "79f2dfe0fe5c205d694379ba17bdd64b7c797c4e509ff7ee6fa13f0d6d75807c"
+    },
+    "code/build_temperature_reference.py": {
+      "bytes": 2799,
+      "sha256": "28c0bd5f7c176d83138b9dce1889bee2193a049860b11abd3b8b2b378e91f4e3"
+    },
+    "code/check_full_validation.py": {
+      "bytes": 2433,
+      "sha256": "b18eccb2f6420947fde58edfb6d317364649cf8ef13486c56b74cc95d48b12a6"
+    },
+    "code/compare_fixed_temperature_rules.py": {
+      "bytes": 2650,
+      "sha256": "498da2d7e4adf14a3b575b78642a14eb5eeca1266a42b26931249845eafe1c81"
+    },
+    "code/derive_terrain_context.py": {
+      "bytes": 7175,
+      "sha256": "e0aa92a54a58c10ef714fd85f0a61c2aa1c31d0b2e911f7394e091aa93ac0f53"
+    },
+    "code/predict.py": {
+      "bytes": 2666,
+      "sha256": "e61a1908d0f3e20f725f45506bbc682a63e97f9cf838ee3dd8047a594aa24fb9"
+    },
+    "code/predict_weather.py": {
+      "bytes": 2172,
+      "sha256": "3036011c325334183ee878186b34843070f9f7dd13ced677697e36335ef7b4f1"
+    },
+    "code/rebuild_weather_information.py": {
+      "bytes": 3698,
+      "sha256": "533c4f8a84ef8ba3c5ecc31fa1cc00ce583a9245aedfb60c8d32fcec738c0b39"
+    },
+    "code/review_sections.py": {
+      "bytes": 894,
+      "sha256": "e0c1bece368f1a8bbe6cf8a7f7e0d21393520f9061a9ba40cb5b04b4b00cb819"
+    },
+    "code/train.py": {
+      "bytes": 3612,
+      "sha256": "cadbf535a2a6fa951f7ee0719cc3071a30bf431420f66eff9f7ee3eb3ae0ab50"
+    },
+    "notebooks/analysis.ipynb": {
+      "bytes": 15786,
+      "sha256": "d9e567a9158dce06e083f64d8f5251d21d87171e1098a7d44d792f4623acb65b"
+    },
+    "notebooks/training.ipynb": {
+      "bytes": 3162,
+      "sha256": "78210746d97dd00cb641c77504bc9dfbf00bb0bf4bd0b52b92f5da0f4af1806e"
+    },
+    "src/advanced_thermal_runtime.py": {
+      "bytes": 1731,
+      "sha256": "73b8853ecc72f0170c5a7baa8253aa2ce20dddf2812a411aea48cc215ec6ab8b"
+    },
+    "src/competition_icing_profiles.py": {
+      "bytes": 1715,
+      "sha256": "3b86872f0a308fb4ede5f9dd3d890fdf83425ad0c52cd63543aa1130a09d83ea"
+    },
+    "src/evaluation.py": {
+      "bytes": 5672,
+      "sha256": "274cfc231e54c9eecb20349de1c7ac5ec6a20a9112d7349011f60de9bf21d802"
+    },
+    "src/evidence_analysis.py": {
+      "bytes": 4038,
+      "sha256": "b1825f2e64155b4cda5a2d6c83999dc0a41e3bc4583c39d29952cfa702540ed1"
+    },
+    "src/evidence_hash.py": {
+      "bytes": 196,
+      "sha256": "0785c741ef1d0354b3e9ec876a0bc25fc07906a96077fb8c8de652e59027c203"
+    },
+    "src/extended_runtime.py": {
+      "bytes": 3155,
+      "sha256": "f817f422fe3f2695bd7233578d35905281205a22add23b929701196bd0f74cf3"
+    },
+    "src/inspection_sensitivity.py": {
+      "bytes": 2717,
+      "sha256": "111829bcd8a49db691f0681b4f5cdfc791821c887a0f24067a794661d0552689"
+    },
+    "src/offline_runtime.py": {
+      "bytes": 1119,
+      "sha256": "78e1ab54dc1d8f30aad4dbcb076846ff061fe56c0391659c54c906a3c5628351"
+    },
+    "src/section_review.py": {
+      "bytes": 1549,
+      "sha256": "162beaa72192ef375188828eab07de79452044753bc4271a9a4f1cc7e0c4f260"
+    },
+    "src/solar_terrain.py": {
+      "bytes": 5770,
+      "sha256": "1a2d9e2b8f528d78b3e992676e66922611500620a8799f3cbb5032b227695ade"
+    },
+    "src/solar_thermal_runtime.py": {
+      "bytes": 1433,
+      "sha256": "862ffba0715714a8d25b683687ba4f5097f68729f5783f5fc854d02982b66d49"
+    },
+    "src/submission_io.py": {
+      "bytes": 435,
+      "sha256": "7575898cfa489d86efd4fe6eaf5525c6d82cf7cf02c80271b7f9b1a33bece18b"
+    },
+    "src/submission_runtime.py": {
+      "bytes": 6168,
+      "sha256": "e1b3848e5fa778de9801736c61ff77be958724cafc680aa003e8d9af3a5d79f8"
+    },
+    "src/thermal_runtime.py": {
+      "bytes": 4183,
+      "sha256": "df2577cadd8c99af7668bfb43d29fd7220b7a168581465310dd9df5fd6795e1f"
+    },
+    "src/validation.py": {
+      "bytes": 6771,
+      "sha256": "3768cd1f1c136e2e001f4f9431cb9cc05b3634e8d6e71ed5665af03e1bb89675"
+    },
+    "src/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "weather/air_temperature/requirements.txt": {
+      "bytes": 252,
+      "sha256": "7326f9c42144974f2437b7d646870360f94bd16cdd21b9cb1a456c505e98efae"
+    },
+    "weather/air_temperature/scripts/predict_weather_supplement.py": {
+      "bytes": 1024,
+      "sha256": "dc41325e8f17fd23df42aef7916a6398cf97d4fa6a2aab6877d134b850e117de"
+    },
+    "weather/air_temperature/scripts/retrain_weather_supplement.py": {
+      "bytes": 2460,
+      "sha256": "89ca64921cf11efcf5173f56b263e20c7be0a12dba4dc5336bae01e938606b6c"
+    },
+    "weather/air_temperature/src/data_source.py": {
+      "bytes": 1037,
+      "sha256": "ea51520481147c875b1d5d5a1377d9f587a0ec6476a805f7db48832d01539baf"
+    },
+    "weather/air_temperature/src/observation_io.py": {
+      "bytes": 1746,
+      "sha256": "64331c7d3acb9619f43878f9d0897b5c633e74e92f98f665ef7e3681a38f46e2"
+    },
+    "weather/air_temperature/src/offline_runtime.py": {
+      "bytes": 1119,
+      "sha256": "78e1ab54dc1d8f30aad4dbcb076846ff061fe56c0391659c54c906a3c5628351"
+    },
+    "weather/air_temperature/src/road_weather_runtime.py": {
+      "bytes": 2502,
+      "sha256": "ec4b2234e9efc6df2dd1a317c1eeeffe86aa7e9ea85c3c5862898367f1f5743b"
+    },
+    "weather/air_temperature/src/road_weather_transfer.py": {
+      "bytes": 4688,
+      "sha256": "8f91f7db4af866eb5eb36fcfd8370c8ec55ff2654535270e46052ca65b9dd374"
+    },
+    "weather/air_temperature/src/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "weather/humidity/requirements.txt": {
+      "bytes": 268,
+      "sha256": "43b5e27d129d588b6ebd04c17a854345c9a2f6384c17b2513e438569b665feb9"
+    },
+    "weather/humidity/scripts/predict_weather_history.py": {
+      "bytes": 1855,
+      "sha256": "d1edc942acdc6c0375ce956ea7ad7fbba2498de3fc2af5f4393a48956592cd17"
+    },
+    "weather/humidity/scripts/retrain_weather_history.py": {
+      "bytes": 3095,
+      "sha256": "3fc7cde255220ee6eafd45e2c18012a786ef63cc3b2f7726a2ab8004465971ab"
+    },
+    "weather/humidity/src/data_source.py": {
+      "bytes": 1037,
+      "sha256": "ea51520481147c875b1d5d5a1377d9f587a0ec6476a805f7db48832d01539baf"
+    },
+    "weather/humidity/src/observation_io.py": {
+      "bytes": 1746,
+      "sha256": "64331c7d3acb9619f43878f9d0897b5c633e74e92f98f665ef7e3681a38f46e2"
+    },
+    "weather/humidity/src/offline_runtime.py": {
+      "bytes": 1119,
+      "sha256": "78e1ab54dc1d8f30aad4dbcb076846ff061fe56c0391659c54c906a3c5628351"
+    },
+    "weather/humidity/src/road_weather_runtime.py": {
+      "bytes": 2502,
+      "sha256": "ec4b2234e9efc6df2dd1a317c1eeeffe86aa7e9ea85c3c5862898367f1f5743b"
+    },
+    "weather/humidity/src/road_weather_transfer.py": {
+      "bytes": 4688,
+      "sha256": "8f91f7db4af866eb5eb36fcfd8370c8ec55ff2654535270e46052ca65b9dd374"
+    },
+    "weather/humidity/src/weather_history_runtime.py": {
+      "bytes": 5723,
+      "sha256": "10185cfebb68855217bf8e14e1620fc81491f2d0b991dfaba700c94cd5329d10"
+    },
+    "weather/humidity/src/weather_history_stable.py": {
+      "bytes": 2593,
+      "sha256": "4e5bf3c6f11841a6ff10df818ad267ef575035dd3dee74043d4111d1212714ba"
+    },
+    "weather/humidity/src/weather_temporal.py": {
+      "bytes": 3369,
+      "sha256": "3dca948e059d0cc89dff9b292612a382fe325befa688eb6eb02a5d863ba63963"
+    },
+    "weather/humidity/src/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "weather/wind/requirements.txt": {
+      "bytes": 268,
+      "sha256": "43b5e27d129d588b6ebd04c17a854345c9a2f6384c17b2513e438569b665feb9"
+    },
+    "weather/wind/scripts/check_notebook.py": {
+      "bytes": 3393,
+      "sha256": "b05b97a7051bdfc210fdb3aab91cea9aec7045ea5791dcd1c19f2286532bb363"
+    },
+    "weather/wind/scripts/predict_wind_network.py": {
+      "bytes": 1461,
+      "sha256": "30d5be016766094008d7663949cc10e5ab73811c934a8dbbfd75d4c2f52d3f33"
+    },
+    "weather/wind/scripts/retrain_wind_network.py": {
+      "bytes": 2017,
+      "sha256": "cfdefd03dcd15d721041e2b6f97d72a6cded39f6c98b180b702bd4ed52482ea3"
+    },
+    "weather/wind/src/data_source.py": {
+      "bytes": 1037,
+      "sha256": "ea51520481147c875b1d5d5a1377d9f587a0ec6476a805f7db48832d01539baf"
+    },
+    "weather/wind/src/observation_io.py": {
+      "bytes": 1746,
+      "sha256": "64331c7d3acb9619f43878f9d0897b5c633e74e92f98f665ef7e3681a38f46e2"
+    },
+    "weather/wind/src/offline_runtime.py": {
+      "bytes": 1119,
+      "sha256": "78e1ab54dc1d8f30aad4dbcb076846ff061fe56c0391659c54c906a3c5628351"
+    },
+    "weather/wind/src/road_weather_runtime.py": {
+      "bytes": 2502,
+      "sha256": "ec4b2234e9efc6df2dd1a317c1eeeffe86aa7e9ea85c3c5862898367f1f5743b"
+    },
+    "weather/wind/src/road_weather_transfer.py": {
+      "bytes": 4688,
+      "sha256": "8f91f7db4af866eb5eb36fcfd8370c8ec55ff2654535270e46052ca65b9dd374"
+    },
+    "weather/wind/src/validation.py": {
+      "bytes": 6771,
+      "sha256": "3768cd1f1c136e2e001f4f9431cb9cc05b3634e8d6e71ed5665af03e1bb89675"
+    },
+    "weather/wind/src/weather_features.py": {
+      "bytes": 7266,
+      "sha256": "95713fa11d415fc17d2a68d0953539da20a605cb30511fdf301ba8093626fc85"
+    },
+    "weather/wind/src/weather_history_runtime.py": {
+      "bytes": 5723,
+      "sha256": "10185cfebb68855217bf8e14e1620fc81491f2d0b991dfaba700c94cd5329d10"
+    },
+    "weather/wind/src/weather_history_stable.py": {
+      "bytes": 2593,
+      "sha256": "4e5bf3c6f11841a6ff10df818ad267ef575035dd3dee74043d4111d1212714ba"
+    },
+    "weather/wind/src/weather_inputs.py": {
+      "bytes": 2272,
+      "sha256": "006895f3c2c7ffa8d3a5d5c52423b15179f377a6657cb669c85f16a6da39938a"
+    },
+    "weather/wind/src/weather_network.py": {
+      "bytes": 5382,
+      "sha256": "eb64dd879725ca9f2b94cd088823b333f4508975e490b4d09e91c9fb71dc6bde"
+    },
+    "weather/wind/src/weather_temporal.py": {
+      "bytes": 3369,
+      "sha256": "3dca948e059d0cc89dff9b292612a382fe325befa688eb6eb02a5d863ba63963"
+    },
+    "weather/wind/src/wind_network_runtime.py": {
+      "bytes": 4847,
+      "sha256": "2033942a974000c133dd01d2978b01b4cc702c67b628e2d89fb0a9605d7d2d43"
+    }
+  },
+  "excluded": [
+    "competition_data",
+    "trained_models",
+    "row_level_predictions",
+    "documents_and_video_containing_data",
+    "credentials"
+  ],
+  "notebook_outputs_empty": true
+}

@@ -17,7 +17,7 @@
 
 노면온도의 개선이 결빙 탐지 성능 향상을 뜻하지는 않는다. 결빙은 오경보가 많아 자동 경보의 단독 근거로 삼기 어렵다. 공간 결과는 추가 관측·시설 확인을 위한 자료이며 결빙확률·사고확률·공식 위험등급을 검증한 결과가 아니다. 실제 현장 계측은 수행 전이다.
 
-[최종 보고서 원고와 도표](docs/delivery/FINAL_ANALYSIS_REPORT.md) · [결과 읽는 순서](docs/START_HERE.md) · [현재 상태와 검증 범위](docs/STATUS.md)
+[최종 보고서 원고와 도표](docs/delivery/FINAL_ANALYSIS_REPORT.md) · [최종 실행 소스·Notebook](submission/README.md) · [결과 읽는 순서](docs/START_HERE.md) · [현재 상태와 검증 범위](docs/STATUS.md)
 
 ## 자료와 방법
 
@@ -41,7 +41,7 @@ python scripts/check_repository.py
 python scripts/check_markdown.py
 ```
 
-원자료를 제외한 Windows·Python 3.11 복사본에서 테스트 502개와 하위 검사 7개, 저장소 파일 1,222개와 Markdown 125개의 검사를 통과했다. 이 명령은 합성 자료와 코드·문서를 검사하며 대회 원자료로 전체 분석을 재현하는 명령과 구분한다. PyTorch는 연구 비교 검사용이며 최종 온도 회귀의 추론에는 필요하지 않다. 추가 연구·보고서 의존성은 `requirements-research.txt`, `requirements-delivery.txt`에 나눠 두었다.
+원자료가 없는 환경에서 합성 테스트 502개와 하위 검사 7개를 검증했다. 저장소 파일 1,302개와 Markdown 126개의 검사도 통과했다. 이 명령은 합성 자료와 코드·문서를 검사하며 대회 원자료로 전체 분석을 재현하는 명령과 구분한다. PyTorch는 연구 비교 검사용이며 최종 온도 회귀의 추론에는 필요하지 않다. 추가 연구·보고서 의존성은 `requirements-research.txt`, `requirements-delivery.txt`에 나눠 두었다.
 
 **GitHub에는 원자료·학습된 모형·행 단위 결과·제출 ZIP을 넣지 않았다.** 저장소 복제만으로 전체 학습·추론과 데모가 실행되지는 않는다. 참가 권한이 있는 로컬 작업공간의 실행 폴더는 `outputs/private/competition_submission/icy_road_model/`이며, 그 안의 `README.md`에 설치·학습·추론 방법이 있다. 전체 예측 103,680행과 예제 144행의 정확 재현은 이 로컬 제출본의 압축 해제본에서 확인한 결과다.
 
@@ -49,6 +49,7 @@ python scripts/check_markdown.py
 
 | 경로 | 역할 |
 | --- | --- |
+| [submission/](submission/README.md) | 최종 제출 코드·Notebook·환경 명세, 원본 바이트 대조 |
 | [src/](src/) | 기상 입력·모형·지표·구간 처리 코드 |
 | [scripts/](scripts/README.md) | 학습·검산·보고서·데모·패키징 진입점 |
 | [config/](config/README.md) | 데이터 출처·분할·실험 설정 |
