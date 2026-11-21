@@ -1,25 +1,40 @@
-# 문서 안내
+# 프로젝트·상세 문서 안내
 
-최종 결과는 [보고서 원고와 도표](delivery/FINAL_ANALYSIS_REPORT.md)를 기준으로 읽는다. PDF·데모·제출 ZIP은 대회 자료가 포함된 로컬 제출본에 있고 GitHub에는 넣지 않았다. [로컬 열람 안내](START_HERE.md)에서 위치와 읽는 순서를 확인할 수 있다.
+[저장소 README](../README.md)는 대회 과제·결과·담당 범위와 주요 판단을 요약합니다. 상세 문서는 실제 분석·검증·제출 과정에서 확인한 내용으로 구성했습니다.
 
-## 처음 읽는 순서
+먼저 [결과와 지표 설명](START_HERE.md) → [최종 분석 보고서](delivery/FINAL_ANALYSIS_REPORT.md) → [검증 상태와 남은 한계](STATUS.md) 순서로 읽으면 자료·모형·결과가 어떻게 이어지는지 파악할 수 있습니다.
 
-1. [결과와 지표 설명](START_HERE.md)
-2. [최종 분석 보고서](delivery/FINAL_ANALYSIS_REPORT.md)
-3. [검증 상태와 남은 한계](STATUS.md)
-4. [공식 규정·평가 기준](competition/OFFICIAL_RULES_AND_RUBRIC_20261106.md)
-5. [코드 실행 안내](../scripts/README.md)와 [폴더 구조](STRUCTURE.md)
+## 목적에 따라 읽기
 
-## 자료와 검증
+| 확인할 내용 | 문서 | 읽을 근거 |
+| --- | --- | --- |
+| 전체 결과와 해석 | [최종 분석 보고서](delivery/FINAL_ANALYSIS_REPORT.md) | 노면온도·도로 기상·결빙 판정·공간 결과·지형 맥락·참고문헌 |
+| 핵심 지표의 뜻 | [결과 읽는 순서](START_HERE.md) | MAE·Precision·Recall·F1의 집계 방식과 분모 |
+| 무엇을 검증했고 무엇이 남았는가 | [현재 상태](STATUS.md) | 완료한 검증, 공식 안내 확인 범위, 제출 이후 상태 |
+| 평가 분할과 누출 방지 | [검증 설계](validation/VALIDATION_PROTOCOL.md) · [평가 상태](validation/EVALUATION_STATUS.md) | 평가 지점 격리, 공간 제외 분할, 시간 경계 |
+| 자료 구조와 품질 | [데이터 감사](data/DATA_AUDIT.md) · [EDA](data/EDA_REPORT.md) · [변수 사전](data/VARIABLE_DICTIONARY.md) | 결측 코드, 관측 주기, 수정 배포본 대조 |
+| 실제 제출 코드 | [최종 실행 소스](../submission/README.md) · [CSV 규약](delivery/CSV_CONTRACT.md) | 모델자료 ZIP의 코드·Notebook·환경 명세와 결과 열 정의 |
+| 대회 규정과 집계 규칙 | [공식 규정·평가 기준](competition/OFFICIAL_RULES_AND_RUBRIC_20261106.md) | 심사 기준, 과제 질의응답의 지표 집계 규칙, 제출 요건 |
+| 시도한 모형과 미채택 이유 | [연구 기록](research/) · [실험 로그](research/EXPERIMENT_LOG.md) | 실험별 입력·분할·비교 결과 |
+| 코드 실행 | [스크립트 안내](../scripts/README.md) · [설정 안내](../config/README.md) · [폴더 구조](STRUCTURE.md) | 진입점, 실험 설정, 폴더 역할 |
+| AI 활용과 공개 범위 | [AI 활용 내역](../AI_USAGE.md) · [공유 범위](../.github/PUBLICATION.md) | AI 지원 범위, 공개 전 규정·파일 검토 |
 
-- [최종 실행 소스·Notebook](../submission/README.md)
+## 먼저 이해할 용어
 
-- [변수 사전](data/VARIABLE_DICTIONARY.md)
-- [검증 설계](validation/VALIDATION_PROTOCOL.md)
-- [CSV 열·단위·결측 규약](delivery/CSV_CONTRACT.md)
-- [AI 활용 내역](../AI_USAGE.md)
-- [저장소 공유 범위](../.github/PUBLICATION.md)
+| 용어 | 이 프로젝트에서의 뜻 |
+| --- | --- |
+| RWIS | 도로기상정보시스템. 도로 옆 관측소의 노면온도·노면상태·기상 관측 |
+| AWS·ASOS | 기상청 방재기상관측·종관기상관측. 도로 밖 일반 기상 관측으로 추정 입력에 사용 |
+| 평가 3지점 | 대회가 지정한 부곡교·해전·삼봉. 학습·선택·주변 참조에서 모두 제외 |
+| 공간 제외 검증 | 한 지역의 관측소를 통째로 빼고 학습한 뒤 그 지역에서 평가하는 방식 |
+| Tref | 결빙 판정용 기준온도. 기본 기상 12특성 회귀 두 개의 평균이며 제출 노면온도 모형과 별개 |
+| 수분 대용조건 | 이슬점·최근 3시간 강수·적설로 노면 수분을 간접 추정한 조건. 실제 노면수분 관측이 아님 |
+| 조건 비율 | 구간별 유효 10분 판정 중 저온·수분 조건을 만족한 비율. 결빙 확률이 아님 |
+| 고유 입력 시계열 | 관측소 조합이 달라도 실제 입력값이 같으면 한 번만 세는 집계 단위 |
+| 선택 유지율 | 75개 선정 기준 조합 중 해당 구간이 선택된 비율. 통계적 신뢰도가 아님 |
 
-## 상세 연구와 과거 기록
+## 공개본의 읽기 기준
 
-`research/`에는 연구별 입력·분할·비교·미채택 이유를, `competition/`에는 시점별 공식 원문 대조를 보관한다. `delivery/`의 날짜·버전이 붙은 문서는 당시 제출 후보의 재현 근거다. 현재 결과는 위 최종 보고서를 따른다. 과거 점수의 분모·입력 범위·평가 규칙을 현재 점수와 혼용하지 않는다.
+수치는 모두 공식 심사 점수가 아닌 로컬 관측 대조와 개발 검증 결과입니다. 날짜·버전이 붙은 `delivery/`, `competition/`, `history/` 문서는 당시 후보와 규정 해석의 기록이므로, 현재 결과는 최종 보고서를 따릅니다. 과거 점수의 분모·입력 범위·평가 규칙을 현재 점수와 섞지 않습니다.
+
+대회 제공 원자료·학습된 모형·행 단위 결과·PDF·데모 영상은 저장소에 없습니다. 합성 테스트 통과를 전체 분석 재현으로 해석하지 않습니다.
