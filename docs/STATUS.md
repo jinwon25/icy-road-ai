@@ -1,5 +1,7 @@
 # 분석 결과와 검증 범위
 
+**2026년 11월 21일 기준: 1차 심사가 끝났고 발표 평가 대상에는 선정되지 않았다.** [발표 평가 공지](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=822)를 확인했으며 이후 모형·결과는 수정하지 않는다. 공개 범위는 [공유 범위](../.github/PUBLICATION.md)를 따른다.
+
 참가팀은 **로드투인사이트**다. [최종 보고서](delivery/FINAL_ANALYSIS_REPORT.md)의 수치는 공식 채점 결과가 아닌 로컬 관측 대조와 개발 검증 결과다.
 
 학습 제외 3지점의 노면온도 MAE 평균은 0.978°C이며 같은 관측쌍에서는 기본 12특성 회귀보다 MAE가 14.6% 낮았다. 결빙의 날짜별 평균 정밀도 0.0195·F1 0.0326은 낮은 수준이며 자동 경보 성능에 한계가 남는다.
