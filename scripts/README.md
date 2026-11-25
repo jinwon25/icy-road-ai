@@ -1,5 +1,7 @@
 # 실행 스크립트 안내
 
+공개본 검사는 [저장소 파일 검사](check_repository.py)와 [Markdown 검사](check_markdown.py)에서 시작합니다. 설치·테스트 명령은 [프로젝트 실행](../README.md#프로젝트-실행)에 있습니다. 아래 연구 스크립트의 입력 경로와 버전은 실험 당시 기준입니다.
+
 ## 최종 결과와 제출본
 
 [현재 결과](../docs/STATUS.md)와 [최종 보고서 원고](../docs/delivery/FINAL_ANALYSIS_REPORT.md)를 먼저 읽는다. 전체 실행은 대회 원자료와 로컬 연구 자산이 필요하며 GitHub 복제만으로 제출본이 생성되지는 않는다.
@@ -10,7 +12,7 @@
 - `package_late_submission_20261106.py`: 문서자료·모델자료 ZIP 생성과 압축 해제본의 추론·지표 재현.
 - `install_late_submission_20261106.py`: 검증한 제출본을 로컬 제출 경로로 반영하고 이전 제출본 보관.
 
-편집·패키징 스크립트는 작업 단계별 완료 파일과 검수 영수증을 입력으로 사용한다. 기존 완료 폴더를 덮어쓰는 일반 배포 도구로 소개하지 않는다. 제출본 내부의 `code/check_full_validation.py`와 두 `code/analyze_*short_forcing_review.py`는 포함 자료로 추론·저장 예측의 지표를 재현하는 별도 진입점이다.
+편집·패키징 스크립트는 단계별 산출물과 검수 영수증을 사용했습니다. 실제 제출 코드에서는 [전체 기간 검산](../submission/source/code/check_full_validation.py), [ASOS 단기 이력](../submission/source/code/analyze_short_forcing_review.py), [AWS 단기 이력](../submission/source/code/analyze_aws_short_forcing_review.py)의 계산 순서를 확인할 수 있습니다. 입력표 폐기 후의 실행 범위는 [제출 소스 안내](../submission/README.md)에 적었습니다.
 
 
 ## 11월 2일 후속 점검·공간 이력·채택 풍속의 구간 적용

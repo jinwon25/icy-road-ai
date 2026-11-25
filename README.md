@@ -4,11 +4,11 @@
 
 센서가 없는 고속도로 구간의 **노면온도와 기상을 주변 기상 관측으로 추정**하고, 그 결과를 교량·선형 정보와 기존 결빙 취약구간 목록에 연결해 **추가 계측과 현장 확인이 필요한 범위를 좁힌** 분석 프로젝트입니다. 2026 DATA·AI 분석 경진대회 문제해결 부문의 전북 고속도로 결빙 과제에 **로드투인사이트**(개인 참가)로 출전했습니다.
 
-이 저장소는 대회 기간(2026년 9–11월)의 분석 코드·실험 설정·검증 테스트·보고서를 정리한 기록입니다. 대회 제공 원자료와 학습된 모형은 참가 서약에 따라 포함하지 않았습니다.
+## 현재 상태
 
-## 문서 읽기 안내
+2026년 11월 6일 결과물을 제출했고, 11월 18일 발표 평가 대상 3팀에 로드투인사이트는 포함되지 않았습니다. 공식 심사 점수는 비공개입니다. 대회 마지막 날인 11월 25일에 저장소를 공개하고 참가자 제공 원자료와 관측값이 담긴 학습·검증 자료를 폐기했습니다. [발표 평가 공지](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=822) · [대회 일정](https://aida.kisti.re.kr/competition/main/competition/COMP_000000000000050/detail.do) · [공개·폐기 기록](.github/PUBLICATION.md)
 
-[문서 안내](docs/README.md)에 목적별 읽는 순서와 용어를 정리했습니다. 결과 전체는 [최종 분석 보고서](docs/delivery/FINAL_ANALYSIS_REPORT.md), 검증 범위는 [현재 상태](docs/STATUS.md), 실제 제출 코드는 [최종 실행 소스](submission/README.md)에서 확인할 수 있습니다.
+학습에서 제외한 3지점의 노면온도 MAE는 평균 **0.978°C**였습니다. 실제 결빙이 관측된 부곡교에서 날짜별 평균 정밀도는 **0.0195**에 그쳤습니다. 이 결과는 관측 공백을 보완하고 추가 계측 후보를 고르는 데 활용했습니다. [최종 분석 보고서](docs/delivery/FINAL_ANALYSIS_REPORT.md)
 
 ## 프로젝트 한눈에 보기
 
@@ -21,14 +21,7 @@
 | 주요 방법 | 학습 제외 지점 평가 · 지역 단위 공간 제외 검증 · 기상 이력 회귀 · 기준온도+수분 조건 결빙 판정 · 오경보 원인 분해 · 선정 기준 민감도 분석 |
 | 도구 | Python·pandas·scikit-learn(HistGradientBoosting)·CatBoost·GeoPandas·rasterio, 비교 실험에 LightGBM·XGBoost·PyTorch |
 | 본인 역할 | 문제 정의·데이터 감사·모델링·검증 설계·공간 분석·보고서·데모 전체. AI 도구의 지원 범위는 [AI 활용 내역](AI_USAGE.md)에 구분 |
-| 산출물 | [최종 보고서 원고](docs/delivery/FINAL_ANALYSIS_REPORT.md) · [제출 실행 소스·Notebook](submission/README.md) · [연구 기록 52건](docs/research/) · 합성 테스트 502개 |
-| 정리 상태 | 결과물 제출과 1차 심사 종료. 발표 평가 대상에는 선정되지 않았고 이후 모형·결과는 수정하지 않음 |
-
-## 대회 결과
-
-2026년 11월 18일 [발표 평가 대상 공지](https://aida.kisti.re.kr/competition/main/selectNotice.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=822)에 이 과제의 발표 대상 3팀이 공개됐고, 로드투인사이트는 포함되지 않았습니다.
-
-심사 점수는 참가 서약에 따라 공개되지 않습니다. 아래 수치는 모두 **공식 점수가 아닌 로컬 관측 대조와 개발 검증 결과**입니다.
+| 산출물 | [최종 보고서 원고](docs/delivery/FINAL_ANALYSIS_REPORT.md) · [제출 실행 소스·Notebook](submission/README.md) · [연구 기록 52건](docs/research/README.md) · 합성 테스트 502개 |
 
 ## 분석 구조
 
@@ -63,9 +56,9 @@ flowchart LR
 | 부곡교 | 34,551 | −0.970 | 1.113 | 1.441 |
 | 해전 | 34,557 | −0.977 | 1.044 | 1.295 |
 | 삼봉 | 34,551 | +0.300 | 0.776 | 1.088 |
-| 지점 평균 | 103,659 | −0.549 | 0.978 | 1.275 |
+| 지점 평균 | — | −0.549 | 0.978 | 1.275 |
 
-같은 시각·같은 지점의 공통 관측쌍 103,131개에서 기본 12특성 회귀(MAE 1.146°C) 대비 **MAE가 14.6% 낮았습니다.** 결빙 판단에 중요한 관측 −2–+2°C 범위에서도 11.4% 낮았습니다. 겨울별 7일 블록 부트스트랩 2,000회의 MAE 차이 95% 구간은 −0.202–−0.135°C입니다.
+세 지점의 유효 관측쌍은 총 103,659개입니다. 이 중 두 모형을 같은 시각·지점에서 비교할 수 있는 103,131쌍에서 기본 12특성 회귀(MAE 1.146°C) 대비 **MAE가 14.6% 낮았습니다.** 결빙 판단에 중요한 관측 −2–+2°C 범위에서도 11.4% 낮았습니다. 겨울별 7일 블록 부트스트랩 2,000회의 MAE 차이 95% 구간은 −0.202–−0.135°C입니다.
 
 ![학습 제외 3지점의 관측·추정 노면온도 밀도](docs/images/final_road_temperature.png)
 
@@ -79,7 +72,7 @@ flowchart LR
 
 대회 평가 3지점은 기온·습도·풍속 원본이 모두 결측이어서 이 표는 별도로 개발 4지역을 하나씩 통째로 제외한 평가입니다. 다른 관측소 값을 정답으로 대신 쓰지 않았습니다.
 
-### 결빙 판정: 재현율은 확보했지만 오경보가 많음
+### 결빙 판정과 오경보
 
 | 판정법 | Precision | Recall | F1 |
 | --- | ---: | ---: | ---: |
@@ -124,7 +117,7 @@ ASOS·AWS 단기 기상 이력, 재분석 자료, 상태 전이 모형, 주변 �
 
 ![구간별 기상 추정 탐색 화면](docs/images/weather_explorer_20261101.png)
 
-화면과 데모 영상은 추정 결과 파일이 포함된 로컬 제출본에만 있고, 이 저장소에는 화면 생성 코드(`src/templates/`, `scripts/`)만 있습니다.
+제출본에는 탐색 화면과 데모 영상을 담았습니다. 공개본에서는 위 화면 예시와 [화면 템플릿](src/templates/), [생성 스크립트](scripts/README.md)를 확인할 수 있습니다.
 
 ## 대회를 통해 얻은 점
 
@@ -148,14 +141,14 @@ python scripts/check_repository.py
 python scripts/check_markdown.py
 ```
 
-합성 테스트 502개와 하위 검사 7개, 저장소 파일·Markdown 검사가 통과합니다. 테스트는 시간 경계·평가 지점 누출·지표 분모·중복 입력 집계를 검증하며, **대회 원자료로 전체 분석을 재현하는 것과는 다릅니다.** 전체 학습·추론에는 대회 참가자에게만 제공된 원자료가 필요합니다. PyTorch는 비교 실험 테스트용이며 최종 추론에는 쓰지 않습니다.
+테스트 502개와 하위 검사 7개로 시간 경계, 평가 지점 분리, 지표 분모, 중복 입력 집계를 확인했습니다. PyTorch는 비교 실험 테스트에 사용합니다. 전체 학습·추론에는 폐기한 대회 관측표가 필요합니다. 제출 당시의 실행 코드와 환경은 [제출 소스 안내](submission/README.md)에서 확인할 수 있습니다.
 
 ## 주요 문서와 파일 구조
 
 | 경로 | 읽을 내용 |
 | --- | --- |
 | [docs/README.md](docs/README.md) | 목적별 문서 안내와 용어 |
-| [docs/delivery/FINAL_ANALYSIS_REPORT.md](docs/delivery/FINAL_ANALYSIS_REPORT.md) | 최종 보고서 원고·도표·참고문헌 |
+| [docs/delivery/](docs/delivery/README.md) | 최종 보고서·제출 소스와 후보별 검토 기록 |
 | [docs/STATUS.md](docs/STATUS.md) | 완료한 검증과 남은 한계 |
 | [submission/](submission/README.md) | 제출 모델자료의 코드·Notebook·환경 명세(원본 바이트 보관) |
 | [docs/research/](docs/research/) | 실험별 입력·분할·비교·미채택 이유 |
@@ -173,10 +166,10 @@ python scripts/check_markdown.py
 
 ## 출처와 이용 조건
 
-대회 제공 자료는 승인된 대회 목적에만 쓰는 비공개 자료입니다. 참가 서약의 제3자 열람·제공 제한과 대회 종료 후 폐기 조건에 따라 원자료·행 단위 파생자료·예측·학습된 모형·인증정보는 넣지 않았고, 코드·설정·출력 없는 Notebook·집계 문서와 도표만 공개합니다. [공유 범위](.github/PUBLICATION.md)
+대회 참가 서약은 제공 데이터의 제3자 열람·제공을 제한하고 대회 종료 후 폐기를 요구합니다. 공개본에는 코드·설정·출력을 비운 노트북·분석 문서·도표를 담았습니다. 한 연구 기록에서 인용한 개별 기상관측값은 기상청 공개 API에서 직접 조회한 사례입니다. 출처와 이용 조건은 [공유 범위](.github/PUBLICATION.md)에 기록했습니다.
 
 외부 자료 출처는 [보고서 참고문헌](docs/delivery/FINAL_ANALYSIS_REPORT.md#참고문헌과-원천-자료)에 정리했습니다. 별도 라이선스 파일이 없으므로 코드 재사용 조건은 정하지 않은 상태입니다.
 
 함께 볼 분석: [KBO 승부예측 대회 참가 결산](https://github.com/jinwon25/KBO-predictor) · [데이터 분석·예측 대회 기록](https://github.com/jinwon25/Dacon) · [LoL 패치·행동 분석](https://github.com/jinwon25/lol-live-ops-analytics).
 
-최진원 · [GitHub](https://github.com/jinwon25) · 대회 결과 확인: 2026-11-21
+최진원 · [GitHub](https://github.com/jinwon25) · 문서 검토일 2026-11-25

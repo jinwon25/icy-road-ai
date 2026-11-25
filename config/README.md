@@ -1,14 +1,22 @@
 # 설정 파일 안내
 
+제출 결과를 해석할 때 사용한 설정과 후보별 실험 설정을 모았습니다. 파일명의 날짜는 설정을 적용한 시점입니다. 코드에서 참조하는 원자료 경로와 해시는 당시 사용한 입력을 식별합니다.
+
+| 확인할 내용 | 설정과 결과 |
+| --- | --- |
+| 입력 자료의 배포 버전 | [원본 이름과 해시](data_source.json) · [자료 감사](../docs/data/DATA_AUDIT.md) |
+| 결빙 평가의 지점 제외와 날짜별 분모 | [11월 6일 비교 설정](official_icing_upgrade_20261106.json) · [공식 답변과 적용 기준](../docs/competition/OFFICIAL_RULES_AND_RUBRIC_20261106.md) |
+| 풍속 모형의 추가 입력 채택 여부 | [풍향·지형 비교 설정](wind_direction_terrain_20261106.json) · [지역·겨울 제외 검증 결과](../docs/research/WIND_DIRECTION_TERRAIN_20261106.md) |
+
 ## 11월 2일 공간·기상 이력의 반증 계획
 
 [weather_network_history_20261102.json](weather_network_history_20261102.json)은 현재 69특성 풍속에 과거 이력을 더한 147특성 단일 후보, 지역 4회·지역/겨울 8회, 같은 HGB와 두 검증의 채택 조건을 고정합니다. 실제 실행 전 `plan.json`에 설정·입력·코드 해시를 보존했고, 두 검증 모두 악화해 미채택했습니다. [설계·참고자료](../docs/research/NETWORK_HISTORY_PLAN_20261102.md) · [완료 수치·검산](../docs/delivery/FOLLOWUP_REVIEW_20261102.md)
 
 채택된 69특성 풍속의 구간 적용은 기존 [공간 적용 설정](weather_segment_projection_20261031.json)의 좌표·기상·두 겨울 달력을 재사용합니다. 새 스크립트는 기존 출력 경로를 사용하지 않고 별도 `wind_network_segment_projection_20261102_v1`에 저장하며 적용 모형·기존 자료의 해시를 고정합니다.
 
-## 최신: 주변 관측망과 풍속 개선을 통합한 v12
+## 11월 1일 v12의 주변 관측망과 풍속 설정
 
-[weather_network_20261101.json](weather_network_20261101.json)은 최대4AWS·50km·엄격한과거15분·35추가특성과36적합, 두 검증의 채택 기준을 실행 전에 고정했습니다. 풍속만 통과했고 기온·습도는 유지합니다. [수치·검산·출처](../docs/research/WEATHER_NETWORK_20261101.md)
+[weather_network_20261101.json](weather_network_20261101.json)은 반경 50km의 AWS 최대 4곳, 추정 시각 이전 15분 이내의 관측, 추가 특성 35개와 36회 학습, 두 검증의 채택 기준을 실행 전에 고정했습니다. 풍속만 통과했고 기온·습도는 유지합니다. [수치·검산·출처](../docs/research/WEATHER_NETWORK_20261101.md)
 
 [물리 입력](weather_thermodynamics_20261101.json)·[CatBoost와 고정 평균](weather_catboost_20261101.json)·[고정 서리 규칙](frost_icing_20261101.json)은 v10 이후의 반증 계획입니다. 결과 확인 뒤 문턱·가중치·채택 조건을 바꾸지 않았고 모두 미채택입니다. 현재 습도는 기존 안정화 이력 계획을 유지합니다. [결과·소스·이용조건](../docs/research/FOLLOWUP_METHODS_20261101.md)
 

@@ -2,7 +2,7 @@
 
 분석 설계 검토, 코드 작성과 수정, 실험 실행 및 결과 대조, 보고서와 데모 편집에 Codex를 활용했다. 지표와 지도 수치는 로컬 Python 프로그램으로 계산했으며 외부 생성형 AI 예측 API를 추론에 사용하지 않았다.
 
-보고서는 관측·추정의 대조, 평가 분모와 한계, 도로 관리에서의 활용 범위를 중심으로 구성했다. 공개 [Frontend Design 스킬](https://github.com/anthropics/skills/tree/main/skills/frontend-design)의 시각적 위계와 사용자 관점 문구 원칙, PDF 렌더·검수 절차를 참고했다. 도로기상 방법과 해석에 사용한 학술·기관 자료는 보고서 참고문헌에 기재했다.
+보고서는 관측·추정의 대조, 평가 분모와 한계, 도로 관리에서의 활용 범위를 중심으로 구성했다. 공개 [Frontend Design 스킬](https://github.com/anthropics/skills/tree/main/skills/frontend-design)의 시각적 위계와 사용자 관점 문구 원칙, PDF 렌더·검수 절차를 참고했다. 도로기상 방법과 해석에 사용한 학술·기관 자료는 [최종 보고서 참고문헌](docs/delivery/FINAL_ANALYSIS_REPORT.md#참고문헌과-원천-자료)에 기재했다.
 
 모형 학습·평가 범위, 입력 자료, 결측 처리와 지표 집계 방식은 코드와 보고서에 명시했다. 제공 자료는 승인된 대회 목적의 비공개 자료이며 공개·재배포 허용을 전제로 하지 않는다.
 
